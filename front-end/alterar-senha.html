@@ -86,8 +86,21 @@
                 return;
             }
             
+            const lang = localStorage.getItem('cineworld_language') || 'pt-BR';
+            state.currentLanguage = lang;
+            
+            applyPageTranslations();
             updateAuthUI();
         });
+        
+        function applyPageTranslations() {
+            document.title = (t('changePasswordTitle') || 'Alterar Senha') + ' - CineWorld';
+            document.querySelector('h1').innerHTML = '<i class="fas fa-key" style="color: var(--accent);"></i> ' + (t('changePasswordTitle') || 'Alterar Senha');
+            document.getElementById('currentPasswordLabel').textContent = t('currentPasswordLabel') || 'Senha Atual';
+            document.getElementById('newPasswordLabel').textContent = t('newPasswordLabel') || 'Nova Senha';
+            document.getElementById('confirmNewPasswordLabel').textContent = t('confirmNewPasswordLabel') || 'Confirmar Nova Senha';
+            document.getElementById('changePasswordBtn').textContent = t('changePasswordBtn') || 'Alterar Senha';
+        }
         
         function changePassword() {
             const current = document.getElementById('currentPassword').value;
@@ -98,46 +111,42 @@
             if (!current || !newPass || !confirmPass) {
                 msg.style.display = 'block';
                 msg.style.color = 'var(--accent)';
-                msg.textContent = 'Preencha todos os campos!';
+                msg.textContent = t('fillAllFields') || 'Preencha todos os campos！';
                 return;
             }
             
             if (newPass.length < 4) {
                 msg.style.display = 'block';
                 msg.style.color = 'var(--accent)';
-                msg.textContent = 'A nova senha deve ter pelo menos 4 caracteres!';
+                msg.textContent = t('passwordLength') || 'A senha deve ter pelo menos 4 caracteres！';
                 return;
             }
             
             if (newPass !== confirmPass) {
                 msg.style.display = 'block';
                 msg.style.color = 'var(--accent)';
-                msg.textContent = 'As senhas não coincidem!';
+                msg.textContent = t('passwordMismatch') || 'As senhas não coincidem！';
                 return;
             }
             
-            // Get current user and users list
             const savedUser = JSON.parse(localStorage.getItem('cineworld_user'));
             const users = JSON.parse(localStorage.getItem('cineworld_users') || '[]');
             
-            // Verify current password
             const userIndex = users.findIndex(u => u.email === savedUser.email);
             if (userIndex === -1 || users[userIndex].password !== current) {
                 msg.style.display = 'block';
                 msg.style.color = 'var(--accent)';
-                msg.textContent = 'Senha atual incorreta!';
+                msg.textContent = t('currentPasswordWrong') || 'Senha atual incorreta！';
                 return;
             }
             
-            // Update password
             users[userIndex].password = newPass;
             localStorage.setItem('cineworld_users', JSON.stringify(users));
             
             msg.style.display = 'block';
             msg.style.color = '#4CAF50';
-            msg.textContent = 'Senha alterada com sucesso!';
+            msg.textContent = t('passwordChanged') || 'Senha alterada com sucesso！';
             
-            // Clear fields
             document.getElementById('currentPassword').value = '';
             document.getElementById('newPassword').value = '';
             document.getElementById('confirmNewPassword').value = '';

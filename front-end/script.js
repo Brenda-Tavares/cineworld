@@ -72,14 +72,24 @@ const translations = {
         addToFavorites: 'Adicionar aos favoritos', removeFromFavorites: 'Remover dos favoritos', watchTrailer: 'Ver Trailer',
         aiTitle: 'O que deseja assistir?', aiGreeting: 'Olá! Sou a assistente de filmes do CineWorld.', aiDescribe: 'Descreva o que você quer assistir:', aiExample: 'Ex: "filme de ação com robôs", "comédia romântica indiana"', aiPlaceholder: 'Descreva o filme...',
         noTitle: 'Sem título',
-        emailPlaceholder: 'Email', passwordPlaceholder: 'Senha', registerLink: 'Cadastre-se', login: 'Entrar', 
-        invalidCredentials: 'Email ou senha incorretos!', fillEmailPassword: 'Preencha email e senha!', 
-        passwordMismatch: 'As senhas não coincidem!', passwordLength: 'A senha deve ter pelo menos 4 caracteres!',
+emailPlaceholder: 'Email', passwordPlaceholder: 'Senha', registerLink: 'Cadastre-se', login: 'Entrar', 
+        invalidCredentials: 'Email ou senha incorretos！', fillEmailPassword: 'Preencha email e senha！', 
+        passwordMismatch: 'As senhas não coincidem！', passwordLength: 'A senha deve ter pelo menos 4 caracteres！',
         profile: 'Perfil', changePassword: 'Alterar Senha',
-        namePlaceholder: 'Nome', noAccount: 'Não tem conta?', hasAccount: 'Já tem conta', login: 'Entrar', confirmPasswordPlaceholder: 'Confirmar Senha', createAccount: 'Crie sua conta',
-        contactSuccess: 'Formulário enviado com sucesso!', contactError: 'Erro ao enviar. Tente novamente.', contactOpenForm: 'O formulário foi aberto! Por favor, preencha e envie.',
-        loginFirst: 'Por favor, entre na sua conta para adicionar favoritos!',
-        myFavorites: 'Meus Favoritos'
+        namePlaceholder: 'Nome', noAccount: 'Não tem conta?', hasAccount: 'Já tem conta', 
+        confirmPasswordPlaceholder: 'Confirmar Senha', createAccount: 'Crie sua conta',
+        contactSuccess: 'Formulário enviado com sucesso！', contactError: 'Erro ao enviar. Tente novamente。', 
+        contactOpenForm: 'O formulário foi aberto！Por favor, preencha e envie。',
+        loginFirst: 'Por favor, entre na sua conta para adicionar favoritos！',
+        myFavorites: 'Meus Favoritos',
+        profileTitle: 'Meu Perfil', profileNameLabel: 'Nome', profileEmailLabel: 'Email',
+        profileFavoritesText: 'Meus Favoritos', profileChangePasswordText: 'Alterar Senha', profileLogoutText: 'Sair',
+        backHomeText: 'Voltar ao início',
+        changePasswordTitle: 'Alterar Senha', currentPasswordLabel: 'Senha Atual', newPasswordLabel: 'Nova Senha',
+        confirmNewPasswordLabel: 'Confirmar Nova Senha', changePasswordBtn: 'Alterar Senha',
+        favoritesTitle: 'Meus Favoritos', emptyFavoritesText: 'Você ainda não tem filmes favoritos！',
+        exploreMovies: 'Explorar Filmes', backToProfile: 'Voltar ao Perfil',
+        fillAllFields: 'Preencha todos os campos！', currentPasswordWrong: 'Senha atual incorreta！', passwordChanged: 'Senha alterada com sucesso！'
     },
     'en': {
         searchPlaceholder: 'Search movies...',
@@ -110,13 +120,23 @@ const translations = {
         aiTitle: 'What would you like to watch?', aiGreeting: 'Hello! I am the CineWorld movie assistant.', aiDescribe: 'Describe what you want to watch:', aiExample: 'Ex: "action movie with robots", "Indian romantic comedy"', aiPlaceholder: 'Describe the movie...',
         noTitle: 'No Title',
         emailPlaceholder: 'Email', passwordPlaceholder: 'Password', registerLink: 'Sign up', login: 'Sign In',
-        invalidCredentials: 'Email or password incorrect!', fillEmailPassword: 'Fill in email and password!', passwordMismatch: 'Passwords do not match!', passwordLength: 'Password must be at least 4 characters!',
-        namePlaceholder: 'Name', noAccount: 'No account?', hasAccount: 'Already have account', login: 'Sign In',
+        invalidCredentials: 'Email or password incorrect!', fillEmailPassword: 'Fill in email and password!', 
+        passwordMismatch: 'Passwords do not match!', passwordLength: 'Password must be at least 4 characters!',
+        profile: 'Profile', changePassword: 'Change Password',
+        namePlaceholder: 'Name', noAccount: 'No account?', hasAccount: 'Already have account', 
         confirmPasswordPlaceholder: 'Confirm Password', createAccount: 'Create your account',
-        contactSuccess: 'Form submitted successfully!', contactError: 'Error submitting. Try again.', contactOpenForm: 'The form has been opened! Please fill and send.',
+        contactSuccess: 'Form submitted successfully!', contactError: 'Error submitting. Try again.', 
+        contactOpenForm: 'The form has been opened! Please fill and send.',
         loginFirst: 'Please login to add favorites!',
         myFavorites: 'My Favorites',
-        profile: 'Profile', changePassword: 'Change Password'
+profileTitle: 'My Profile', profileNameLabel: 'Name', profileEmailLabel: 'Email',
+        profileFavoritesText: 'My Favorites', profileChangePasswordText: 'Change Password', profileLogoutText: 'Sign Out',
+        backHomeText: 'Back to Home',
+        changePasswordTitle: 'Change Password', currentPasswordLabel: 'Current Password', newPasswordLabel: 'New Password',
+        confirmNewPasswordLabel: 'Confirm New Password', changePasswordBtn: 'Change Password',
+        favoritesTitle: 'My Favorites', emptyFavoritesText: 'You have no favorite movies yet！',
+        exploreMovies: 'Explore Movies', backToProfile: 'Back to Profile',
+        fillAllFields: 'Please fill in all fields！', currentPasswordWrong: 'Current password is incorrect！', passwordChanged: 'Password changed successfully！'
     },
     'es': {
         searchPlaceholder: 'Buscar películas...',
@@ -147,13 +167,23 @@ const translations = {
         aiTitle: '¿Qué quieres ver?', aiGreeting: '¡Hola! Soy el asistente de películas de CineWorld.', aiDescribe: 'Describe lo que quieres ver:', aiExample: 'Ej: "película de acción con robots"', aiPlaceholder: 'Describe la película...',
         noTitle: 'Sin título',
         emailPlaceholder: 'Correo electrónico', passwordPlaceholder: 'Contraseña', registerLink: 'Regístrate', login: 'Entrar',
-        invalidCredentials: '¡Email o contraseña incorrectos!', fillEmailPassword: '¡Completa email y contraseña!', passwordMismatch: '¡Las contraseñas no coinciden!', passwordLength: '¡La contraseña debe tener al menos 4 caracteres!',
-        namePlaceholder: 'Nombre', noAccount: '¿No tienes cuenta?', hasAccount: 'Ya tengo cuenta', login: 'Entrar',
+        invalidCredentials: '¡Email o contraseña incorrectos!', fillEmailPassword: '¡Completa email y contraseña!', 
+        passwordMismatch: '¡Las contraseñas no coinciden!', passwordLength: '¡La contraseña debe tener al menos 4 caracteres!',
+        namePlaceholder: 'Nombre', noAccount: '¿No tienes cuenta?', hasAccount: 'Ya tengo cuenta', 
         confirmPasswordPlaceholder: 'Confirmar Contraseña', createAccount: 'Crea tu cuenta',
-        contactSuccess: '¡Formulario enviado con éxito!', contactError: 'Error al enviar. Inténtalo de nuevo.', contactOpenForm: '¡El formulario se ha abierto! Por favor, llena y envía.',
+        contactSuccess: '¡Formulario enviado con éxito!', contactError: 'Error al enviar. Inténtalo de nuevo.', 
+        contactOpenForm: '¡El formulario se ha abierto! Por favor, llena y envía.',
         loginFirst: '¡Por favor, entra en tu cuenta para agregar favoritos!',
         myFavorites: 'Mis Favoritos',
-        profile: 'Perfil', changePassword: 'Cambiar Contraseña'
+        profile: 'Perfil', changePassword: 'Cambiar Contraseña',
+profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Correo electrónico',
+        profileFavoritesText: 'Mis Favoritos', profileChangePasswordText: 'Cambiar Contraseña', profileLogoutText: 'Cerrar Sesión',
+        backHomeText: 'Volver al inicio',
+        changePasswordTitle: 'Cambiar Contraseña', currentPasswordLabel: 'Contraseña Actual', newPasswordLabel: 'Nueva Contraseña',
+        confirmNewPasswordLabel: 'Confirmar Nueva Contraseña', changePasswordBtn: 'Cambiar Contraseña',
+        favoritesTitle: 'Mis Favoritos', emptyFavoritesText: '¡Aún no tienes películas favoritas！',
+        exploreMovies: 'Explorar Películas', backToProfile: 'Volver al Perfil',
+        fillAllFields: '¡Por favor, complete todos los campos！', currentPasswordWrong: '¡La contraseña actual es incorrecta！', passwordChanged: '¡Contraseña cambiada con éxito！'
     },
     'zh-CN': {
         searchPlaceholder: '搜索电影...',
@@ -184,13 +214,23 @@ const translations = {
         aiTitle: '想看什么?', aiGreeting: '你好！我是 CineWorld 电影助手。', aiDescribe: '描述你想看什么:', aiExample: '例如："机器人动作片"', aiPlaceholder: '描述电影...',
         noTitle: '无标题',
         emailPlaceholder: '邮箱', passwordPlaceholder: '密码', registerLink: '注册', login: '登录',
-        invalidCredentials: '邮箱或密码错误！', fillEmailPassword: '请填写邮箱和密码！', passwordMismatch: '密码不匹配！', passwordLength: '密码必须至少4个字符！',
-        namePlaceholder: '姓名', noAccount: '没有账户？', hasAccount: '已有账户', login: '登录',
+        invalidCredentials: '邮箱或密码错误！', fillEmailPassword: '请填写邮箱和密码！', 
+        passwordMismatch: '密码不匹配！', passwordLength: '密码必须至少4个字符！',
+        namePlaceholder: '姓名', noAccount: '没有账户？', hasAccount: '已有账户', 
         confirmPasswordPlaceholder: '确认密码', createAccount: '创建账户',
-        contactSuccess: '表单提交成功！', contactError: '提交错误，请重试。', contactOpenForm: '表单已打开！请填写并发送。',
+        contactSuccess: '表单提交成功！', contactError: '提交错误，请重试。', 
+        contactOpenForm: '表单已打开！请填写并发送。',
         loginFirst: '请登录以添加收藏！',
         myFavorites: '我的收藏',
-        profile: '个人资料', changePassword: '修改密码'
+        profile: '个人资料', changePassword: '修改密码',
+        profileTitle: '我的资料', profileNameLabel: '姓名', profileEmailLabel: '邮箱',
+        profileFavoritesText: '我的收藏', profileChangePasswordText: '修改密码', profileLogoutText: '退出',
+        backHomeText: '返回首页',
+        changePasswordTitle: '修改密码', currentPasswordLabel: '当前密码', newPasswordLabel: '新密码',
+        confirmNewPasswordLabel: '确认新密码', changePasswordBtn: '修改密码',
+        favoritesTitle: '我的收藏', emptyFavoritesText: '您还没有收藏的电影！',
+        exploreMovies: '浏览电影', backToProfile: '返回资料',
+        fillAllFields: '请填写所有字段！', currentPasswordWrong: '当前密码错误！', passwordChanged: '密码修改成功！'
     },
     'zh-HK': {
         searchPlaceholder: '搜尋電影...',
@@ -221,13 +261,23 @@ const translations = {
         aiTitle: '想睇咩?', aiGreeting: '你好！我是 CineWorld 電影助手。', aiDescribe: '描述你想睇咩:', aiExample: '例如："机器人动作片"', aiPlaceholder: '描述電影...',
         noTitle: '無標題',
         emailPlaceholder: '電子郵件', passwordPlaceholder: '密碼', registerLink: '註冊', login: '登入',
-        invalidCredentials: '郵箱或密碼錯誤！', fillEmailPassword: '請填寫郵箱和密碼！', passwordMismatch: '密碼不匹配！', passwordLength: '密碼必須至少4個字符！',
-        namePlaceholder: '姓名', noAccount: '沒有賬戶？', hasAccount: '已有賬戶', login: '登入',
+        invalidCredentials: '郵箱或密碼錯誤！', fillEmailPassword: '請填寫郵箱和密碼！', 
+        passwordMismatch: '密碼不匹配！', passwordLength: '密碼必須至少4個字符！',
+        namePlaceholder: '姓名', noAccount: '沒有賬戶？', hasAccount: '已有賬戶', 
         confirmPasswordPlaceholder: '確認密碼', createAccount: '創建賬戶',
-        contactSuccess: '表單提交成功！', contactError: '提交錯誤，請重試。', contactOpenForm: '表單已打開！請填寫並發送。',
+        contactSuccess: '表單提交成功！', contactError: '提交錯誤，請重試。', 
+        contactOpenForm: '表單已打開！請填寫並發送。',
         loginFirst: '請登入以添加收藏！',
         myFavorites: '我的收藏',
-        profile: '個人資料', changePassword: '修改密碼'
+        profile: '個人資料', changePassword: '修改密碼',
+        profileTitle: '我的資料', profileNameLabel: '姓名', profileEmailLabel: '電子郵件',
+        profileFavoritesText: '我的收藏', profileChangePasswordText: '修改密碼', profileLogoutText: '登出',
+        backHomeText: '返回首頁',
+        changePasswordTitle: '修改密碼', currentPasswordLabel: '當前密碼', newPasswordLabel: '新密碼',
+        confirmNewPasswordLabel: '確認新密碼', changePasswordBtn: '修改密碼',
+        favoritesTitle: '我的收藏', emptyFavoritesText: '您還沒有收藏的電影！',
+        exploreMovies: '瀏覽電影', backToProfile: '返回資料',
+        fillAllFields: '請填寫所有欄位！', currentPasswordWrong: '當前密碼錯誤！', passwordChanged: '密碼修改成功！'
     },
     'ja': {
         searchPlaceholder: '映画を検索...',
@@ -258,13 +308,25 @@ const translations = {
         aiTitle: '何を見たいですか？', aiGreeting: 'こんにちは！CineWorld 映画アシスタントです。', aiDescribe: '見たいものを描述:', aiExample: '例："ロボットアクション映画"', aiPlaceholder: '映画を描述...',
         noTitle: '無題',
         emailPlaceholder: 'メールアドレス', passwordPlaceholder: 'パスワード', registerLink: '登録', login: 'ログイン',
-        invalidCredentials: 'メールアドレスまたはパスワードが正しくありません！', fillEmailPassword: 'メールアドレスとパスワードを入力してください！', passwordMismatch: 'パスワードが一致しません！', passwordLength: 'パスワードは4文字以上である必要があります！',
-        namePlaceholder: '名前', noAccount: 'アカウントがありませんか？', hasAccount: 'すでにアカウントあり', login: 'ログイン',
+        invalidCredentials: 'メールアドレスまたはパスワードが正しくありません！', 
+        fillEmailPassword: 'メールアドレスとパスワードを入力してください！', 
+        passwordMismatch: 'パスワードが一致しません！', 
+        passwordLength: 'パスワードは4文字以上である必要があります！',
+        namePlaceholder: '名前', noAccount: 'アカウントがありませんか？', hasAccount: 'すでにアカウントあり', 
         confirmPasswordPlaceholder: 'パスワード確認', createAccount: 'アカウント作成',
-        contactSuccess: 'フォーム送信成功！', contactError: '送信エラー。もう一度お試しください。', contactOpenForm: 'フォームが開きました！記入して送信してください。',
+        contactSuccess: 'フォーム送信成功！', contactError: '送信エラー。もう一度お試しください。', 
+        contactOpenForm: 'フォームが開きました！記入して送信してください。',
         loginFirst: 'お気に入りを追加するにはログインしてください！',
         myFavorites: 'お気に入り',
-        profile: 'プロフィール', changePassword: 'パスワード変更'
+        profile: 'プロフィール', changePassword: 'パスワード変更',
+        profileTitle: 'マイページ', profileNameLabel: '名前', profileEmailLabel: 'メールアドレス',
+        profileFavoritesText: 'お気に入り', profileChangePasswordText: 'パスワード変更', profileLogoutText: 'ログアウト',
+        backHomeText: 'ホームに戻る',
+        changePasswordTitle: 'パスワード変更', currentPasswordLabel: '現在のパスワード', newPasswordLabel: '新しいパスワード',
+        confirmNewPasswordLabel: '新しいパスワードを確認', changePasswordBtn: 'パスワードを変更',
+        favoritesTitle: 'お気に入り', emptyFavoritesText: 'まだお気に入り映画がありません！',
+        exploreMovies: '映画を探す', backToProfile: 'プロフィールに戻る',
+        fillAllFields: 'すべての項目を入力してください！', currentPasswordWrong: '現在のパスワードが正しくありません！', passwordChanged: 'パスワードが変更されました！'
     },
     'ru': {
         searchPlaceholder: 'Поиск фильмов...',
@@ -295,13 +357,25 @@ const translations = {
         aiTitle: 'Что хотите смотреть?', aiGreeting: 'Привет! Я помощник фильмов CineWorld.', aiDescribe: 'Опишите, что хотите смотреть:', aiExample: 'Например: "боевик с роботами"', aiPlaceholder: 'Опишите фильм...',
         noTitle: 'Без названия',
         emailPlaceholder: 'Email', passwordPlaceholder: 'Пароль', registerLink: 'Регистрация', login: 'Войти',
-        invalidCredentials: 'Неверный email или пароль!', fillEmailPassword: 'Заполните email и пароль!', passwordMismatch: 'Пароли не совпадают!', passwordLength: 'Пароль должен быть не менее 4 символов!',
-        namePlaceholder: 'Имя', noAccount: 'Нет аккаунта?', hasAccount: 'Уже есть аккаунт', login: 'Войти',
+        invalidCredentials: 'Неверный email или пароль!', 
+        fillEmailPassword: 'Заполните email и пароль!', 
+        passwordMismatch: 'Пароли не совпадают!', 
+        passwordLength: 'Пароль должен быть не менее 4 символов!',
+        namePlaceholder: 'Имя', noAccount: 'Нет аккаунта?', hasAccount: 'Уже есть аккаунт', 
         confirmPasswordPlaceholder: 'Подтвердите пароль', createAccount: 'Создайте аккаунт',
-        contactSuccess: 'Форма успешно отправлена!', contactError: 'Ошибка отправки. Попробуйте снова.', contactOpenForm: 'Форма открыта! Пожалуйста, заполните и отправьте.',
+        contactSuccess: 'Форма успешно отправлена!', contactError: 'Ошибка отправки. Попробуйте снова.', 
+        contactOpenForm: 'Форма открыта! Пожалуйста, заполните и отправьте.',
         loginFirst: 'Пожалуйста, войдите, чтобы добавить в избранное!',
         myFavorites: 'Избранное',
-        profile: 'Профиль', changePassword: 'Изменить пароль'
+        profile: 'Профиль', changePassword: 'Изменить пароль',
+profileTitle: 'Мой профиль', profileNameLabel: 'Имя', profileEmailLabel: 'Email',
+        profileFavoritesText: 'Избранное', profileChangePasswordText: 'Изменить пароль', profileLogoutText: 'Выйти',
+        backHomeText: 'На главную',
+        changePasswordTitle: 'Изменить пароль', currentPasswordLabel: 'Текущий пароль', newPasswordLabel: 'Новый пароль',
+        confirmNewPasswordLabel: 'Подтвердите новый пароль', changePasswordBtn: 'Изменить пароль',
+        favoritesTitle: 'Избранное', emptyFavoritesText: 'У вас пока нет избранных фильмов！',
+        exploreMovies: 'Смотреть фильмы', backToProfile: 'Вернуться в профиль',
+        fillAllFields: 'Пожалуйста, заполните все поля！', currentPasswordWrong: 'Неверный текущий пароль！', passwordChanged: 'Пароль успешно изменен！'
     },
     'ko': {
         searchPlaceholder: '영화 검색...',
@@ -332,13 +406,25 @@ const translations = {
         aiTitle: '무엇을 보고 싶나요?', aiGreeting: '안녕하세요! CineWorld 영화 도우미입니다.', aiDescribe: '보고 싶은 것을 설명:', aiExample: '예: "로봇 액션 영화"', aiPlaceholder: '영화 설명...',
         noTitle: '제목 없음',
         emailPlaceholder: '이메일', passwordPlaceholder: '비밀번호', registerLink: '회원가입', login: '로그인',
-        invalidCredentials: '이메일 또는 비밀번호가不正确합니다!', fillEmailPassword: '이메일과 비밀번호를 입력하세요!', passwordMismatch: '비밀번호가 일치하지 않습니다!', passwordLength: '비밀번호는 최소 4자 이상이어야 합니다!',
-        namePlaceholder: '이름', noAccount: '계정이 없으신가요?', hasAccount: '이미 계정이 있음', login: '로그인',
+        invalidCredentials: '이메일 또는 비밀번호가不正确합니다！', 
+        fillEmailPassword: '이메일과 비밀번호를 입력하세요！', 
+        passwordMismatch: '비밀번호가 일치하지 않습니다！', 
+        passwordLength: '비밀번호는 최소 4자 이상이어야 합니다！',
+        namePlaceholder: '이름', noAccount: '계정이 없으신가요？', hasAccount: '이미 계정이 있음', 
         confirmPasswordPlaceholder: '비밀번호 확인', createAccount: '계정 만들기',
-        contactSuccess: '양식이 성공적으로 제출되었습니다!', contactError: '제출 오류. 다시 시도하십시오.', contactOpenForm: '양식이 열렸습니다! 내용을 입력하고 보내십시오.',
-        loginFirst: '즐겨찾기에 추가하려면 로그인하십시오!',
+        contactSuccess: '양식이 성공적으로 제출되었습니다！', contactError: '제출 오류。다시 시도하십시오。', 
+        contactOpenForm: '양식이 열렸습니다！내용을 입력하고 보내십시오。',
+        loginFirst: '즐겨찾기에 추가하려면 로그인하십시오！',
         myFavorites: '나의 즐겨찾기',
-        profile: '프로필', changePassword: '비밀번호 변경'
+        profile: '프로필', changePassword: '비밀번호 변경',
+        profileTitle: '내 프로필', profileNameLabel: '이름', profileEmailLabel: '이메일',
+        profileFavoritesText: '즐겨찾기', profileChangePasswordText: '비밀번호 변경', profileLogoutText: '로그아웃',
+        backHomeText: '홈으로 돌아가기',
+        changePasswordTitle: '비밀번호 변경', currentPasswordLabel: '현재 비밀번호', newPasswordLabel: '새 비밀번호',
+        confirmNewPasswordLabel: '새 비밀번호 확인', changePasswordBtn: '비밀번호 변경',
+        favoritesTitle: '즐겨찾기', emptyFavoritesText: '아직 즐겨찾기한 영화가 없습니다！',
+        exploreMovies: '영화 찾기', backToProfile: '프로필로 돌아가기',
+        fillAllFields: '모든 항목을 입력해 주세요！', currentPasswordWrong: '현재 비밀번호가 올바르지 않습니다！', passwordChanged: '비밀번호가 변경되었습니다！'
     }
 };
 
@@ -1364,7 +1450,7 @@ function toggleNavMenu() {
     document.getElementById('navMenu').classList.toggle('open');
 }
 
-// Favorites - now using Supabase
+// Favorites
 function toggleFavorite(movieId) {
     if (!currentUser) {
         showToast(t('loginFirst') || 'Por favor, entre na sua conta para adicionar favoritos!');
@@ -1381,28 +1467,34 @@ function toggleFavorite(movieId) {
         favorites.splice(index, 1);
     }
     
+    localStorage.setItem('cineworld_favorites', JSON.stringify(favorites));
     updateFavoritesCount();
     renderMovies();
     
-    const modal = document.getElementById('movieModal');
-    if (modal.classList.contains('open')) {
-        const movie = state.movies.find(m => m.id === movieId);
-        if (movie) showMovieModal(movie);
+    // Update button immediately in grid
+    const gridBtn = document.querySelector(`.movie-card[data-id="${movieId}"] .fav-btn`);
+    if (gridBtn) {
+        if (isAdding) {
+            gridBtn.classList.add('active');
+        } else {
+            gridBtn.classList.remove('active');
+        }
+    }
+    
+    // Update button in modal
+    const modalBtn = document.querySelector('.modal-fav-btn');
+    if (modalBtn) {
+        if (isAdding) {
+            modalBtn.classList.add('active');
+        } else {
+            modalBtn.classList.remove('active');
+        }
     }
     
     // Sync with Supabase
     if (typeof toggleFavoriteSupabase === 'function') {
         toggleFavoriteSupabase(movieId, isAdding).catch(err => {
             console.error('Supabase sync error:', err);
-            // Revert on error
-            if (isAdding) {
-                const idx = favorites.indexOf(movieId);
-                if (idx !== -1) favorites.splice(idx, 1);
-            } else {
-                favorites.push(movieId);
-            }
-            updateFavoritesCount();
-            renderMovies();
             showToast(t('syncError') || 'Erro ao sincronizar favoritos.');
         });
     }

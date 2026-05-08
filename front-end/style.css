@@ -939,7 +939,6 @@ body {
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.6);
     border: none;
-    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -947,14 +946,22 @@ body {
     transition: var(--transition);
 }
 
-.fav-btn:hover {
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
+.fav-btn i {
+    font-size: 0.9rem;
+    color: #60a5fa;
+    transition: var(--transition);
 }
 
-.fav-btn.active {
-    background: var(--accent);
-    color: white;
+.fav-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.fav-btn:hover i {
+    color: #93c5fd;
+}
+
+.fav-btn.active i {
+    color: #ef4444;
 }
 
 .fav-btn-large {
@@ -964,7 +971,6 @@ body {
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--border);
-    color: var(--text-light);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -976,17 +982,21 @@ body {
 
 .fav-btn-large:hover {
     background: rgba(255, 255, 255, 0.15);
-    color: white;
 }
 
 .fav-btn-large.active {
     background: var(--accent);
     border-color: var(--accent);
-    color: white;
 }
 
 .fav-btn-large i {
     font-size: 1.2rem;
+    color: #60a5fa;
+    transition: var(--transition);
+}
+
+.fav-btn-large.active i {
+    color: white;
 }
 
 /* Info */

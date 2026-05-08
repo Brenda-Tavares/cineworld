@@ -97,11 +97,26 @@
                 return;
             }
             
+            const lang = localStorage.getItem('cineworld_language') || 'pt-BR';
+            state.currentLanguage = lang;
+            
             const user = JSON.parse(savedUser);
             document.getElementById('profileName').textContent = user.name;
             document.getElementById('profileEmail').textContent = user.email;
+            
+            applyPageTranslations();
             updateAuthUI();
         });
+        
+        function applyPageTranslations() {
+            document.getElementById('profileTitle').textContent = t('profileTitle') || 'Meu Perfil';
+            document.getElementById('profileNameLabel').textContent = t('profileNameLabel') || 'Nome';
+            document.getElementById('profileEmailLabel').textContent = t('profileEmailLabel') || 'Email';
+            document.getElementById('profileFavoritesText').textContent = t('profileFavoritesText') || 'Meus Favoritos';
+            document.getElementById('profileChangePasswordText').textContent = t('profileChangePasswordText') || 'Alterar Senha';
+            document.getElementById('profileLogoutText').textContent = t('profileLogoutText') || 'Sair';
+            document.getElementById('backHomeText').textContent = t('backHomeText') || 'Voltar ao início';
+        }
         
         function goToFavorites(e) {
             e.preventDefault();
