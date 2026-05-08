@@ -353,20 +353,6 @@ function t(key) {
     }
 }
 
-// Initialize auth - load user from localStorage
-function initAuth() {
-    const savedUser = localStorage.getItem('cineworld_user');
-    if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        const savedFavs = localStorage.getItem('cineworld_favorites');
-        if (savedFavs) {
-            favorites = JSON.parse(savedFavs);
-        }
-    }
-    updateAuthUI();
-    updateFavoritesCount();
-}
-
 // API Base
 const API_BASE = '/api';
 
