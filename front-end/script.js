@@ -1,4 +1,4 @@
-// Supabase Configuration - CineWorld
+// CineWorld - Main Script
 
 // Toast notification function
 function showToast(message) {
@@ -13,7 +13,6 @@ function showToast(message) {
     setTimeout(() => toast.remove(), 3000);
 }
 
-// CineWorld - Main Script
 let state = {
     movies: [],
     currentPage: 1,
@@ -26,9 +25,6 @@ let state = {
     searchQuery: '',
     isLoading: false
 };
-
-let currentUser = null;
-let favorites = [];
 
 // Language map for TMDB API
 const languageMap = {
@@ -54,12 +50,8 @@ const translations = {
         rating: 'Avaliação', year: 'Ano', synopsis: 'Sinopse', synopsisNotAvailable: 'Sinopse não disponível.',
         originalTitle: 'Título original', close: 'Fechar',
         noResults: 'Nenhum filme encontrado', tryAgain: 'Tente outro gênero ou busca', resultsFor: 'Resultados para',
-        login: 'Entrar', logout: 'Sair', loginTitle: 'Entrar', registerTitle: 'Cadastrar', logoutMessage: 'Volte logo!',
-        loginDesc: 'Escolha uma opção para continuar',
-        loginGoogle: 'Google', loginFacebook: 'Facebook',
         streaming: 'Onde Assistir', runtime: 'min',
-        favorites: 'Favoritos', noFavorites: 'Você ainda não tem favoritos!',
-        welcome: 'Bem-vindo', sortBy: 'Ordenar',
+        sortBy: 'Ordenar',
         contact: 'Contato', contactTitle: 'Fale Conosco', contactDesc: 'Envie suas sugestões, elogios ou reclamações',
         name: 'Nome (opcional)', type: 'Tipo', message: 'Mensagem *', send: 'Enviar',
         suggestion: 'Sugestão', compliment: 'Elogio', complaint: 'Reclamação', other: 'Outro',
@@ -69,27 +61,11 @@ const translations = {
         watch: 'Assistir', rent: 'Alugar', buy: 'Comprar',
         navHome: 'Início', navAbout: 'Sobre', navPrivacy: 'Privacidade', navTerms: 'Termos', navCookies: 'Cookies',
         footerAbout: 'Sobre', footerPrivacy: 'Privacidade', footerTerms: 'Termos', footerCookies: 'Cookies',
-        addToFavorites: 'Adicionar aos favoritos', removeFromFavorites: 'Remover dos favoritos', watchTrailer: 'Ver Trailer',
+        watchTrailer: 'Ver Trailer',
         aiTitle: 'O que deseja assistir?', aiGreeting: 'Olá! Sou a assistente de filmes do CineWorld.', aiDescribe: 'Descreva o que você quer assistir:', aiExample: 'Ex: "filme de ação com robôs", "comédia romântica indiana"', aiPlaceholder: 'Descreva o filme...',
         noTitle: 'Sem título',
-emailPlaceholder: 'Email', passwordPlaceholder: 'Senha', registerLink: 'Cadastre-se', login: 'Entrar', 
-        invalidCredentials: 'Email ou senha incorretos！', fillEmailPassword: 'Preencha email e senha！', 
-        passwordMismatch: 'As senhas não coincidem！', passwordLength: 'A senha deve ter pelo menos 4 caracteres！',
-        profile: 'Perfil', changePassword: 'Alterar Senha',
-        namePlaceholder: 'Nome', noAccount: 'Não tem conta?', hasAccount: 'Já tem conta', 
-        confirmPasswordPlaceholder: 'Confirmar Senha', createAccount: 'Crie sua conta',
-        contactSuccess: 'Formulário enviado com sucesso！', contactError: 'Erro ao enviar. Tente novamente。', 
-        contactOpenForm: 'O formulário foi aberto！Por favor, preencha e envie。',
-        loginFirst: 'Por favor, entre na sua conta para adicionar favoritos！',
-        myFavorites: 'Meus Favoritos',
-        profileTitle: 'Meu Perfil', profileNameLabel: 'Nome', profileEmailLabel: 'Email',
-        profileFavoritesText: 'Meus Favoritos', profileChangePasswordText: 'Alterar Senha', profileLogoutText: 'Sair',
-        backHomeText: 'Voltar ao início',
-        changePasswordTitle: 'Alterar Senha', currentPasswordLabel: 'Senha Atual', newPasswordLabel: 'Nova Senha',
-        confirmNewPasswordLabel: 'Confirmar Nova Senha', changePasswordBtn: 'Alterar Senha',
-        favoritesTitle: 'Meus Favoritos', emptyFavoritesText: 'Você ainda não tem filmes favoritos！',
-        exploreMovies: 'Explorar Filmes', backToProfile: 'Voltar ao Perfil',
-        fillAllFields: 'Preencha todos os campos！', currentPasswordWrong: 'Senha atual incorreta！', passwordChanged: 'Senha alterada com sucesso！'
+        contactSuccess: 'Formulário enviado com sucesso!', contactError: 'Erro ao enviar. Tente novamente.',
+        contactOpenForm: 'O formulário foi aberto! Por favor, preencha e envie.',
     },
     'en': {
         searchPlaceholder: 'Search movies...',
@@ -101,12 +77,8 @@ emailPlaceholder: 'Email', passwordPlaceholder: 'Senha', registerLink: 'Cadastre
         rating: 'Rating', year: 'Year', synopsis: 'Synopsis', synopsisNotAvailable: 'Synopsis not available',
         originalTitle: 'Original title', close: 'Close',
         noResults: 'No movies found', tryAgain: 'Try another genre or search', resultsFor: 'Results for',
-        login: 'Sign In', logout: 'Sign Out', loginTitle: 'Sign In', registerTitle: 'Sign Up', logoutMessage: 'Come back soon!',
-        loginDesc: 'Choose an option to continue',
-        loginGoogle: 'Google', loginFacebook: 'Facebook',
         streaming: 'Watch On', runtime: 'min',
-        favorites: 'Favorites', noFavorites: 'You have no favorites yet!',
-        welcome: 'Welcome', sortBy: 'Sort',
+        sortBy: 'Sort',
         contact: 'Contact', contactTitle: 'Contact Us', contactDesc: 'Send your suggestions, compliments or complaints',
         name: 'Name (optional)', type: 'Type', message: 'Message *', send: 'Send',
         suggestion: 'Suggestion', compliment: 'Compliment', complaint: 'Complaint', other: 'Other',
@@ -116,27 +88,11 @@ emailPlaceholder: 'Email', passwordPlaceholder: 'Senha', registerLink: 'Cadastre
         watch: 'Watch', rent: 'Rent', buy: 'Buy',
         navHome: 'Home', navAbout: 'About', navPrivacy: 'Privacy', navTerms: 'Terms', navCookies: 'Cookies',
         footerAbout: 'About', footerPrivacy: 'Privacy', footerTerms: 'Terms', footerCookies: 'Cookies',
-        addToFavorites: 'Add to favorites', removeFromFavorites: 'Remove from favorites', watchTrailer: 'Watch Trailer',
+        watchTrailer: 'Watch Trailer',
         aiTitle: 'What would you like to watch?', aiGreeting: 'Hello! I am the CineWorld movie assistant.', aiDescribe: 'Describe what you want to watch:', aiExample: 'Ex: "action movie with robots", "Indian romantic comedy"', aiPlaceholder: 'Describe the movie...',
         noTitle: 'No Title',
-        emailPlaceholder: 'Email', passwordPlaceholder: 'Password', registerLink: 'Sign up', login: 'Sign In',
-        invalidCredentials: 'Email or password incorrect!', fillEmailPassword: 'Fill in email and password!', 
-        passwordMismatch: 'Passwords do not match!', passwordLength: 'Password must be at least 4 characters!',
-        profile: 'Profile', changePassword: 'Change Password',
-        namePlaceholder: 'Name', noAccount: 'No account?', hasAccount: 'Already have account', 
-        confirmPasswordPlaceholder: 'Confirm Password', createAccount: 'Create your account',
-        contactSuccess: 'Form submitted successfully!', contactError: 'Error submitting. Try again.', 
+        contactSuccess: 'Form submitted successfully!', contactError: 'Error submitting. Try again.',
         contactOpenForm: 'The form has been opened! Please fill and send.',
-        loginFirst: 'Please login to add favorites!',
-        myFavorites: 'My Favorites',
-profileTitle: 'My Profile', profileNameLabel: 'Name', profileEmailLabel: 'Email',
-        profileFavoritesText: 'My Favorites', profileChangePasswordText: 'Change Password', profileLogoutText: 'Sign Out',
-        backHomeText: 'Back to Home',
-        changePasswordTitle: 'Change Password', currentPasswordLabel: 'Current Password', newPasswordLabel: 'New Password',
-        confirmNewPasswordLabel: 'Confirm New Password', changePasswordBtn: 'Change Password',
-        favoritesTitle: 'My Favorites', emptyFavoritesText: 'You have no favorite movies yet！',
-        exploreMovies: 'Explore Movies', backToProfile: 'Back to Profile',
-        fillAllFields: 'Please fill in all fields！', currentPasswordWrong: 'Current password is incorrect！', passwordChanged: 'Password changed successfully！'
     },
     'es': {
         searchPlaceholder: 'Buscar películas...',
@@ -148,12 +104,8 @@ profileTitle: 'My Profile', profileNameLabel: 'Name', profileEmailLabel: 'Email'
         rating: 'Valoración', year: 'Año', synopsis: 'Sinopsis', synopsisNotAvailable: 'Sinopsis no disponible.',
         originalTitle: 'Título original', close: 'Cerrar',
         noResults: 'No se encontraron películas', tryAgain: 'Intenta otro género o búsqueda', resultsFor: 'Resultados para',
-        login: 'Entrar', logout: 'Salir', loginTitle: 'Entrar', registerTitle: 'Registrarse', logoutMessage: '¡Vuelve pronto!',
-        loginDesc: 'Elige una opción para continuar',
-        loginGoogle: 'Google', loginFacebook: 'Facebook',
         streaming: 'Ver en', runtime: 'min',
-        favorites: 'Favoritos', noFavorites: '¡Aún no tienes favoritos!',
-        welcome: 'Bienvenido', sortBy: 'Ordenar',
+        sortBy: 'Ordenar',
         contact: 'Contacto', contactTitle: 'Contáctanos', contactDesc: 'Envía tus sugerencias, elogios o quejas',
         name: 'Nombre (opcional)', type: 'Tipo', message: 'Mensaje *', send: 'Enviar',
         suggestion: 'Sugerencia', compliment: 'Elogio', complaint: 'Queja', other: 'Otro',
@@ -163,27 +115,11 @@ profileTitle: 'My Profile', profileNameLabel: 'Name', profileEmailLabel: 'Email'
         watch: 'Ver', rent: 'Alquilar', buy: 'Comprar',
         navHome: 'Inicio', navAbout: 'Acerca de', navPrivacy: 'Privacidad', navTerms: 'Términos', navCookies: 'Cookies',
         footerAbout: 'Acerca de', footerPrivacy: 'Privacidad', footerTerms: 'Términos', footerCookies: 'Cookies',
-        addToFavorites: 'Agregar a favoritos', removeFromFavorites: 'Quitar de favoritos', watchTrailer: 'Ver Trailer',
+        watchTrailer: 'Ver Trailer',
         aiTitle: '¿Qué quieres ver?', aiGreeting: '¡Hola! Soy el asistente de películas de CineWorld.', aiDescribe: 'Describe lo que quieres ver:', aiExample: 'Ej: "película de acción con robots"', aiPlaceholder: 'Describe la película...',
         noTitle: 'Sin título',
-        emailPlaceholder: 'Correo electrónico', passwordPlaceholder: 'Contraseña', registerLink: 'Regístrate', login: 'Entrar',
-        invalidCredentials: '¡Email o contraseña incorrectos!', fillEmailPassword: '¡Completa email y contraseña!', 
-        passwordMismatch: '¡Las contraseñas no coinciden!', passwordLength: '¡La contraseña debe tener al menos 4 caracteres!',
-        namePlaceholder: 'Nombre', noAccount: '¿No tienes cuenta?', hasAccount: 'Ya tengo cuenta', 
-        confirmPasswordPlaceholder: 'Confirmar Contraseña', createAccount: 'Crea tu cuenta',
-        contactSuccess: '¡Formulario enviado con éxito!', contactError: 'Error al enviar. Inténtalo de nuevo.', 
+        contactSuccess: '¡Formulario enviado con éxito!', contactError: 'Error al enviar. Inténtalo de nuevo.',
         contactOpenForm: '¡El formulario se ha abierto! Por favor, llena y envía.',
-        loginFirst: '¡Por favor, entra en tu cuenta para agregar favoritos!',
-        myFavorites: 'Mis Favoritos',
-        profile: 'Perfil', changePassword: 'Cambiar Contraseña',
-profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Correo electrónico',
-        profileFavoritesText: 'Mis Favoritos', profileChangePasswordText: 'Cambiar Contraseña', profileLogoutText: 'Cerrar Sesión',
-        backHomeText: 'Volver al inicio',
-        changePasswordTitle: 'Cambiar Contraseña', currentPasswordLabel: 'Contraseña Actual', newPasswordLabel: 'Nueva Contraseña',
-        confirmNewPasswordLabel: 'Confirmar Nueva Contraseña', changePasswordBtn: 'Cambiar Contraseña',
-        favoritesTitle: 'Mis Favoritos', emptyFavoritesText: '¡Aún no tienes películas favoritas！',
-        exploreMovies: 'Explorar Películas', backToProfile: 'Volver al Perfil',
-        fillAllFields: '¡Por favor, complete todos los campos！', currentPasswordWrong: '¡La contraseña actual es incorrecta！', passwordChanged: '¡Contraseña cambiada con éxito！'
     },
     'zh-CN': {
         searchPlaceholder: '搜索电影...',
@@ -195,12 +131,8 @@ profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Corre
         rating: '评分', year: '年份', synopsis: '简介', synopsisNotAvailable: '简介不可用',
         originalTitle: '原名', close: '关闭',
         noResults: '未找到电影', tryAgain: '尝试其他类型或搜索', resultsFor: '搜索结果',
-        login: '登录', logout: '登出', loginTitle: '登录', registerTitle: '注册', logoutMessage: '欢迎下次光临！',
-        loginDesc: '选择一个选项继续',
-        loginGoogle: 'Google', loginFacebook: 'Facebook',
         streaming: '在线观看', runtime: '分钟',
-        favorites: '收藏', noFavorites: '还没有收藏！',
-        welcome: '欢迎', sortBy: '排序',
+        sortBy: '排序',
         contact: '联系', contactTitle: '联系我们', contactDesc: '发送您的建议、表扬或投诉',
         name: '姓名（可选）', type: '类型', message: '留言 *', send: '发送',
         suggestion: '建议', compliment: '表扬', complaint: '投诉', other: '其他',
@@ -210,27 +142,11 @@ profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Corre
         watch: '观看', rent: '租借', buy: '购买',
         navHome: '首页', navAbout: '关于', navPrivacy: '隐私', navTerms: '条款', navCookies: 'Cookies',
         footerAbout: '关于', footerPrivacy: '隐私', footerTerms: '条款', footerCookies: 'Cookies',
-        addToFavorites: '添加到收藏', removeFromFavorites: '从收藏中删除', watchTrailer: '观看预告片',
+        watchTrailer: '观看预告片',
         aiTitle: '想看什么?', aiGreeting: '你好！我是 CineWorld 电影助手。', aiDescribe: '描述你想看什么:', aiExample: '例如："机器人动作片"', aiPlaceholder: '描述电影...',
         noTitle: '无标题',
-        emailPlaceholder: '邮箱', passwordPlaceholder: '密码', registerLink: '注册', login: '登录',
-        invalidCredentials: '邮箱或密码错误！', fillEmailPassword: '请填写邮箱和密码！', 
-        passwordMismatch: '密码不匹配！', passwordLength: '密码必须至少4个字符！',
-        namePlaceholder: '姓名', noAccount: '没有账户？', hasAccount: '已有账户', 
-        confirmPasswordPlaceholder: '确认密码', createAccount: '创建账户',
-        contactSuccess: '表单提交成功！', contactError: '提交错误，请重试。', 
+        contactSuccess: '表单提交成功！', contactError: '提交错误，请重试。',
         contactOpenForm: '表单已打开！请填写并发送。',
-        loginFirst: '请登录以添加收藏！',
-        myFavorites: '我的收藏',
-        profile: '个人资料', changePassword: '修改密码',
-        profileTitle: '我的资料', profileNameLabel: '姓名', profileEmailLabel: '邮箱',
-        profileFavoritesText: '我的收藏', profileChangePasswordText: '修改密码', profileLogoutText: '退出',
-        backHomeText: '返回首页',
-        changePasswordTitle: '修改密码', currentPasswordLabel: '当前密码', newPasswordLabel: '新密码',
-        confirmNewPasswordLabel: '确认新密码', changePasswordBtn: '修改密码',
-        favoritesTitle: '我的收藏', emptyFavoritesText: '您还没有收藏的电影！',
-        exploreMovies: '浏览电影', backToProfile: '返回资料',
-        fillAllFields: '请填写所有字段！', currentPasswordWrong: '当前密码错误！', passwordChanged: '密码修改成功！'
     },
     'zh-HK': {
         searchPlaceholder: '搜尋電影...',
@@ -242,12 +158,8 @@ profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Corre
         rating: '評分', year: '年份', synopsis: '簡介', synopsisNotAvailable: '簡介不可用',
         originalTitle: '原名', close: '關閉',
         noResults: '未找到電影', tryAgain: '嘗試其他類型或搜尋', resultsFor: '搜尋結果',
-        login: '登入', logout: '登出', loginTitle: '登入', registerTitle: '註冊', logoutMessage: '歡迎下次光臨！',
-        loginDesc: '選擇一個選項繼續',
-        loginGoogle: 'Google', loginFacebook: 'Facebook',
         streaming: '線上觀看', runtime: '分鐘',
-        favorites: '收藏', noFavorites: '還沒有收藏！',
-        welcome: '歡迎', sortBy: '排序',
+        sortBy: '排序',
         contact: '聯繫', contactTitle: '聯繫我們', contactDesc: '發送您的建議、表揚或投訴',
         name: '姓名可選', type: '類型', message: '訊息 *', send: '發送',
         suggestion: '建議', compliment: '表揚', complaint: '投訴', other: '其他',
@@ -257,27 +169,11 @@ profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Corre
         watch: '觀看', rent: '租用', buy: '購買',
         navHome: '首頁', navAbout: '關於', navPrivacy: '隱私', navTerms: '條款', navCookies: 'Cookies',
         footerAbout: '關於', footerPrivacy: '隱私', footerTerms: '條款', footerCookies: 'Cookies',
-        addToFavorites: '添加到收藏', removeFromFavorites: '從收藏中刪除', watchTrailer: '觀看預告片',
+        watchTrailer: '觀看預告片',
         aiTitle: '想睇咩?', aiGreeting: '你好！我是 CineWorld 電影助手。', aiDescribe: '描述你想睇咩:', aiExample: '例如："机器人动作片"', aiPlaceholder: '描述電影...',
         noTitle: '無標題',
-        emailPlaceholder: '電子郵件', passwordPlaceholder: '密碼', registerLink: '註冊', login: '登入',
-        invalidCredentials: '郵箱或密碼錯誤！', fillEmailPassword: '請填寫郵箱和密碼！', 
-        passwordMismatch: '密碼不匹配！', passwordLength: '密碼必須至少4個字符！',
-        namePlaceholder: '姓名', noAccount: '沒有賬戶？', hasAccount: '已有賬戶', 
-        confirmPasswordPlaceholder: '確認密碼', createAccount: '創建賬戶',
-        contactSuccess: '表單提交成功！', contactError: '提交錯誤，請重試。', 
+        contactSuccess: '表單提交成功！', contactError: '提交錯誤，請重試。',
         contactOpenForm: '表單已打開！請填寫並發送。',
-        loginFirst: '請登入以添加收藏！',
-        myFavorites: '我的收藏',
-        profile: '個人資料', changePassword: '修改密碼',
-        profileTitle: '我的資料', profileNameLabel: '姓名', profileEmailLabel: '電子郵件',
-        profileFavoritesText: '我的收藏', profileChangePasswordText: '修改密碼', profileLogoutText: '登出',
-        backHomeText: '返回首頁',
-        changePasswordTitle: '修改密碼', currentPasswordLabel: '當前密碼', newPasswordLabel: '新密碼',
-        confirmNewPasswordLabel: '確認新密碼', changePasswordBtn: '修改密碼',
-        favoritesTitle: '我的收藏', emptyFavoritesText: '您還沒有收藏的電影！',
-        exploreMovies: '瀏覽電影', backToProfile: '返回資料',
-        fillAllFields: '請填寫所有欄位！', currentPasswordWrong: '當前密碼錯誤！', passwordChanged: '密碼修改成功！'
     },
     'ja': {
         searchPlaceholder: '映画を検索...',
@@ -289,12 +185,8 @@ profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Corre
         rating: '評価', year: '年', synopsis: 'あらすじ', synopsisNotAvailable: 'あらすじはありません',
         originalTitle: '原題', close: '閉じる',
         noResults: '映画が見つかりません', tryAgain: '他のジャンルで検索', resultsFor: '検索結果',
-        login: 'ログイン', logout: 'ログアウト', loginTitle: 'ログイン', registerTitle: '登録', logoutMessage: 'また来てね！',
-        loginDesc: 'オプションを選択してください',
-        loginGoogle: 'Google', loginFacebook: 'Facebook',
         streaming: '視聴', runtime: '分',
-        favorites: 'お気に入り', noFavorites: 'お気に入りはまだありません！',
-        welcome: 'ようこそ', sortBy: '並べ替え',
+        sortBy: '並べ替え',
         contact: 'お問い合わせ', contactTitle: 'お問い合わせ', contactDesc: 'ご要望やお問い合わせを送信',
         name: '名前任意', type: 'タイプ', message: 'メッセージ *', send: '送信',
         suggestion: 'ご要望', compliment: 'お問い合わせ', complaint: '苦情', other: 'その他',
@@ -304,29 +196,11 @@ profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Corre
         watch: '視聴', rent: 'レンタル', buy: '購入',
         navHome: 'ホーム', navAbout: 'について', navPrivacy: 'プライバシー', navTerms: '利用規約', navCookies: 'Cookies',
         footerAbout: 'について', footerPrivacy: 'プライバシー', footerTerms: '利用規約', footerCookies: 'Cookies',
-        addToFavorites: 'お気に入りに追加', removeFromFavorites: 'お気に入りから削除', watchTrailer: '予告編を見る',
+        watchTrailer: '予告編を見る',
         aiTitle: '何を見たいですか？', aiGreeting: 'こんにちは！CineWorld 映画アシスタントです。', aiDescribe: '見たいものを描述:', aiExample: '例："ロボットアクション映画"', aiPlaceholder: '映画を描述...',
         noTitle: '無題',
-        emailPlaceholder: 'メールアドレス', passwordPlaceholder: 'パスワード', registerLink: '登録', login: 'ログイン',
-        invalidCredentials: 'メールアドレスまたはパスワードが正しくありません！', 
-        fillEmailPassword: 'メールアドレスとパスワードを入力してください！', 
-        passwordMismatch: 'パスワードが一致しません！', 
-        passwordLength: 'パスワードは4文字以上である必要があります！',
-        namePlaceholder: '名前', noAccount: 'アカウントがありませんか？', hasAccount: 'すでにアカウントあり', 
-        confirmPasswordPlaceholder: 'パスワード確認', createAccount: 'アカウント作成',
-        contactSuccess: 'フォーム送信成功！', contactError: '送信エラー。もう一度お試しください。', 
+        contactSuccess: 'フォーム送信成功！', contactError: '送信エラー。もう一度お試しください。',
         contactOpenForm: 'フォームが開きました！記入して送信してください。',
-        loginFirst: 'お気に入りを追加するにはログインしてください！',
-        myFavorites: 'お気に入り',
-        profile: 'プロフィール', changePassword: 'パスワード変更',
-        profileTitle: 'マイページ', profileNameLabel: '名前', profileEmailLabel: 'メールアドレス',
-        profileFavoritesText: 'お気に入り', profileChangePasswordText: 'パスワード変更', profileLogoutText: 'ログアウト',
-        backHomeText: 'ホームに戻る',
-        changePasswordTitle: 'パスワード変更', currentPasswordLabel: '現在のパスワード', newPasswordLabel: '新しいパスワード',
-        confirmNewPasswordLabel: '新しいパスワードを確認', changePasswordBtn: 'パスワードを変更',
-        favoritesTitle: 'お気に入り', emptyFavoritesText: 'まだお気に入り映画がありません！',
-        exploreMovies: '映画を探す', backToProfile: 'プロフィールに戻る',
-        fillAllFields: 'すべての項目を入力してください！', currentPasswordWrong: '現在のパスワードが正しくありません！', passwordChanged: 'パスワードが変更されました！'
     },
     'ru': {
         searchPlaceholder: 'Поиск фильмов...',
@@ -338,12 +212,8 @@ profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Corre
         rating: 'Рейтинг', year: 'Год', synopsis: 'Описание', synopsisNotAvailable: 'Описание недоступно',
         originalTitle: 'Оригиналное название', close: 'Закрыть',
         noResults: 'Фильмы не найдены', tryAgain: 'Попробуйте другой жанр или поиск', resultsFor: 'Результаты для',
-        login: 'Войти', logout: 'Выйти', loginTitle: 'Войти', registerTitle: 'Регистрация', logoutMessage: 'До скорой встречи！',
-        loginDesc: 'Выберите вариант',
-        loginGoogle: 'Google', loginFacebook: 'Facebook',
         streaming: 'Смотреть', runtime: 'мин',
-        favorites: 'Избранное', noFavorites: 'У вас пока нет избранного!',
-        welcome: 'Добро пожаловать', sortBy: 'Сортировать',
+        sortBy: 'Сортировать',
         contact: 'Контакт', contactTitle: 'Связаться', contactDesc: 'Отправьте ваши предложения, похвалу или жалобы',
         name: 'Имя необязательно', type: 'Тип', message: 'Сообщение *', send: 'Отправить',
         suggestion: 'Предложение', compliment: 'Похвала', complaint: 'Жалоба', other: 'Другое',
@@ -353,29 +223,11 @@ profileTitle: 'Mi Perfil', profileNameLabel: 'Nombre', profileEmailLabel: 'Corre
         watch: 'Смотреть', rent: 'Аренда', buy: 'Купить',
         navHome: 'Главная', navAbout: 'О нас', navPrivacy: 'Конфиденциальность', navTerms: 'Условия', navCookies: 'Cookies',
         footerAbout: 'О нас', footerPrivacy: 'Конфиденциальность', footerTerms: 'Условия', footerCookies: 'Cookies',
-        addToFavorites: 'Добавить в избранное', removeFromFavorites: 'Удалить из избранного', watchTrailer: 'Смотреть трейлер',
+        watchTrailer: 'Смотреть трейлер',
         aiTitle: 'Что хотите смотреть?', aiGreeting: 'Привет! Я помощник фильмов CineWorld.', aiDescribe: 'Опишите, что хотите смотреть:', aiExample: 'Например: "боевик с роботами"', aiPlaceholder: 'Опишите фильм...',
         noTitle: 'Без названия',
-        emailPlaceholder: 'Email', passwordPlaceholder: 'Пароль', registerLink: 'Регистрация', login: 'Войти',
-        invalidCredentials: 'Неверный email или пароль!', 
-        fillEmailPassword: 'Заполните email и пароль!', 
-        passwordMismatch: 'Пароли не совпадают!', 
-        passwordLength: 'Пароль должен быть не менее 4 символов!',
-        namePlaceholder: 'Имя', noAccount: 'Нет аккаунта?', hasAccount: 'Уже есть аккаунт', 
-        confirmPasswordPlaceholder: 'Подтвердите пароль', createAccount: 'Создайте аккаунт',
-        contactSuccess: 'Форма успешно отправлена!', contactError: 'Ошибка отправки. Попробуйте снова.', 
+        contactSuccess: 'Форма успешно отправлена!', contactError: 'Ошибка отправки. Попробуйте снова.',
         contactOpenForm: 'Форма открыта! Пожалуйста, заполните и отправьте.',
-        loginFirst: 'Пожалуйста, войдите, чтобы добавить в избранное!',
-        myFavorites: 'Избранное',
-        profile: 'Профиль', changePassword: 'Изменить пароль',
-profileTitle: 'Мой профиль', profileNameLabel: 'Имя', profileEmailLabel: 'Email',
-        profileFavoritesText: 'Избранное', profileChangePasswordText: 'Изменить пароль', profileLogoutText: 'Выйти',
-        backHomeText: 'На главную',
-        changePasswordTitle: 'Изменить пароль', currentPasswordLabel: 'Текущий пароль', newPasswordLabel: 'Новый пароль',
-        confirmNewPasswordLabel: 'Подтвердите новый пароль', changePasswordBtn: 'Изменить пароль',
-        favoritesTitle: 'Избранное', emptyFavoritesText: 'У вас пока нет избранных фильмов！',
-        exploreMovies: 'Смотреть фильмы', backToProfile: 'Вернуться в профиль',
-        fillAllFields: 'Пожалуйста, заполните все поля！', currentPasswordWrong: 'Неверный текущий пароль！', passwordChanged: 'Пароль успешно изменен！'
     },
     'ko': {
         searchPlaceholder: '영화 검색...',
@@ -387,12 +239,8 @@ profileTitle: 'Мой профиль', profileNameLabel: 'Имя', profileEmailL
         rating: '평점', year: '연도', synopsis: '시놉시스', synopsisNotAvailable: '시놉시스 없음',
         originalTitle: '원제', close: '닫기',
         noResults: '영화를 찾을 수 없습니다', tryAgain: '다른 장르 또는 검색을 시도하세요', resultsFor: '검색 결과',
-        login: '로그인', logout: '로그아웃', loginTitle: '로그인', registerTitle: '회원가입', logoutMessage: '다음에 봐요！',
-        loginDesc: '옵션을 선택하세요',
-        loginGoogle: 'Google', loginFacebook: 'Facebook',
         streaming: '시청', runtime: '분',
-        favorites: '즐겨찾기', noFavorites: '즐겨찾기가 아직 없습니다!',
-        welcome: '환영합니다', sortBy: '정렬',
+        sortBy: '정렬',
         contact: '연락', contactTitle: '연락하기', contactDesc: '제안, 칭찬 또는 불만의 보내기',
         name: '이름 선택', type: '유형', message: '메시지 *', send: '보내기',
         suggestion: '제안', compliment: '칭찬', complaint: '불만', other: '기타',
@@ -402,29 +250,11 @@ profileTitle: 'Мой профиль', profileNameLabel: 'Имя', profileEmailL
         watch: '시청', rent: '대여', buy: '구매',
         navHome: '홈', navAbout: '정보', navPrivacy: '개인정보', navTerms: '이용약관', navCookies: 'Cookies',
         footerAbout: '정보', footerPrivacy: '개인정보', footerTerms: '이용약관', footerCookies: 'Cookies',
-        addToFavorites: '즐겨찾기에 추가', removeFromFavorites: '즐겨찾기에서 삭제', watchTrailer: '예고편 보기',
+        watchTrailer: '예고편 보기',
         aiTitle: '무엇을 보고 싶나요?', aiGreeting: '안녕하세요! CineWorld 영화 도우미입니다.', aiDescribe: '보고 싶은 것을 설명:', aiExample: '예: "로봇 액션 영화"', aiPlaceholder: '영화 설명...',
         noTitle: '제목 없음',
-        emailPlaceholder: '이메일', passwordPlaceholder: '비밀번호', registerLink: '회원가입', login: '로그인',
-        invalidCredentials: '이메일 또는 비밀번호가不正确합니다！', 
-        fillEmailPassword: '이메일과 비밀번호를 입력하세요！', 
-        passwordMismatch: '비밀번호가 일치하지 않습니다！', 
-        passwordLength: '비밀번호는 최소 4자 이상이어야 합니다！',
-        namePlaceholder: '이름', noAccount: '계정이 없으신가요？', hasAccount: '이미 계정이 있음', 
-        confirmPasswordPlaceholder: '비밀번호 확인', createAccount: '계정 만들기',
-        contactSuccess: '양식이 성공적으로 제출되었습니다！', contactError: '제출 오류。다시 시도하십시오。', 
-        contactOpenForm: '양식이 열렸습니다！내용을 입력하고 보내십시오。',
-        loginFirst: '즐겨찾기에 추가하려면 로그인하십시오！',
-        myFavorites: '나의 즐겨찾기',
-        profile: '프로필', changePassword: '비밀번호 변경',
-        profileTitle: '내 프로필', profileNameLabel: '이름', profileEmailLabel: '이메일',
-        profileFavoritesText: '즐겨찾기', profileChangePasswordText: '비밀번호 변경', profileLogoutText: '로그아웃',
-        backHomeText: '홈으로 돌아가기',
-        changePasswordTitle: '비밀번호 변경', currentPasswordLabel: '현재 비밀번호', newPasswordLabel: '새 비밀번호',
-        confirmNewPasswordLabel: '새 비밀번호 확인', changePasswordBtn: '비밀번호 변경',
-        favoritesTitle: '즐겨찾기', emptyFavoritesText: '아직 즐겨찾기한 영화가 없습니다！',
-        exploreMovies: '영화 찾기', backToProfile: '프로필로 돌아가기',
-        fillAllFields: '모든 항목을 입력해 주세요！', currentPasswordWrong: '현재 비밀번호가 올바르지 않습니다！', passwordChanged: '비밀번호가 변경되었습니다！'
+        contactSuccess: '양식이 성공적으로 제출되었습니다!', contactError: '제출 오류。다시 시도하십시오.',
+        contactOpenForm: '양식이 열렸습니다! 내용을 입력하고 보내십시오.',
     }
 };
 
@@ -445,7 +275,6 @@ const API_BASE = '/api';
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     loadTheme();
-    initAuth();
     loadFromURL();
     setupEvents();
     updateNavLinks();
@@ -530,19 +359,12 @@ function setupEvents() {
         localStorage.setItem('cineworld_language', state.currentLanguage);
         localStorage.setItem('cineworld_lang', this.value);
         
-        if (langLabel) {
-            langLabel.textContent = t('language') || 'Idioma:';
-        }
-        
         document.getElementById('htmlLang').lang = state.currentLanguage;
         applyTranslations();
         updateNavLinks();
         updateURL();
         window.location.href = window.location.pathname + '?lang=' + state.currentLanguage;
     });
-    
-    // Login
-    document.getElementById('authBtn').addEventListener('click', openLoginModal);
     
     // Filter origin
     document.getElementById('filterOriginSelect').addEventListener('change', function() {
@@ -600,15 +422,10 @@ function setupEvents() {
         if (e.target === this) closeMovieModal();
     });
     
-    document.getElementById('loginModal').addEventListener('click', function(e) {
-        if (e.target === this) closeLoginModal();
-    });
-    
     // ESC key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeMovieModal();
-            closeLoginModal();
             const aiPanel = document.getElementById('aiPanel');
             if (aiPanel && aiPanel.classList.contains('open')) {
                 aiPanel.classList.remove('open');
@@ -746,7 +563,6 @@ function renderMovies() {
         const year = movie.release_date ? movie.release_date.split('-')[0] : '';
         const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
         const posterUrl = movie.poster_path ? (movie.poster_path.startsWith('http') ? movie.poster_path : 'https://image.tmdb.org/t/p/w500' + movie.poster_path) : null;
-        const isFav = favorites.includes(movie.id);
         const hasVotes = movie.vote_count > 0;
         
         return `
@@ -757,10 +573,6 @@ function renderMovies() {
                         `<div class="poster-fallback"><i class="fas fa-film"></i></div>`
                     }
                     ${hasVotes && rating ? `<div class="rating"><i class="fas fa-star"></i> ${rating}</div>` : ''}
-                    <button class="fav-btn ${isFav ? 'active' : ''}" 
-                            onclick="event.stopPropagation(); toggleFavorite(${movie.id})">
-                        <i class="fas fa-heart"></i>
-                    </button>
                     </div>
                     <div class="movie-info">
                         <h3 class="movie-title">${movie.title || t('noTitle')}</h3>
@@ -942,25 +754,6 @@ function updateTranslations() {
             footerCookies.textContent = t('footerCookies');
             footerCookies.href = getLegalPageUrl('cookies');
         }
-        
-        const loginBtn = document.getElementById('authBtn');
-        if (loginBtn) {
-            const span = loginBtn.querySelector('span');
-            if (span) {
-                if (currentUser) {
-                    span.textContent = t('logout');
-                } else {
-                    span.textContent = t('login');
-                }
-            }
-        }
-        
-        const registerBtn = document.getElementById('registerBtn');
-        if (registerBtn) {
-            registerBtn.textContent = t('registerTitle') || 'Cadastrar';
-        }
-        
-        updateFavoritesCount();
     } catch (e) {
         console.error('Error updating translations:', e);
     }
@@ -1161,11 +954,12 @@ window.toggleAIPanel = function() {
     panel.classList.toggle('open');
 };
 
-window.performAiSearch = function() {
-    const input = document.getElementById('aiInput');
+function doAiSearch() {
+    const input = document.getElementById('aiSearchInput');
     const query = input ? input.value.trim() : '';
     if (!query) return;
     
+    const panel = document.getElementById('aiPanel');
     const resultsDiv = document.getElementById('aiResults');
     resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin"></i> <span>' + t('analyzing') + '...</span></div>';
     
@@ -1189,7 +983,10 @@ window.performAiSearch = function() {
         console.error('AI search error:', err);
         resultsDiv.innerHTML = '<p style="text-align:center;color:var(--text-muted);">' + t('error') + '</p>';
     });
-};
+}
+
+window.askAI = doAiSearch;
+window.performAiSearch = doAiSearch;
 
 // Show movie details
 window.showMovieDetails = async function(movieId) {
@@ -1218,7 +1015,6 @@ function showMovieModal(movie) {
     const year = movie.release_date ? movie.release_date.split('-')[0] : '';
     const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
     const posterUrl = movie.poster_path ? movie.poster_path : null;
-    const isFav = favorites.includes(movie.id);
     const hasVotes = movie.vote_count > 0;
     
 let streamingHtml = '';
@@ -1427,11 +1223,6 @@ const platformUrls = {
                     <i class="fab fa-youtube"></i>
                     <span>${t('watchTrailer')}</span>
                 </a>` : ''}
-                <button class="fav-btn-large ${isFav ? 'active' : ''}" 
-                        onclick="toggleFavorite(${movie.id})">
-                    <i class="fas fa-heart"></i>
-                    <span>${isFav ? t('removeFromFavorites') : t('addToFavorites')}</span>
-                </button>
             </div>
         </div>
     `;
@@ -1449,342 +1240,6 @@ function closeMovieModal() {
 function toggleNavMenu() {
     document.getElementById('navMenu').classList.toggle('open');
 }
-
-// Favorites
-function toggleFavorite(movieId) {
-    if (!currentUser) {
-        showToast(t('loginFirst') || 'Por favor, entre na sua conta para adicionar favoritos!');
-        openLoginModal();
-        return;
-    }
-    
-    const index = favorites.indexOf(movieId);
-    const isAdding = index === -1;
-    
-    if (isAdding) {
-        favorites.push(movieId);
-    } else {
-        favorites.splice(index, 1);
-    }
-    
-    localStorage.setItem('cineworld_favorites', JSON.stringify(favorites));
-    updateFavoritesCount();
-    renderMovies();
-    
-    // Update button immediately in grid
-    const gridBtn = document.querySelector(`.movie-card[data-id="${movieId}"] .fav-btn`);
-    if (gridBtn) {
-        if (isAdding) {
-            gridBtn.classList.add('active');
-        } else {
-            gridBtn.classList.remove('active');
-        }
-    }
-    
-    // Update button in modal
-    const modalBtn = document.querySelector('.modal-fav-btn');
-    if (modalBtn) {
-        if (isAdding) {
-            modalBtn.classList.add('active');
-        } else {
-            modalBtn.classList.remove('active');
-        }
-    }
-    
-    // Sync with Supabase
-    if (typeof toggleFavoriteSupabase === 'function') {
-        toggleFavoriteSupabase(movieId, isAdding).catch(err => {
-            console.error('Supabase sync error:', err);
-            showToast(t('syncError') || 'Erro ao sincronizar favoritos.');
-        });
-    }
-}
-
-function updateFavoritesCount() {
-    const count = document.getElementById('favCount');
-    if (count) {
-        count.textContent = favorites.length;
-    }
-}
-
-function showFavorites() {
-    if (favorites.length === 0) {
-        showToast(t('noFavorites') || 'Você ainda não tem filmes favoritos!');
-        return;
-    }
-    
-    const favMovies = state.movies.filter(m => favorites.includes(m.id));
-    if (favMovies.length > 0) {
-        state.movies = favMovies;
-        renderMovies();
-        document.getElementById('currentTitle').textContent = t('myFavorites') || 'Meus Favoritos';
-        document.getElementById('moviesCount').textContent = favMovies.length + ' ' + t('movies');
-    }
-}
-
-// Auth
-function initAuth() {
-    const savedUser = localStorage.getItem('cineworld_user');
-    
-    if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        updateAuthUI();
-        
-        // Load favorites from Supabase if available
-        if (typeof loadFavoritesFromSupabase === 'function') {
-            loadFavoritesFromSupabase().catch(err => {
-                console.error('Error loading from Supabase:', err);
-                // Fallback to localStorage
-                const savedFavorites = localStorage.getItem('cineworld_favorites');
-                if (savedFavorites) {
-                    favorites = JSON.parse(savedFavorites);
-                    updateFavoritesCount();
-                    renderMovies();
-                }
-            });
-        } else {
-            // Fallback to localStorage
-            const savedFavorites = localStorage.getItem('cineworld_favorites');
-            if (savedFavorites) {
-                favorites = JSON.parse(savedFavorites);
-                updateFavoritesCount();
-                renderMovies();
-            }
-        }
-    } else {
-        // No user, load from localStorage
-        const savedFavorites = localStorage.getItem('cineworld_favorites');
-        if (savedFavorites) {
-            favorites = JSON.parse(savedFavorites);
-            updateFavoritesCount();
-            renderMovies();
-        }
-    }
-}
-
-// Login/Register functions
-function openLoginModal() {
-    if (currentUser) {
-        showToast(t('welcome') + ', ' + currentUser.name + '!');
-    } else {
-        showLoginForm();
-        document.getElementById('loginModal').classList.add('open');
-    }
-}
-
-function closeLoginModal() {
-    document.getElementById('loginModal').classList.remove('open');
-}
-
-function showLoginForm() {
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('registerForm').style.display = 'none';
-    document.getElementById('loginModalTitle').textContent = t('loginTitle');
-    document.getElementById('loginSubTitle').textContent = t('loginDesc');
-    
-    const emailInput = document.getElementById('loginEmail');
-    if (emailInput) emailInput.placeholder = t('emailPlaceholder') || 'Email';
-    const passwordInput = document.getElementById('loginPassword');
-    if (passwordInput) passwordInput.placeholder = t('passwordPlaceholder') || 'Senha';
-    const loginBtn = document.querySelector('#loginForm button[onclick="doLogin()"]');
-    if (loginBtn) loginBtn.textContent = t('login');
-    
-    const noAccountText = document.getElementById('noAccountText');
-    if (noAccountText) {
-        noAccountText.innerHTML = t('noAccount') + ' <a href="#" onclick="showRegister(event)" style="color: var(--accent);">' + t('registerLink') + '</a>';
-    }
-}
-
-function showRegisterForm() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'block';
-    document.getElementById('loginModalTitle').textContent = t('registerTitle') || 'Cadastrar';
-    
-    const registerSubTitle = document.getElementById('registerSubTitle');
-    if (registerSubTitle) registerSubTitle.textContent = t('createAccount') || 'Crie sua conta';
-    
-    const nameInput = document.getElementById('registerName');
-    if (nameInput) nameInput.placeholder = t('namePlaceholder') || 'Nome';
-    const emailInput = document.getElementById('registerEmail');
-    if (emailInput) emailInput.placeholder = t('emailPlaceholder') || 'Email';
-    const passwordInput = document.getElementById('registerPassword');
-    if (passwordInput) passwordInput.placeholder = t('passwordPlaceholder') || 'Senha';
-    const confirmPasswordInput = document.getElementById('registerConfirmPassword');
-    if (confirmPasswordInput) confirmPasswordInput.placeholder = t('confirmPasswordPlaceholder') || 'Confirmar Senha';
-    const registerBtn = document.getElementById('registerBtn');
-    if (registerBtn) registerBtn.textContent = t('registerTitle') || 'Cadastrar';
-    
-    const hasAccountText = document.getElementById('hasAccountText');
-    if (hasAccountText) {
-        hasAccountText.innerHTML = t('hasAccount') + ' <a href="#" onclick="showLogin(event)" style="color: var(--accent);">' + t('login') + '</a>';
-    }
-}
-
-window.showRegister = function(e) {
-    e.preventDefault();
-    showRegisterForm();
-};
-
-window.showLogin = function(e) {
-    e.preventDefault();
-    showLoginForm();
-};
-
-function doRegister() {
-    const name = document.getElementById('registerName').value.trim();
-    const email = document.getElementById('registerEmail').value.trim();
-    const password = document.getElementById('registerPassword').value;
-    const confirmPassword = document.getElementById('registerConfirmPassword').value;
-    
-    if (!name || !email || !password) {
-        showToast(t('fillAllFields') || 'Preencha todos os campos!');
-        return;
-    }
-    
-    if (password !== confirmPassword) {
-        showToast(t('passwordMismatch') || 'As senhas não coincidem!');
-        return;
-    }
-    
-    if (password.length < 4) {
-        showToast(t('passwordLength') || 'A senha deve ter pelo menos 4 caracteres!');
-        return;
-    }
-    
-    const users = JSON.parse(localStorage.getItem('cineworld_users') || '[]');
-    
-    if (users.find(u => u.email === email)) {
-        showToast(t('emailExists') || 'Este email já está cadastrado!');
-        return;
-    }
-    
-    const newUser = {
-        id: 'user_' + Date.now(),
-        name: name,
-        email: email,
-        password: password,
-        provider: 'local'
-    };
-    
-    users.push(newUser);
-    localStorage.setItem('cineworld_users', JSON.stringify(users));
-    
-    doLogin({ id: newUser.id, name: newUser.name, email: newUser.email });
-    showToast(t('accountCreated') || 'Conta criada com sucesso! Bem-vindo, ' + name + '!');
-}
-
-function doLogin(userObj) {
-    if (userObj) {
-        currentUser = userObj;
-        localStorage.setItem('cineworld_user', JSON.stringify(currentUser));
-        updateAuthUI();
-        closeLoginModal();
-        showToast((t('welcome') || 'Bem-vindo!') + ' ' + currentUser.name);
-    } else {
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
-        
-        if (!email || !password) {
-            showToast(t('fillEmailPassword') || 'Preencha email e senha!');
-            return;
-        }
-        
-        const users = JSON.parse(localStorage.getItem('cineworld_users') || '[]');
-        const user = users.find(u => u.email === email && u.password === password);
-        
-        if (user) {
-            const loginUser = { id: user.id, name: user.name, email: user.email };
-            currentUser = loginUser;
-            localStorage.setItem('cineworld_user', JSON.stringify(loginUser));
-            
-            updateAuthUI();
-            closeLoginModal();
-            
-            document.getElementById('loginEmail').value = '';
-            document.getElementById('loginPassword').value = '';
-            
-            showToast(t('welcomeBack') || 'Bem-vindo de volta, ' + user.name + '!');
-        } else {
-            showToast(t('invalidCredentials') || 'Email ou senha incorretos!');
-        }
-    }
-}
-
-window.logout = function() {
-    currentUser = null;
-    favorites = [];
-    localStorage.removeItem('cineworld_user');
-    localStorage.removeItem('cineworld_favorites');
-    updateAuthUI();
-    updateFavoritesCount();
-    showToast(t('logoutMessage') || 'Volte logo!');
-};
-
-function updateAuthUI() {
-    const btn = document.getElementById('authBtn');
-    const text = document.getElementById('authText');
-    
-    if (currentUser && currentUser.name) {
-        btn.innerHTML = `<i class="fas fa-user-check"></i><span>${currentUser.name}</span>`;
-    } else {
-        const saved = localStorage.getItem('cineworld_user');
-        if (saved) {
-            currentUser = JSON.parse(saved);
-            btn.innerHTML = `<i class="fas fa-user-check"></i><span>${currentUser.name}</span>`;
-        } else {
-            btn.innerHTML = `<i class="fas fa-user"></i><span>${t('login')}</span>`;
-        }
-    }
-}
-
-function toggleUserMenu() {
-    const menu = document.getElementById('userMenu');
-    if (!currentUser) {
-        openLoginModal();
-        return;
-    }
-    if (menu.style.display === 'none') {
-        const userMenuContent = document.getElementById('userMenuContent');
-        userMenuContent.innerHTML = `
-            <div class="user-menu-item" onclick="showProfile()">
-                <i class="fas fa-user"></i> ${t('profile') || 'Perfil'}
-            </div>
-            <div class="user-menu-item" onclick="showFavorites()">
-                <i class="fas fa-heart"></i> ${t('myFavorites') || 'Meus Favoritos'}
-            </div>
-            <div class="user-menu-item" onclick="showChangePassword()">
-                <i class="fas fa-key"></i> ${t('changePassword') || 'Alterar Senha'}
-            </div>
-            <div class="user-menu-divider"></div>
-            <div class="user-menu-item" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i> ${t('logout') || 'Sair'}
-            </div>
-        `;
-        menu.style.display = 'block';
-    } else {
-        menu.style.display = 'none';
-    }
-}
-
-function showProfile() {
-    toggleUserMenu();
-    showToast(t('profile') + ': ' + currentUser.name);
-}
-
-function showChangePassword() {
-    toggleUserMenu();
-    // Implementation for change password
-    showToast(t('changePassword') || 'Funcionalidade em desenvolvimento');
-}
-
-// Close user menu when clicking outside
-document.addEventListener('click', function(e) {
-    const menu = document.getElementById('userMenu');
-    const btn = document.getElementById('authBtn');
-    if (menu && !menu.contains(e.target) && !btn.contains(e.target)) {
-        menu.style.display = 'none';
-    }
-});
 
 // Theme toggle
 function toggleTheme() {
@@ -1829,32 +1284,4 @@ function loadTheme() {
     }
 }
 
-// Contact
 
-
-
-// Google login handler
-window.handleGoogleLogin = function(response) {
-    try {
-        const decoded = JSON.parse(atob(response.credential.split('.')[1]));
-        const user = {
-            id: 'google_' + decoded.sub,
-            name: decoded.name,
-            email: decoded.email,
-            picture: decoded.picture,
-            provider: 'google'
-        };
-        
-        currentUser = user;
-        localStorage.setItem('cineworld_user', JSON.stringify(user));
-        updateAuthUI();
-        closeLoginModal();
-        
-        showToast(t('welcome') + ', ' + user.name + '!');
-    } catch (error) {
-        console.error('Google login error:', error);
-        showToast(t('loginError') || 'Erro no login com Google.');
-    }
-};
-
-console.log('CineWorld script loaded successfully');

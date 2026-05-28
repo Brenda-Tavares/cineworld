@@ -1,6 +1,11 @@
 const axios = require('axios');
 
-const TMDB_API_KEY = process.env.TMDB_API_KEY || '08d264815baddc8059d7a7bd88e18057';
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
+
+if (!TMDB_API_KEY) {
+    module.exports = (req, res) => res.status(500).json({ error: 'TMDB_API_KEY not configured' });
+    return;
+}
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 
 module.exports = async (req, res) => {
@@ -66,9 +71,6 @@ module.exports = async (req, res) => {
             isFree: checkFree(p.provider_name),
             link: `https://www.google.com/search?q=${encodeURIComponent('filme ' + movie_id + ' ' + p.provider_name + ' streaming')}`
         }));
-        
-        // Adicionar mensagem de verificação
-        console.log('Streaming providers loaded. Note: Some providers may show outdated availability.');
         
         res.json({ success: true, streaming: result });
     } catch (error) {

@@ -4,9 +4,6 @@
 *.key
 *.pem
 
-# Firebase (não usado mais)
-firebase-config.js  
-
 # Node
 node_modules/
 package-lock.json
@@ -14,10 +11,6 @@ package-lock.json
 # Vercel
 .vercel/
 .vercel_output/
-
-# Backup files
-*.bak
-*.backup
 
 # IDE files
 .vscode/
@@ -38,7 +31,20 @@ server.py
 # OS
 .DS_Store
 Thumbs.db
-.vercel
 
 # Private notes
 duvidas_a_serem_sanadas.txt
+
+# Firebase (not used anymore)
+firebase-config.js
+
+# Backup files
+*.bak
+*.backup
+
+# Environment config with real keys
+.env.temp
+
+# Test files
+back-end/node_modules/
+back-end/package-lock.json

@@ -19,9 +19,6 @@
     <meta property="og:url" content="https://cineworld-site.vercel.app/">
     <meta property="og:site_name" content="CineWorld">
     
-    <!-- Supabase (only library) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="CineWorld - Descubra filmes do mundo inteiro">
@@ -88,20 +85,8 @@
                     <option value="zh-HK">Cantonês (廣東話)</option>
                     <option value="ja">Japonês (日本語)</option>
                     <option value="ru">Russo (Русский)</option>
-<option value="ko">Coreano (한국어)</option>
+                    <option value="ko">Coreano (한국어)</option>
                 </select>
-                
-                <div style="position: relative; display: flex; align-items: center; gap: 10px;">
-                    <button class="login-btn" id="authBtn" onclick="toggleUserMenu()">
-                        <i class="fas fa-user"></i>
-                        <span id="authText">Entrar</span>
-                    </button>
-                    
-                    <!-- User Menu Dropdown -->
-                    <div id="userMenu" class="user-menu" style="display: none;">
-                        <div id="userMenuContent"></div>
-                    </div>
-                </div>
             </div>
         </div>
     </header>
@@ -237,7 +222,7 @@
                 CineWorld não hospeda nenhum arquivo de vídeo. Todo o conteúdo é fornecido pela API oficial do TMDB (The Movie Database). 
                 Os links para assistir são direcionados para plataformas de streaming legítimas (Netflix, Prime Video, Disney+, etc.).
             </p>
-            <p>&copy; 2026 - Todos os direitos reservados | Desenvolvido por <strong>Brenda Tavares</strong> | <strong>Nico Claw</strong></p>
+            <p>&copy; 2026 - Todos os direitos reservados | Desenvolvido por <strong>Brenda Tavares</strong></p>
         </footer>
     </main>
     
@@ -251,112 +236,6 @@
                 </button>
             </div>
             <div class="modal-body" id="modalBody"></div>
-        </div>
-    </div>
-    
-    <!-- MODAL LOGIN / CADASTRO -->
-    <div class="modal" id="loginModal">
-        <div class="modal-box" style="max-width: 400px;">
-            <div class="modal-header">
-                <h2 id="loginModalTitle">Entrar</h2>
-                <button class="modal-close" onclick="closeLoginModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body" style="text-align: center;">
-                <!-- Formulário de Login -->
-                <div id="loginForm">
-                    <p style="color: var(--text-light); margin-bottom: 20px; text-align: center;">
-                        <span id="loginSubTitle"></span>
-                    </p>
-                    <div style="margin-bottom: 15px;">
-                        <input type="email" id="loginEmail" placeholder="Email" style="
-                            width: 100%; padding: 12px;
-                            background: var(--bg-hover); border: 1px solid var(--border);
-                            border-radius: 8px; color: white; font-size: 0.95rem;
-                        ">
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <input type="password" id="loginPassword" placeholder="Senha" onkeydown="if(event.key==='Enter')doLogin()" style="
-                            width: 100%; padding: 12px;
-                            background: var(--bg-hover); border: 1px solid var(--border);
-                            border-radius: 8px; color: white; font-size: 0.95rem;
-                        ">
-                    </div>
-                    <button onclick="doLogin()" style="
-                        width: 100%; padding: 14px; margin-bottom: 12px;
-                        border: none; border-radius: 8px; font-size: 0.95rem;
-                        font-weight: 600; cursor: pointer;
-                        background: var(--primary); color: white;">
-                        Entrar
-                    </button>
-                    <p style="text-align: center; color: var(--text-light); font-size: 0.9rem;" id="noAccountText">
-                        
-                    </p>
-                </div>
-                
-                <!-- Botão Google Login -->
-                <div id="g_id_onload"
-                     data-client_id="599900390263-2aeqg8nqgpr4l8dtmlvm1colpgerir1b.apps.googleusercontent.com"
-                     data-context="signin"
-                     data-ux_mode="popup"
-                     data-callback="handleGoogleLogin"
-                     data-auto_prompt="false">
-                </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-size="large"
-                     data-theme="outline"
-                     data-text="signin_with"
-                     data-shape="rectangular"
-                     data-logo_alignment="center"
-                     style="display: flex; justify-content: center; margin-top: 20px;">
-                </div>
-                
-                <!-- Formulário de Cadastro -->
-<div id="registerForm" style="display: none;">
-                    <p id="registerSubTitle" style="color: var(--text-light); margin-bottom: 20px; text-align: center;">
-                        Crie sua conta
-                    </p>
-                    <div style="margin-bottom: 15px;">
-                        <input type="text" id="registerName" placeholder="Nome" style="
-                            width: 100%; padding: 12px;
-                            background: var(--bg-hover); border: 1px solid var(--border);
-                            border-radius: 8px; color: white; font-size: 0.95rem;
-                        ">
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <input type="email" id="registerEmail" placeholder="Email" style="
-                            width: 100%; padding: 12px;
-                            background: var(--bg-hover); border: 1px solid var(--border);
-                            border-radius: 8px; color: white; font-size: 0.95rem;
-                        ">
-                    </div>
-                    <div style="margin-bottom: 15px;">
-                        <input type="password" id="registerPassword" placeholder="Senha" style="
-                            width: 100%; padding: 12px;
-                            background: var(--bg-hover); border: 1px solid var(--border);
-                            border-radius: 8px; color: white; font-size: 0.95rem;
-                        ">
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <input type="password" id="registerConfirmPassword" placeholder="Confirmar Senha" style="
-                            width: 100%; padding: 12px;
-                            background: var(--bg-hover); border: 1px solid var(--border);
-                            border-radius: 8px; color: white; font-size: 0.95rem;
-                        ">
-                    </div>
-                    <button onclick="doRegister()" id="registerBtn" style="
-                        width: 100%; padding: 14px; margin-bottom: 12px;
-                        border: none; border-radius: 8px; font-size: 0.95rem;
-                        font-weight: 600; cursor: pointer;
-                        background: var(--accent); color: white;">
-                        Cadastrar
-                    </button>
-<p id="hasAccountText" style="text-align: center; color: var(--text-light); font-size: 0.9rem;">
-                    </p>
-                </div>
-            </div>
         </div>
     </div>
     
@@ -434,8 +313,6 @@
         }
         checkCookieConsent();
     </script>
-    
-    <!-- Supabase and main script -->
     
     <script src="/front-end/script.js"></script>
     

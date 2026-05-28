@@ -1,7 +1,12 @@
 const axios = require('axios');
 
-const TMDB_API_KEY = process.env.TMDB_API_KEY || '08d264815baddc8059d7a7bd88e18057';
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyAb42Lbrz7g5FWLoqmWK5ChQ_4_EY4J7H4';
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+if (!TMDB_API_KEY) {
+    module.exports = (req, res) => res.status(500).json({ error: 'TMDB_API_KEY not configured' });
+    return;
+}
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const TMDB_IMAGE = 'https://image.tmdb.org/t/p/w500';
 
@@ -72,7 +77,7 @@ const langMap = {
     'chines': 'zh', 'chinês': 'zh',
     'hindi': 'hi', 'indiano': 'hi',
     'brasileiro': 'pt', 'brasil': 'pt',
-    'americano': 'en', 'ingles': 'en', 'americano': 'en',
+    'americano': 'en', 'ingles': 'en',
     'espanhol': 'es', 'mexicano': 'es',
     'frances': 'fr', 'francês': 'fr',
     'italiano': 'it'
@@ -190,7 +195,6 @@ function cleanKeywords(query) {
 
 async function callGeminiSmart(query, filters) {
     if (isRateLimited()) {
-        console.log('Rate limited, using fallback');
         return null;
     }
     
@@ -235,12 +239,10 @@ Output JSON only, no extra text:`;
         
         if (match) {
             const result = JSON.parse(match[0]);
-            console.log('Gemini smart result:', result);
             return result;
         }
         return null;
     } catch (error) {
-        console.log('Gemini error:', error.message);
         return null;
     }
 }
@@ -297,7 +299,9 @@ async function searchWithFilters(query, keywords, filters, tmdbLang, pageNum) {
                     backdrop_path: m.backdrop_path ? 'https://image.tmdb.org/t/p/w780' + m.backdrop_path : null
                 });
             }
-        } catch (e) {}
+        } catch (e) {
+            console.error('Genre discover error:', e.message);
+        }
     }
     
     if (filters.decade && resultsMap.size < 10) {
@@ -315,7 +319,9 @@ async function searchWithFilters(query, keywords, filters, tmdbLang, pageNum) {
                         });
                     }
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.error('Decade search error:', e.message);
+            }
         }
     }
     
@@ -334,7 +340,9 @@ async function searchWithFilters(query, keywords, filters, tmdbLang, pageNum) {
                         });
                     }
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.error('Keyword search error:', e.message);
+            }
         }
     }
     
@@ -351,7 +359,6 @@ module.exports = async (req, res) => {
     const cacheKey = `${q}_${language}`;
     const cachedResult = getCachedResult(cacheKey);
     if (cachedResult) {
-        console.log('Using cached result');
         return res.json(cachedResult);
     }
     

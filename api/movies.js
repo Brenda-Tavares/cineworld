@@ -1,6 +1,11 @@
 const axios = require('axios');
 
-const TMDB_API_KEY = process.env.TMDB_API_KEY || '08d264815baddc8059d7a7bd88e18057';
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
+
+if (!TMDB_API_KEY) {
+    module.exports = (req, res) => res.status(500).json({ error: 'TMDB_API_KEY not configured' });
+    return;
+}
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const TMDB_IMAGE = 'https://image.tmdb.org/t/p/w500';
 
@@ -63,7 +68,7 @@ module.exports = async (req, res) => {
                 'japonês': 'ja', 'japanese': 'ja', 'japao': 'ja', 'japão': 'ja',
                 'chinês': 'zh', 'chinese': 'zh', 'china': 'zh',
                 'hindi': 'hi', 'indiano': 'hi', 'india': 'hi',
-                'americano': 'en', 'americano': 'en', 'EUA': 'en',
+                'americano': 'en', 'EUA': 'en',
                 'brasileiro': 'pt', 'brasil': 'pt',
                 'mexicano': 'es', 'mexico': 'es',
                 'francês': 'fr', 'french': 'fr', 'franca': 'fr',
