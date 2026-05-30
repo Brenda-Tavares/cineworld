@@ -93,9 +93,7 @@ GEMINI_API_KEY=sua_chave_gemini
 
 ## Autora
 
-Desenvolvido por **Brenda Tavares** — [ShipClaw Labs](https://github.com/ShipClaw-Labs)
-
-Este repositório faz parte do portfólio da ShipClaw Labs.
+Desenvolvido por **Brenda Tavares** — ShipClaw
 
 ---
 
