@@ -339,8 +339,8 @@ function loadFromURL() {
     }
     
     // Sync UI with state
-    const langSelect = document.getElementById('langSelect');
-    if (langSelect) langSelect.value = state.currentLanguage;
+    // Sync custom lang dropdown
+    updateLangDropdownUI();
     
     const genreSelect = document.getElementById('genreSelectMobile');
     if (genreSelect) genreSelect.value = state.currentGenre;
@@ -367,16 +367,8 @@ function setupEvents() {
     if (searchInput) searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') performMainSearch(); });
     
     // Language
-    document.getElementById('langSelect').addEventListener('change', function() {
-        state.currentLanguage = this.value;
-        state.currentPage = 1;
-        localStorage.setItem('cineworld_language', state.currentLanguage);
-        document.getElementById('htmlLang').lang = state.currentLanguage;
-        applyTranslations();
-        updateNavLinks();
-        updateURL();
-        window.location.href = window.location.pathname + '?lang=' + state.currentLanguage;
-    });
+    // Language dropdown
+    setupLangDropdown();
     
     // Filters
     document.getElementById('filterOriginSelect').addEventListener('change', function() {
@@ -430,6 +422,11 @@ function setupEvents() {
 // ========================================
 function handleGlobalKeydown(e) {
     if (e.key === 'Escape') {
+        const langPanel = document.getElementById('langDropdownPanel');
+        if (langPanel && langPanel.classList.contains('open')) {
+            closeLangDropdown();
+            return;
+        }
         const modal = document.getElementById('movieModal');
         if (modal.classList.contains('open')) {
             closeMovieModal();
@@ -441,6 +438,107 @@ function handleGlobalKeydown(e) {
             return;
         }
     }
+}
+
+// ========================================
+// LANGUAGE DROPDOWN (CUSTOM)
+// ========================================
+const langMeta = {
+    'pt-BR': { flag: '🇧🇷', code: 'PT', name: 'Português', native: 'Português' },
+    'en': { flag: '🇺🇸', code: 'EN', name: 'Inglês', native: 'English' },
+    'es': { flag: '🇪🇸', code: 'ES', name: 'Espanhol', native: 'Español' },
+    'zh-CN': { flag: '🇨🇳', code: '中文', name: 'Mandarim', native: '中文' },
+    'zh-HK': { flag: '🇭🇰', code: '廣東', name: 'Cantonês', native: '廣東話' },
+    'ja': { flag: '🇯🇵', code: '日本', name: 'Japonês', native: '日本語' },
+    'ru': { flag: '🇷🇺', code: 'RU', name: 'Russo', native: 'Русский' },
+    'ko': { flag: '🇰🇷', code: '한국', name: 'Coreano', native: '한국어' }
+};
+
+function setupLangDropdown() {
+    const btn = document.getElementById('langDropdownBtn');
+    const panel = document.getElementById('langDropdownPanel');
+    if (!btn || !panel) return;
+    
+    // Toggle dropdown
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = panel.classList.contains('open');
+        if (isOpen) {
+            closeLangDropdown();
+        } else {
+            openLangDropdown();
+        }
+    });
+    
+    // Item clicks
+    panel.querySelectorAll('.lang-dropdown-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const lang = item.dataset.lang;
+            if (lang && lang !== state.currentLanguage) {
+                state.currentLanguage = lang;
+                state.currentPage = 1;
+                localStorage.setItem('cineworld_language', lang);
+                document.getElementById('htmlLang').lang = lang;
+                updateLangDropdownUI();
+                applyTranslations();
+                updateNavLinks();
+                updateURL();
+                closeLangDropdown();
+                window.location.href = window.location.pathname + '?lang=' + lang;
+            } else {
+                closeLangDropdown();
+            }
+        });
+        
+        // Keyboard support
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                item.click();
+            }
+        });
+    });
+    
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.lang-dropdown')) {
+            closeLangDropdown();
+        }
+    });
+}
+
+function openLangDropdown() {
+    const btn = document.getElementById('langDropdownBtn');
+    const panel = document.getElementById('langDropdownPanel');
+    btn.setAttribute('aria-expanded', 'true');
+    panel.classList.add('open');
+    
+    // Focus active item
+    const active = panel.querySelector('.lang-dropdown-item.active');
+    if (active) setTimeout(() => active.focus(), 50);
+}
+
+function closeLangDropdown() {
+    const btn = document.getElementById('langDropdownBtn');
+    const panel = document.getElementById('langDropdownPanel');
+    btn.setAttribute('aria-expanded', 'false');
+    panel.classList.remove('open');
+}
+
+function updateLangDropdownUI() {
+    const meta = langMeta[state.currentLanguage] || langMeta['pt-BR'];
+    
+    const flagEl = document.getElementById('currentLangFlag');
+    const codeEl = document.getElementById('currentLangCode');
+    if (flagEl) flagEl.textContent = meta.flag;
+    if (codeEl) codeEl.textContent = meta.code;
+    
+    // Update active state in panel
+    document.querySelectorAll('.lang-dropdown-item').forEach(item => {
+        const isActive = item.dataset.lang === state.currentLanguage;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-selected', isActive.toString());
+    });
 }
 
 // ========================================
@@ -889,19 +987,14 @@ function applyTranslations() {
         'footerAbout': 'footerAbout',
         'footerPrivacy': 'footerPrivacy',
         'footerTerms': 'footerTerms',
-        'footerCookies': 'footerCookies',
-        'langLabel': 'language'
+        'footerCookies': 'footerCookies'
     };
     
     for (const [id, key] of Object.entries(elements)) {
         const el = document.getElementById(id);
         if (el && lang[key]) {
-            if (id === 'langLabel') {
-                el.textContent = lang[key] + ':';
-            } else {
-                const textSpan = el.querySelector('span');
-                if (textSpan && lang[key]) textSpan.textContent = lang[key];
-            }
+            const textSpan = el.querySelector('span');
+            if (textSpan && lang[key]) textSpan.textContent = lang[key];
         }
     }
 }

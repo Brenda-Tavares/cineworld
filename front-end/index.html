@@ -99,17 +99,71 @@
             
             <!-- Ações -->
             <div class="header-actions">
-                <span class="lang-label" id="langLabel">Idioma</span>
-                <select class="lang-select" id="langSelect" aria-label="Selecionar idioma">
-                    <option value="pt-BR">Português (Português)</option>
-                    <option value="en">Inglês (English)</option>
-                    <option value="es">Espanhol (Español)</option>
-                    <option value="zh-CN">Mandarim (中文)</option>
-                    <option value="zh-HK">Cantonês (廣東話)</option>
-                    <option value="ja">Japonês (日本語)</option>
-                    <option value="ru">Russo (Русский)</option>
-                    <option value="ko">Coreano (한국어)</option>
-                </select>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-dropdown-btn" id="langDropdownBtn" aria-label="Selecionar idioma" aria-expanded="false" aria-haspopup="listbox">
+                        <span class="lang-flag" id="currentLangFlag">🇧🇷</span>
+                        <span class="lang-code" id="currentLangCode">PT</span>
+                        <i class="fas fa-chevron-down lang-chevron" aria-hidden="true"></i>
+                    </button>
+                    <div class="lang-dropdown-panel" id="langDropdownPanel" role="listbox" aria-label="Idiomas disponíveis">
+                        <div class="lang-dropdown-item active" data-lang="pt-BR" role="option" aria-selected="true" tabindex="0">
+                            <span class="lang-item-flag">🇧🇷</span>
+                            <span class="lang-item-info">
+                                <span class="lang-item-name">Português</span>
+                                <span class="lang-item-native">Português</span>
+                            </span>
+                        </div>
+                        <div class="lang-dropdown-item" data-lang="en" role="option" aria-selected="false" tabindex="0">
+                            <span class="lang-item-flag">🇺🇸</span>
+                            <span class="lang-item-info">
+                                <span class="lang-item-name">Inglês</span>
+                                <span class="lang-item-native">English</span>
+                            </span>
+                        </div>
+                        <div class="lang-dropdown-item" data-lang="es" role="option" aria-selected="false" tabindex="0">
+                            <span class="lang-item-flag">🇪🇸</span>
+                            <span class="lang-item-info">
+                                <span class="lang-item-name">Espanhol</span>
+                                <span class="lang-item-native">Español</span>
+                            </span>
+                        </div>
+                        <div class="lang-dropdown-item" data-lang="zh-CN" role="option" aria-selected="false" tabindex="0">
+                            <span class="lang-item-flag">🇨🇳</span>
+                            <span class="lang-item-info">
+                                <span class="lang-item-name">Mandarim</span>
+                                <span class="lang-item-native">中文</span>
+                            </span>
+                        </div>
+                        <div class="lang-dropdown-item" data-lang="zh-HK" role="option" aria-selected="false" tabindex="0">
+                            <span class="lang-item-flag">🇭🇰</span>
+                            <span class="lang-item-info">
+                                <span class="lang-item-name">Cantonês</span>
+                                <span class="lang-item-native">廣東話</span>
+                            </span>
+                        </div>
+                        <div class="lang-dropdown-item" data-lang="ja" role="option" aria-selected="false" tabindex="0">
+                            <span class="lang-item-flag">🇯🇵</span>
+                            <span class="lang-item-info">
+                                <span class="lang-item-name">Japonês</span>
+                                <span class="lang-item-native">日本語</span>
+                            </span>
+                        </div>
+                        <div class="lang-dropdown-item" data-lang="ru" role="option" aria-selected="false" tabindex="0">
+                            <span class="lang-item-flag">🇷🇺</span>
+                            <span class="lang-item-info">
+                                <span class="lang-item-name">Russo</span>
+                                <span class="lang-item-native">Русский</span>
+                            </span>
+                        </div>
+                        <div class="lang-dropdown-item" data-lang="ko" role="option" aria-selected="false" tabindex="0">
+                            <span class="lang-item-flag">🇰🇷</span>
+                            <span class="lang-item-info">
+                                <span class="lang-item-name">Coreano</span>
+                                <span class="lang-item-native">한국어</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -225,13 +279,13 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="" class="platform-img" style="height: 22px; width: auto; filter: brightness(0) invert(1);" loading="lazy">
             </a>
             <a href="https://www.max.com" target="_blank" rel="noopener noreferrer" title="Max (HBO)" aria-label="Max - Abrir site externo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Max_logo.svg" alt="" class="platform-img" style="height: 28px; width: auto; filter: brightness(0) invert(1);" loading="lazy">
+                <img src="https://www.citypng.com/public/uploads/preview/hbo-max-white-logo-png-701751694707739y4d41kme7y.png" alt="" class="platform-img" style="height: 38px; width: auto;" loading="lazy">
             </a>
             <a href="https://globoplay.globo.com" target="_blank" rel="noopener noreferrer" title="Globoplay" aria-label="Globoplay - Abrir site externo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Globoplay_logo_%282020%29.svg" alt="" class="platform-img" style="height: 32px; width: auto;" loading="lazy">
+                <img src="https://static.wixstatic.com/media/64ad72_f22b0aff0a514bb7b341dcf7740ca3ce~mv2.png/v1/fill/w_456,h_468,al_c/globoplayicon.png" alt="" class="platform-img" style="height: 40px; width: auto;" loading="lazy">
             </a>
             <a href="https://pluto.tv" target="_blank" rel="noopener noreferrer" title="Pluto TV" aria-label="Pluto TV - Abrir site externo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Pluto_TV_logo_%282023%29.svg" alt="" class="platform-img" style="height: 28px; width: auto;" loading="lazy">
+                <img src="https://images.seeklogo.com/logo-png/52/3/pluto-tv-logo-png_seeklogo-520780.png" alt="" class="platform-img" style="height: 40px; width: auto;" loading="lazy">
             </a>
         </div>
         <div class="footer-links">
