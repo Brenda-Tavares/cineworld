@@ -1,6 +1,6 @@
 /*!
  CINEWORLD BACKEND API
- © 2026 Brenda Tavares
+ © 2026 ShipClaw Devs
  */
 
 const express = require('express');

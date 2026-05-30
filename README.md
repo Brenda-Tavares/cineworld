@@ -105,4 +105,4 @@ Commercial redistribution, resale or unauthorized reproduction of the project is
 
 ---
 
-Developed by Brenda Tavares
+Developed by ShipClaw Devs&trade;
