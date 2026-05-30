@@ -469,14 +469,14 @@ function handleGlobalKeydown(e) {
 // LANGUAGE DROPDOWN (CUSTOM)
 // ========================================
 const langMeta = {
-    'pt-BR': { flag: 'BR', code: 'PT', name: 'Português', native: 'Português' },
-    'en': { flag: 'US', code: 'EN', name: 'Inglês', native: 'English' },
-    'es': { flag: 'ES', code: 'ES', name: 'Espanhol', native: 'Español' },
-    'zh-CN': { flag: 'CN', code: '中文', name: 'Mandarim', native: '中文' },
-    'zh-HK': { flag: 'HK', code: '廣東', name: 'Cantonês', native: '廣東話' },
-    'ja': { flag: 'JP', code: '日本', name: 'Japonês', native: '日本語' },
-    'ru': { flag: 'RU', code: 'RU', name: 'Russo', native: 'Русский' },
-    'ko': { flag: 'KR', code: '한국', name: 'Coreano', native: '한국어' }
+    'pt-BR': { name: 'Português', native: 'Português' },
+    'en': { name: 'Inglês', native: 'English' },
+    'es': { name: 'Espanhol', native: 'Español' },
+    'zh-CN': { name: 'Mandarim', native: '中文' },
+    'zh-HK': { name: 'Cantonês', native: '廣東話' },
+    'ja': { name: 'Japonês', native: '日本語' },
+    'ru': { name: 'Russo', native: 'Русский' },
+    'ko': { name: 'Coreano', native: '한국어' }
 };
 
 function setupLangDropdown() {
@@ -553,8 +553,8 @@ function closeLangDropdown() {
 function updateLangDropdownUI() {
     const meta = langMeta[state.currentLanguage] || langMeta['pt-BR'];
     
-    const flagEl = document.getElementById('currentLangFlag');
-    if (flagEl) flagEl.textContent = meta.flag;
+    const nameEl = document.getElementById('currentLangName');
+    if (nameEl) nameEl.textContent = meta.name;
     
     // Update active state in panel
     document.querySelectorAll('.lang-dropdown-item').forEach(item => {
