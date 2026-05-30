@@ -15,10 +15,36 @@
         .legal-page a { color: var(--accent); text-decoration: none; }
         .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--accent); text-decoration: none; font-weight: 500; }
         .back-link:hover { color: var(--primary-light); }
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 30px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .contact-card-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .contact-card-email {
+            display: block;
+            font-size: 1.05rem;
+            color: var(--text-white);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            word-break: break-all;
+        }
+        .contact-card-email:hover { color: var(--accent); }
         @media (max-width: 600px) {
             .legal-page { padding: 20px 15px 60px; }
             .legal-page h1 { font-size: 1.5rem; }
             .legal-page h2 { font-size: 1.1rem; }
+            .contact-card { padding: 20px; }
         }
     </style>
 </head>
@@ -81,6 +107,14 @@
             <li>Busca inteligente com IA</li>
             <li>Favoritos e histórico</li>
         </ul>
+
+        <h2><i class="fas fa-envelope"></i> Fale Conosco</h2>
+        <p>Tem alguma dúvida, sugestão ou precisa de suporte? Estamos aqui para ajudar. Envie um e-mail e retornaremos o mais breve possível.</p>
+        <div class="contact-card">
+            <span class="contact-card-label">E-mail de suporte</span>
+            <a href="mailto:supportshipclawlabs@proton.me" class="contact-card-email">supportshipclawlabs@proton.me</a>
+        </div>
+
         <p style="margin-top: 30px;"><em>Última atualização: 2026</em></p>
     </div>
 
@@ -114,7 +148,7 @@
             <span class="footer-divider">|</span>
             <a href="/cookies">Cookies</a>
         </div>
-        <p>&copy; 2026 - Todos os direitos reservados | Desenvolvido por <strong>ShipClaw Devs&trade;</strong> | <a href="mailto:supportshipclawlabs@proton.me" style="color:var(--text-muted);text-decoration:none;">supportshipclawlabs@proton.me</a></p>
+        <p>&copy; 2026 - Todos os direitos reservados | Desenvolvido por <strong>Brenda Tavares</strong></p>
     </footer>
 </body>
 </html>

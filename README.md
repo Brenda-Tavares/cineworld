@@ -1,34 +1,34 @@
-# CineWorld TMDB
+# CineWorld
 
-Multilingual movie discovery platform focused on interactive browsing, API integration and contextual AI-assisted movie discovery.
-
----
-
-## About the Project
-
-CineWorld is a web application developed for movie discovery and exploration through a responsive and multilingual interface.
-
-The platform integrates TMDB APIs for dynamic movie search, filtering and content browsing, while also featuring conversational AI interaction capable of contextually suggesting movies based on user input and intent.
+Plataforma de descoberta de filmes com interface multilíngue, integração com TMDB API e assistente de filmes por IA.
 
 ---
 
-## Features
+## Sobre o Projeto
 
-* Dynamic movie search
-* Genre and category filtering
-* Sorting by rating, popularity and release date
-* Country and year filtering
-* Multi-language support
-* Streaming provider information
-* Contextual AI-assisted movie suggestions
-* Responsive interface
-* Contact system
-* Security middleware and API protection
-* Deployment on Vercel
+O CineWorld é uma aplicação web desenvolvida para descoberta e exploração de filmes através de uma interface responsiva e multilíngue.
+
+A plataforma integra APIs do TMDB para busca dinâmica de filmes, filtragem e navegação de conteúdo, além de contar com interação por IA conversacional capaz de sugerir filmes contextualmente com base na intenção do usuário.
 
 ---
 
-## Technologies
+## Funcionalidades
+
+* Busca dinâmica de filmes
+* Filtragem por gênero e categoria
+* Ordenação por avaliação, popularidade e data de lançamento
+* Filtragem por país e ano
+* Suporte a múltiplos idiomas
+* Informações sobre plataformas de streaming
+* Sugestões de filmes assistidas por IA
+* Interface responsiva
+* Sistema de contato
+* Middleware de segurança e proteção de API
+* Deploy na Vercel
+
+---
+
+## Tecnologias
 
 ### Frontend
 
@@ -42,39 +42,39 @@ The platform integrates TMDB APIs for dynamic movie search, filtering and conten
 * Express.js
 * Vercel Serverless Functions
 
-### APIs & Services
+### APIs & Serviços
 
 * TMDB API
 * Google Gemini AI
 * Supabase PostgreSQL
 
-### Infrastructure & Security
+### Infraestrutura & Segurança
 
 * Helmet
 * CORS
 * Rate Limiting
-* Input Validation
+* Validação de Entrada
 
-### Deployment
+### Deploy
 
 * Vercel
 
 ---
 
-## Live Demo
+## Demonstração
 
 https://cineworld-site.vercel.app
 
 ---
 
-## Local Development
+## Desenvolvimento Local
 
 ```bash
 npm install
 vercel dev
 ```
 
-The application will run locally at:
+A aplicação rodará localmente em:
 
 ```text
 http://localhost:3000
@@ -82,27 +82,25 @@ http://localhost:3000
 
 ---
 
-## Environment Variables
+## Variáveis de Ambiente
 
 ```env
-TMDB_API_KEY=your_tmdb_api_key
-GEMINI_API_KEY=your_gemini_api_key
+TMDB_API_KEY=sua_chave_tmdb
+GEMINI_API_KEY=sua_chave_gemini
 ```
 
 ---
 
-## Screenshots
+## Autora
 
-Coming soon.
+Desenvolvido por **Brenda Tavares** — [ShipClaw Labs](https://github.com/ShipClaw-Labs)
 
----
-
-## License
-
-This repository is shared for portfolio and demonstration purposes only.
-
-Commercial redistribution, resale or unauthorized reproduction of the project is not permitted.
+Este repositório faz parte do portfólio da ShipClaw Labs.
 
 ---
 
-Developed by ShipClaw Devs&trade;
+## Licença
+
+Este repositório é compartilhado exclusivamente para fins de portfólio e demonstração.
+
+Não é permitida a redistribuição comercial, revenda ou reprodução não autorizada do projeto.

@@ -1296,6 +1296,34 @@ body {
 .site-footer .footer-divider { margin: 0 var(--space-md); color: var(--border); }
 .site-footer strong { color: var(--primary); }
 
+/* Footer Contact */
+.footer-contact {
+    margin: var(--space-xl) auto var(--space-lg);
+    padding: var(--space-lg) var(--space-xl);
+    max-width: 400px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+.footer-contact-label {
+    font-size: var(--font-xs);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
+}
+.footer-contact-email {
+    display: block;
+    font-size: var(--font-base);
+    color: var(--text-light);
+    text-decoration: none;
+    transition: var(--transition);
+    word-break: break-all;
+}
+.footer-contact-email:hover {
+    color: var(--accent);
+}
+
 /* Mobile Footer */
 @media (max-width: 768px) {
     .site-footer {
