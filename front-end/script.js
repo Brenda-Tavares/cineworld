@@ -301,15 +301,33 @@ const API_BASE = '/api';
 // INITIALIZATION
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
-    loadFromURL();
-    setupEvents();
-    updateNavLinks();
-    applyTranslations();
+    try {
+        loadFromURL();
+    } catch(e) {
+        console.error('loadFromURL error:', e);
+    }
+    try {
+        setupEvents();
+    } catch(e) {
+        console.error('setupEvents error:', e);
+    }
+    try {
+        updateNavLinks();
+    } catch(e) {
+        console.error('updateNavLinks error:', e);
+    }
+    try {
+        applyTranslations();
+    } catch(e) {
+        console.error('applyTranslations error:', e);
+    }
     loadData();
     
+    // Always hide loading after timeout, regardless of errors
     setTimeout(() => {
-        document.getElementById('loading').style.display = 'none';
-    }, 1000);
+        const loadingEl = document.getElementById('loading');
+        if (loadingEl) loadingEl.style.display = 'none';
+    }, 1500);
 });
 
 // ========================================
@@ -371,13 +389,15 @@ function setupEvents() {
     setupLangDropdown();
     
     // Filters
-    document.getElementById('filterOriginSelect').addEventListener('change', function() {
+    const originSelect = document.getElementById('filterOriginSelect');
+    if (originSelect) originSelect.addEventListener('change', function() {
         state.currentOrigin = this.value;
         state.currentPage = 1;
         loadMovies();
     });
     
-    document.getElementById('filterSortSelect').addEventListener('change', function() {
+    const sortSelect = document.getElementById('filterSortSelect');
+    if (sortSelect) sortSelect.addEventListener('change', function() {
         state.currentSort = this.value;
         state.currentPage = 1;
         loadMovies();
@@ -391,25 +411,30 @@ function setupEvents() {
     });
     
     // Genre mobile
-    document.getElementById('genreSelectMobile').addEventListener('change', function() {
+    const genreMobile = document.getElementById('genreSelectMobile');
+    if (genreMobile) genreMobile.addEventListener('change', function() {
         state.currentGenre = this.value;
         state.currentPage = 1;
         state.searchQuery = '';
-        document.getElementById('mainSearchInput').value = '';
+        const searchInput = document.getElementById('mainSearchInput');
+        if (searchInput) searchInput.value = '';
         updateTitle();
         loadMovies();
     });
     
     // Pagination
-    document.getElementById('prevPage').addEventListener('click', () => {
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    if (prevBtn) prevBtn.addEventListener('click', () => {
         if (state.currentPage > 1) { state.currentPage--; loadMovies(); }
     });
-    document.getElementById('nextPage').addEventListener('click', () => {
+    if (nextBtn) nextBtn.addEventListener('click', () => {
         if (state.currentPage < state.totalPages) { state.currentPage++; loadMovies(); }
     });
     
     // Modal close
-    document.getElementById('movieModal').addEventListener('click', function(e) {
+    const modal = document.getElementById('movieModal');
+    if (modal) modal.addEventListener('click', function(e) {
         if (e.target === this) closeMovieModal();
     });
     
