@@ -1,18 +1,25 @@
 // CineWorld - Main Script
 
-// Toast notification function
+// ========================================
+// TOAST NOTIFICATION
+// ========================================
 function showToast(message) {
     const existing = document.querySelector('.toast-notification');
     if (existing) existing.remove();
     
     const toast = document.createElement('div');
     toast.className = 'toast-notification';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     toast.textContent = message;
     document.body.appendChild(toast);
     
     setTimeout(() => toast.remove(), 3000);
 }
 
+// ========================================
+// STATE
+// ========================================
 let state = {
     movies: [],
     currentPage: 1,
@@ -23,10 +30,13 @@ let state = {
     currentLanguage: 'pt-BR',
     currentYear: '',
     searchQuery: '',
-    isLoading: false
+    isLoading: false,
+    genres: []
 };
 
-// Language map for TMDB API
+// ========================================
+// LANGUAGE MAP
+// ========================================
 const languageMap = {
     'pt-BR': 'pt-BR',
     'en': 'en-US',
@@ -38,7 +48,9 @@ const languageMap = {
     'ko': 'ko-KR'
 };
 
-// Translations
+// ========================================
+// TRANSLATIONS
+// ========================================
 const translations = {
     'pt-BR': {
         searchPlaceholder: 'Buscar filmes...',
@@ -52,9 +64,6 @@ const translations = {
         noResults: 'Nenhum filme encontrado', tryAgain: 'Tente outro gênero ou busca', resultsFor: 'Resultados para',
         streaming: 'Onde Assistir', runtime: 'min',
         sortBy: 'Ordenar',
-        contact: 'Contato', contactTitle: 'Fale Conosco', contactDesc: 'Envie suas sugestões, elogios ou reclamações',
-        name: 'Nome (opcional)', type: 'Tipo', message: 'Mensagem *', send: 'Enviar',
-        suggestion: 'Sugestão', compliment: 'Elogio', complaint: 'Reclamação', other: 'Outro',
         footer: '© 2026 - Todos os direitos reservados | Desenvolvido por',
         tagline: 'Descubra filmes e onde assistir',
         about: 'Sobre', privacy: 'Privacidade', terms: 'Termos', cookies: 'Cookies',
@@ -64,8 +73,13 @@ const translations = {
         watchTrailer: 'Ver Trailer',
         aiTitle: 'O que deseja assistir?', aiGreeting: 'Olá! Sou a assistente de filmes do CineWorld.', aiDescribe: 'Descreva o que você quer assistir:', aiExample: 'Ex: "filme de ação com robôs", "comédia romântica indiana"', aiPlaceholder: 'Descreva o filme...',
         noTitle: 'Sem título',
-        contactSuccess: 'Formulário enviado com sucesso!', contactError: 'Erro ao enviar. Tente novamente.',
-        contactOpenForm: 'O formulário foi aberto! Por favor, preencha e envie.',
+        searching: 'Buscando',
+        analyzing: 'Analisando',
+        error: 'Erro ao buscar',
+        emptyTitle: 'Nenhum filme encontrado',
+        emptyDesc: 'Tente outro gênero, ajuste os filtros ou use a busca para encontrar algo diferente.',
+        skipToContent: 'Pular para o conteúdo',
+        enterPage: 'Ir para página',
     },
     'en': {
         searchPlaceholder: 'Search movies...',
@@ -79,9 +93,6 @@ const translations = {
         noResults: 'No movies found', tryAgain: 'Try another genre or search', resultsFor: 'Results for',
         streaming: 'Watch On', runtime: 'min',
         sortBy: 'Sort',
-        contact: 'Contact', contactTitle: 'Contact Us', contactDesc: 'Send your suggestions, compliments or complaints',
-        name: 'Name (optional)', type: 'Type', message: 'Message *', send: 'Send',
-        suggestion: 'Suggestion', compliment: 'Compliment', complaint: 'Complaint', other: 'Other',
         footer: '© 2026 - All rights reserved | Developed by',
         tagline: 'Discover movies and where to watch',
         about: 'About', privacy: 'Privacy', terms: 'Terms', cookies: 'Cookies',
@@ -91,8 +102,13 @@ const translations = {
         watchTrailer: 'Watch Trailer',
         aiTitle: 'What would you like to watch?', aiGreeting: 'Hello! I am the CineWorld movie assistant.', aiDescribe: 'Describe what you want to watch:', aiExample: 'Ex: "action movie with robots", "Indian romantic comedy"', aiPlaceholder: 'Describe the movie...',
         noTitle: 'No Title',
-        contactSuccess: 'Form submitted successfully!', contactError: 'Error submitting. Try again.',
-        contactOpenForm: 'The form has been opened! Please fill and send.',
+        searching: 'Searching',
+        analyzing: 'Analyzing',
+        error: 'Search error',
+        emptyTitle: 'No movies found',
+        emptyDesc: 'Try another genre, adjust filters, or use search to find something different.',
+        skipToContent: 'Skip to content',
+        enterPage: 'Go to page',
     },
     'es': {
         searchPlaceholder: 'Buscar películas...',
@@ -106,9 +122,6 @@ const translations = {
         noResults: 'No se encontraron películas', tryAgain: 'Intenta otro género o búsqueda', resultsFor: 'Resultados para',
         streaming: 'Ver en', runtime: 'min',
         sortBy: 'Ordenar',
-        contact: 'Contacto', contactTitle: 'Contáctanos', contactDesc: 'Envía tus sugerencias, elogios o quejas',
-        name: 'Nombre (opcional)', type: 'Tipo', message: 'Mensaje *', send: 'Enviar',
-        suggestion: 'Sugerencia', compliment: 'Elogio', complaint: 'Queja', other: 'Otro',
         footer: '© 2026 - Todos los derechos reservados | Desarrollado por',
         tagline: 'Descubre películas y dónde verlas',
         about: 'Sobre', privacy: 'Privacidad', terms: 'Términos', cookies: 'Cookies',
@@ -118,8 +131,13 @@ const translations = {
         watchTrailer: 'Ver Trailer',
         aiTitle: '¿Qué quieres ver?', aiGreeting: '¡Hola! Soy el asistente de películas de CineWorld.', aiDescribe: 'Describe lo que quieres ver:', aiExample: 'Ej: "película de acción con robots"', aiPlaceholder: 'Describe la película...',
         noTitle: 'Sin título',
-        contactSuccess: '¡Formulario enviado con éxito!', contactError: 'Error al enviar. Inténtalo de nuevo.',
-        contactOpenForm: '¡El formulario se ha abierto! Por favor, llena y envía.',
+        searching: 'Buscando',
+        analyzing: 'Analizando',
+        error: 'Error de búsqueda',
+        emptyTitle: 'No se encontraron películas',
+        emptyDesc: 'Intenta otro género, ajusta los filtros o usa la búsqueda para encontrar algo diferente.',
+        skipToContent: 'Saltar al contenido',
+        enterPage: 'Ir a página',
     },
     'zh-CN': {
         searchPlaceholder: '搜索电影...',
@@ -133,9 +151,6 @@ const translations = {
         noResults: '未找到电影', tryAgain: '尝试其他类型或搜索', resultsFor: '搜索结果',
         streaming: '在线观看', runtime: '分钟',
         sortBy: '排序',
-        contact: '联系', contactTitle: '联系我们', contactDesc: '发送您的建议、表扬或投诉',
-        name: '姓名（可选）', type: '类型', message: '留言 *', send: '发送',
-        suggestion: '建议', compliment: '表扬', complaint: '投诉', other: '其他',
         footer: '© 2026 - 版权所有 | 开发',
         tagline: '发现电影和在哪里观看',
         about: '关于', privacy: '隐私', terms: '条款', cookies: 'Cookies',
@@ -145,8 +160,13 @@ const translations = {
         watchTrailer: '观看预告片',
         aiTitle: '想看什么?', aiGreeting: '你好！我是 CineWorld 电影助手。', aiDescribe: '描述你想看什么:', aiExample: '例如："机器人动作片"', aiPlaceholder: '描述电影...',
         noTitle: '无标题',
-        contactSuccess: '表单提交成功！', contactError: '提交错误，请重试。',
-        contactOpenForm: '表单已打开！请填写并发送。',
+        searching: '搜索中',
+        analyzing: '分析中',
+        error: '搜索错误',
+        emptyTitle: '未找到电影',
+        emptyDesc: '尝试其他类型，调整筛选条件，或使用搜索查找不同的内容。',
+        skipToContent: '跳到内容',
+        enterPage: '转到页面',
     },
     'zh-HK': {
         searchPlaceholder: '搜尋電影...',
@@ -160,9 +180,6 @@ const translations = {
         noResults: '未找到電影', tryAgain: '嘗試其他類型或搜尋', resultsFor: '搜尋結果',
         streaming: '線上觀看', runtime: '分鐘',
         sortBy: '排序',
-        contact: '聯繫', contactTitle: '聯繫我們', contactDesc: '發送您的建議、表揚或投訴',
-        name: '姓名可選', type: '類型', message: '訊息 *', send: '發送',
-        suggestion: '建議', compliment: '表揚', complaint: '投訴', other: '其他',
         footer: '© 2026 - 版權所有 | 開發',
         tagline: '發現電影和在哪裡觀看',
         about: '關於', privacy: '隱私', terms: '條款', cookies: 'Cookies',
@@ -170,10 +187,15 @@ const translations = {
         navHome: '首頁', navAbout: '關於', navPrivacy: '隱私', navTerms: '條款', navCookies: 'Cookies',
         footerAbout: '關於', footerPrivacy: '隱私', footerTerms: '條款', footerCookies: 'Cookies',
         watchTrailer: '觀看預告片',
-        aiTitle: '想睇咩?', aiGreeting: '你好！我是 CineWorld 電影助手。', aiDescribe: '描述你想睇咩:', aiExample: '例如："机器人动作片"', aiPlaceholder: '描述電影...',
+        aiTitle: '想睇咩?', aiGreeting: '你好！我是 CineWorld 電影助手。', aiDescribe: '描述你想睇咩:', aiExample: '例如："機器人動作片"', aiPlaceholder: '描述電影...',
         noTitle: '無標題',
-        contactSuccess: '表單提交成功！', contactError: '提交錯誤，請重試。',
-        contactOpenForm: '表單已打開！請填寫並發送。',
+        searching: '搜尋中',
+        analyzing: '分析中',
+        error: '搜尋錯誤',
+        emptyTitle: '未找到電影',
+        emptyDesc: '嘗試其他類型，調整篩選條件，或使用搜尋查找不同的內容。',
+        skipToContent: '跳到內容',
+        enterPage: '轉到頁面',
     },
     'ja': {
         searchPlaceholder: '映画を検索...',
@@ -187,9 +209,6 @@ const translations = {
         noResults: '映画が見つかりません', tryAgain: '他のジャンルで検索', resultsFor: '検索結果',
         streaming: '視聴', runtime: '分',
         sortBy: '並べ替え',
-        contact: 'お問い合わせ', contactTitle: 'お問い合わせ', contactDesc: 'ご要望やお問い合わせを送信',
-        name: '名前任意', type: 'タイプ', message: 'メッセージ *', send: '送信',
-        suggestion: 'ご要望', compliment: 'お問い合わせ', complaint: '苦情', other: 'その他',
         footer: '© 2026 - 全著作権 | 開発',
         tagline: '映画を見つけて、視聴方法を確認',
         about: 'について', privacy: 'プライバシー', terms: '利用規約', cookies: 'Cookies',
@@ -197,26 +216,28 @@ const translations = {
         navHome: 'ホーム', navAbout: 'について', navPrivacy: 'プライバシー', navTerms: '利用規約', navCookies: 'Cookies',
         footerAbout: 'について', footerPrivacy: 'プライバシー', footerTerms: '利用規約', footerCookies: 'Cookies',
         watchTrailer: '予告編を見る',
-        aiTitle: '何を見たいですか？', aiGreeting: 'こんにちは！CineWorld 映画アシスタントです。', aiDescribe: '見たいものを描述:', aiExample: '例："ロボットアクション映画"', aiPlaceholder: '映画を描述...',
+        aiTitle: '何を見たいですか？', aiGreeting: 'こんにちは！CineWorld 映画アシスタントです。', aiDescribe: '見たいものを教えてください:', aiExample: '例："ロボットアクション映画"', aiPlaceholder: '映画を説明...',
         noTitle: '無題',
-        contactSuccess: 'フォーム送信成功！', contactError: '送信エラー。もう一度お試しください。',
-        contactOpenForm: 'フォームが開きました！記入して送信してください。',
+        searching: '検索中',
+        analyzing: '分析中',
+        error: '検索エラー',
+        emptyTitle: '映画が見つかりません',
+        emptyDesc: '他のジャンルを試すか、フィルターを調整するか、検索で別のものを見つけてください。',
+        skipToContent: 'コンテンツへスキップ',
+        enterPage: 'ページへ移動',
     },
     'ru': {
         searchPlaceholder: 'Поиск фильмов...',
         popular: 'Популярные фильмы', bestRated: 'Лучшие оценки', worstRated: 'Худшие оценки', release: 'Новейшие', upcoming: 'Скоро в прокате',
-        all: 'Все', allYears: 'Все', national: 'Националные', international: 'Международные', originLabel: 'Фильмы:',
+        all: 'Все', allYears: 'Все', national: 'Национальные', international: 'Международные', originLabel: 'Фильмы:',
         genres: 'Жанры', movies: 'фильмов', page: 'Страница', of: 'из',
         language: 'Язык',
         prev: 'Предыдущая', next: 'Следующая', details: 'Детали',
         rating: 'Рейтинг', year: 'Год', synopsis: 'Описание', synopsisNotAvailable: 'Описание недоступно',
-        originalTitle: 'Оригиналное название', close: 'Закрыть',
+        originalTitle: 'Оригинальное название', close: 'Закрыть',
         noResults: 'Фильмы не найдены', tryAgain: 'Попробуйте другой жанр или поиск', resultsFor: 'Результаты для',
         streaming: 'Смотреть', runtime: 'мин',
         sortBy: 'Сортировать',
-        contact: 'Контакт', contactTitle: 'Связаться', contactDesc: 'Отправьте ваши предложения, похвалу или жалобы',
-        name: 'Имя необязательно', type: 'Тип', message: 'Сообщение *', send: 'Отправить',
-        suggestion: 'Предложение', compliment: 'Похвала', complaint: 'Жалоба', other: 'Другое',
         footer: '© 2026 - Все права защищены | Разработано',
         tagline: 'Найдите фильмы и где смотреть',
         about: 'О нас', privacy: 'Конфиденциальность', terms: 'Условия', cookies: 'Cookies',
@@ -226,8 +247,13 @@ const translations = {
         watchTrailer: 'Смотреть трейлер',
         aiTitle: 'Что хотите смотреть?', aiGreeting: 'Привет! Я помощник фильмов CineWorld.', aiDescribe: 'Опишите, что хотите смотреть:', aiExample: 'Например: "боевик с роботами"', aiPlaceholder: 'Опишите фильм...',
         noTitle: 'Без названия',
-        contactSuccess: 'Форма успешно отправлена!', contactError: 'Ошибка отправки. Попробуйте снова.',
-        contactOpenForm: 'Форма открыта! Пожалуйста, заполните и отправьте.',
+        searching: 'Поиск',
+        analyzing: 'Анализ',
+        error: 'Ошибка поиска',
+        emptyTitle: 'Фильмы не найдены',
+        emptyDesc: 'Попробуйте другой жанр, настройте фильтры или используйте поиск чтобы найти что-то другое.',
+        skipToContent: 'Перейти к содержанию',
+        enterPage: 'Перейти на страницу',
     },
     'ko': {
         searchPlaceholder: '영화 검색...',
@@ -241,9 +267,6 @@ const translations = {
         noResults: '영화를 찾을 수 없습니다', tryAgain: '다른 장르 또는 검색을 시도하세요', resultsFor: '검색 결과',
         streaming: '시청', runtime: '분',
         sortBy: '정렬',
-        contact: '연락', contactTitle: '연락하기', contactDesc: '제안, 칭찬 또는 불만의 보내기',
-        name: '이름 선택', type: '유형', message: '메시지 *', send: '보내기',
-        suggestion: '제안', compliment: '칭찬', complaint: '불만', other: '기타',
         footer: '© 2026 - 모든 권리 보유 | 개발',
         tagline: '영화 찾기 및 시청 방법',
         about: '정보', privacy: '개인정보', terms: '이용약관', cookies: 'Cookies',
@@ -253,28 +276,31 @@ const translations = {
         watchTrailer: '예고편 보기',
         aiTitle: '무엇을 보고 싶나요?', aiGreeting: '안녕하세요! CineWorld 영화 도우미입니다.', aiDescribe: '보고 싶은 것을 설명:', aiExample: '예: "로봇 액션 영화"', aiPlaceholder: '영화 설명...',
         noTitle: '제목 없음',
-        contactSuccess: '양식이 성공적으로 제출되었습니다!', contactError: '제출 오류。다시 시도하십시오.',
-        contactOpenForm: '양식이 열렸습니다! 내용을 입력하고 보내십시오.',
+        searching: '검색 중',
+        analyzing: '분석 중',
+        error: '검색 오류',
+        emptyTitle: '영화를 찾을 수 없습니다',
+        emptyDesc: '다른 장르를 시도하거나, 필터를 조정하거나, 검색을 사용하여 다른 것을 찾아보세요.',
+        skipToContent: '콘텐츠로 건너뛰기',
+        enterPage: '페이지로 이동',
     }
 };
 
 // Translation function
 function t(key) {
-    try {
-        const lang = translations[state.currentLanguage] || translations['pt-BR'];
-        return lang[key] || translations['pt-BR'][key] || key;
-    } catch(e) {
-        console.error('Translation error for key:', key, 'Lang:', state.currentLanguage, 'Error:', e);
-        return key;
-    }
+    const lang = translations[state.currentLanguage] || translations['pt-BR'];
+    return lang[key] || translations['pt-BR'][key] || key;
 }
 
-// API Base
+// ========================================
+// API
+// ========================================
 const API_BASE = '/api';
 
-// Initialize
+// ========================================
+// INITIALIZATION
+// ========================================
 document.addEventListener('DOMContentLoaded', function() {
-    loadTheme();
     loadFromURL();
     setupEvents();
     updateNavLinks();
@@ -286,36 +312,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000);
 });
 
-// Load data from URL
+// ========================================
+// URL STATE
+// ========================================
 function loadFromURL() {
     const params = new URLSearchParams(window.location.search);
     
-    if (params.has('page')) {
-        state.currentPage = parseInt(params.get('page')) || 1;
-    }
-    if (params.has('sort')) {
-        state.currentSort = params.get('sort');
-    }
-    if (params.has('genre')) {
-        state.currentGenre = params.get('genre');
-    }
-    if (params.has('origin')) {
-        state.currentOrigin = params.get('origin');
-    }
+    if (params.has('page')) state.currentPage = parseInt(params.get('page')) || 1;
+    if (params.has('sort')) state.currentSort = params.get('sort');
+    if (params.has('genre')) state.currentGenre = params.get('genre');
+    if (params.has('origin')) state.currentOrigin = params.get('origin');
+    if (params.has('year')) state.currentYear = params.get('year');
+    
     if (params.has('lang')) {
         state.currentLanguage = params.get('lang');
         localStorage.setItem('cineworld_language', state.currentLanguage);
     } else {
         const savedLang = localStorage.getItem('cineworld_language');
-        if (savedLang) {
-            state.currentLanguage = savedLang;
-        }
-    }
-    if (params.has('year')) {
-        state.currentYear = params.get('year');
+        if (savedLang) state.currentLanguage = savedLang;
     }
     
-    // Update UI elements from state
+    if (params.has('q')) {
+        state.searchQuery = params.get('q');
+        const searchInput = document.getElementById('mainSearchInput');
+        if (searchInput) searchInput.value = state.searchQuery;
+    }
+    
+    // Sync UI with state
     const langSelect = document.getElementById('langSelect');
     if (langSelect) langSelect.value = state.currentLanguage;
     
@@ -332,33 +355,22 @@ function loadFromURL() {
     if (yearSelect) yearSelect.value = state.currentYear;
 }
 
-// Setup event listeners
+// ========================================
+// EVENT SETUP
+// ========================================
 function setupEvents() {
     // Search
-    const cineSearchBtn = document.getElementById('mainSearchBtn');
-    const cineSearchInput = document.getElementById('mainSearchInput');
+    const searchBtn = document.getElementById('mainSearchBtn');
+    const searchInput = document.getElementById('mainSearchInput');
     
-    if (cineSearchBtn) {
-        cineSearchBtn.addEventListener('click', function() {
-            performMainSearch();
-        });
-    }
-    
-    if (cineSearchInput) {
-        cineSearchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                performMainSearch();
-            }
-        });
-    }
+    if (searchBtn) searchBtn.addEventListener('click', performMainSearch);
+    if (searchInput) searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') performMainSearch(); });
     
     // Language
     document.getElementById('langSelect').addEventListener('change', function() {
         state.currentLanguage = this.value;
         state.currentPage = 1;
         localStorage.setItem('cineworld_language', state.currentLanguage);
-        localStorage.setItem('cineworld_lang', this.value);
-        
         document.getElementById('htmlLang').lang = state.currentLanguage;
         applyTranslations();
         updateNavLinks();
@@ -366,75 +378,109 @@ function setupEvents() {
         window.location.href = window.location.pathname + '?lang=' + state.currentLanguage;
     });
     
-    // Filter origin
+    // Filters
     document.getElementById('filterOriginSelect').addEventListener('change', function() {
         state.currentOrigin = this.value;
         state.currentPage = 1;
         loadMovies();
     });
     
-    // Filter sort
     document.getElementById('filterSortSelect').addEventListener('change', function() {
         state.currentSort = this.value;
         state.currentPage = 1;
         loadMovies();
     });
     
-    // Filter year
     const yearSelect = document.getElementById('filterYearSelect');
-    if (yearSelect) {
-        yearSelect.addEventListener('change', function() {
-            state.currentYear = this.value;
-            state.currentPage = 1;
-            loadMovies();
-        });
-    }
+    if (yearSelect) yearSelect.addEventListener('change', function() {
+        state.currentYear = this.value;
+        state.currentPage = 1;
+        loadMovies();
+    });
     
-    // Genre mobile select
+    // Genre mobile
     document.getElementById('genreSelectMobile').addEventListener('change', function() {
         state.currentGenre = this.value;
         state.currentPage = 1;
         state.searchQuery = '';
-        const searchInputMobile = document.getElementById('mainSearchInput');
-        if (searchInputMobile) searchInputMobile.value = '';
-        
+        document.getElementById('mainSearchInput').value = '';
         updateTitle();
         loadMovies();
     });
     
     // Pagination
     document.getElementById('prevPage').addEventListener('click', () => {
-        if (state.currentPage > 1) {
-            state.currentPage--;
-            loadMovies();
-        }
+        if (state.currentPage > 1) { state.currentPage--; loadMovies(); }
     });
-    
     document.getElementById('nextPage').addEventListener('click', () => {
-        if (state.currentPage < state.totalPages) {
-            state.currentPage++;
-            loadMovies();
-        }
+        if (state.currentPage < state.totalPages) { state.currentPage++; loadMovies(); }
     });
     
-    // Close modals
+    // Modal close
     document.getElementById('movieModal').addEventListener('click', function(e) {
         if (e.target === this) closeMovieModal();
     });
     
     // ESC key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
+    document.addEventListener('keydown', handleGlobalKeydown);
+}
+
+// ========================================
+// KEYBOARD HANDLING
+// ========================================
+function handleGlobalKeydown(e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('movieModal');
+        if (modal.classList.contains('open')) {
             closeMovieModal();
-            const aiPanel = document.getElementById('aiPanel');
-            if (aiPanel && aiPanel.classList.contains('open')) {
-                aiPanel.classList.remove('open');
+            return;
+        }
+        const aiPanel = document.getElementById('aiPanel');
+        if (aiPanel && aiPanel.classList.contains('open')) {
+            toggleAIPanel();
+            return;
+        }
+    }
+}
+
+// ========================================
+// MODAL FOCUS TRAP (WCAG 2.4.3)
+// ========================================
+let lastFocusedElement = null;
+
+function trapFocus(modal) {
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusableElements = modal.querySelectorAll(focusableSelectors);
+    if (focusableElements.length === 0) return;
+    
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+    
+    modal.addEventListener('keydown', function modalTrap(e) {
+        if (e.key !== 'Tab') return;
+        
+        if (e.shiftKey) {
+            if (document.activeElement === firstFocusable) {
+                e.preventDefault();
+                lastFocusable.focus();
             }
+        } else {
+            if (document.activeElement === lastFocusable) {
+                e.preventDefault();
+                firstFocusable.focus();
+            }
+        }
+        
+        // Re-check if modal is still open
+        if (!modal.classList.contains('open')) {
+            modal.removeEventListener('keydown', modalTrap);
         }
     });
 }
 
-// Load data (genres + movies)
+// ========================================
+// DATA LOADING
+// ========================================
 async function loadData() {
     try {
         const tmdbLang = languageMap[state.currentLanguage] || 'pt-BR';
@@ -449,69 +495,105 @@ async function loadData() {
         
         await loadMovies();
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error loading data:', error);
     }
 }
 
-// Render genres
+// ========================================
+// GENRES
+// ========================================
 function renderGenres() {
     const container = document.getElementById('genresList');
     if (!container) return;
     
-    let genresHtml = `
-        <div class="genre-item ${state.currentGenre === '0' ? 'active' : ''}" 
-             data-id="0">
-            <i class="fas fa-globe"></i>
+    let html = `
+        <div class="genre-item ${state.currentGenre === '0' ? 'active' : ''}" data-id="0" role="option" tabindex="0" aria-selected="${state.currentGenre === '0'}">
+            <i class="fas fa-globe" aria-hidden="true"></i>
             <span>${t('all')}</span>
         </div>
     `;
     
-    genresHtml += state.genres.map(genre => `
-        <div class="genre-item ${genre.id.toString() === state.currentGenre ? 'active' : ''}" 
-             data-id="${genre.id}">
-            <i class="${genre.icon || 'fas fa-film'}"></i>
+    html += state.genres.map(genre => `
+        <div class="genre-item ${genre.id.toString() === state.currentGenre ? 'active' : ''}" data-id="${genre.id}" role="option" tabindex="0" aria-selected="${genre.id.toString() === state.currentGenre}">
+            <i class="${genre.icon || 'fas fa-film'}" aria-hidden="true"></i>
             <span>${genre.name}</span>
         </div>
     `).join('');
     
-    container.innerHTML = genresHtml;
+    container.innerHTML = html;
     
+    // Mobile select
     const mobileSelect = document.getElementById('genreSelectMobile');
     if (mobileSelect) {
-        let optionsHtml = `<option value="0">${t('all')} ${t('genres')}</option>`;
-        optionsHtml += state.genres.map(genre => 
+        let options = `<option value="0">${t('all')} ${t('genres')}</option>`;
+        options += state.genres.map(genre => 
             `<option value="${genre.id}" ${genre.id.toString() === state.currentGenre ? 'selected' : ''}>${genre.name}</option>`
         ).join('');
-        mobileSelect.innerHTML = optionsHtml;
+        mobileSelect.innerHTML = options;
     }
     
+    // Desktop click handlers
     container.querySelectorAll('.genre-item').forEach(item => {
-        item.addEventListener('click', function() {
-            state.currentGenre = this.dataset.id;
+        const handler = () => {
+            state.currentGenre = item.dataset.id;
             state.currentPage = 1;
             state.searchQuery = '';
-            const searchInput = document.getElementById('mainSearchInput');
-            if (searchInput) searchInput.value = '';
+            document.getElementById('mainSearchInput').value = '';
             
-            document.querySelectorAll('.genre-item').forEach(g => g.classList.remove('active'));
-            this.classList.add('active');
+            container.querySelectorAll('.genre-item').forEach(g => {
+                g.classList.remove('active');
+                g.setAttribute('aria-selected', 'false');
+            });
+            item.classList.add('active');
+            item.setAttribute('aria-selected', 'true');
             
             updateTitle();
             loadMovies();
-        });
+        };
+        
+        item.addEventListener('click', handler);
+        item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
     });
 }
 
 function updateGenreUIFromState() {
     document.querySelectorAll('.genre-item').forEach(item => {
-        item.classList.toggle('active', item.dataset.id === state.currentGenre);
+        const isActive = item.dataset.id === state.currentGenre;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-selected', isActive.toString());
     });
 }
 
-// Load movies
+// ========================================
+// SKELETON LOADING
+// ========================================
+function showSkeletonLoading() {
+    const container = document.getElementById('moviesGrid');
+    if (!container) return;
+    
+    let html = '';
+    for (let i = 0; i < 12; i++) {
+        html += `
+            <div class="skeleton-card">
+                <div class="skeleton-poster"></div>
+                <div class="skeleton-info">
+                    <div class="skeleton-line medium"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>
+        `;
+    }
+    container.innerHTML = html;
+}
+
+// ========================================
+// LOAD MOVIES
+// ========================================
 async function loadMovies() {
     if (state.isLoading) return;
     state.isLoading = true;
+    
+    showSkeletonLoading();
     
     try {
         const tmdbLang = languageMap[state.currentLanguage] || 'pt-BR';
@@ -520,15 +602,9 @@ async function loadMovies() {
         if (state.searchQuery) {
             url = API_BASE + '/movies?q=' + encodeURIComponent(state.searchQuery) + '&page=' + state.currentPage + '&language=' + tmdbLang;
         } else {
-            if (state.currentGenre !== '0') {
-                url += '&genre=' + state.currentGenre;
-            }
-            if (state.currentOrigin !== 'all') {
-                url += '&origin=' + state.currentOrigin;
-            }
-            if (state.currentYear) {
-                url += '&year=' + state.currentYear;
-            }
+            if (state.currentGenre !== '0') url += '&genre=' + state.currentGenre;
+            if (state.currentOrigin !== 'all') url += '&origin=' + state.currentOrigin;
+            if (state.currentYear) url += '&year=' + state.currentYear;
         }
         
         const response = await fetch(url);
@@ -540,78 +616,94 @@ async function loadMovies() {
             renderMovies();
             updateUI();
         } else {
-            document.getElementById('moviesGrid').innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:40px;">' + t('noResults') + '</p>';
+            renderEmptyState();
         }
     } catch (error) {
         console.error('Error loading movies:', error);
+        renderEmptyState();
     } finally {
         state.isLoading = false;
     }
 }
 
-// Render movies
+// ========================================
+// EMPTY STATE
+// ========================================
+function renderEmptyState() {
+    const container = document.getElementById('moviesGrid');
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div class="empty-state">
+            <div class="empty-state-icon"><i class="fas fa-film" aria-hidden="true"></i></div>
+            <h3 class="empty-state-title">${t('emptyTitle')}</h3>
+            <p class="empty-state-desc">${t('emptyDesc')}</p>
+        </div>
+    `;
+    
+    document.getElementById('moviesCount').textContent = '0 ' + t('movies');
+    renderPageNumbers();
+    document.getElementById('pageIndicator').textContent = '';
+    document.getElementById('prevPage').disabled = true;
+    document.getElementById('nextPage').disabled = true;
+}
+
+// ========================================
+// RENDER MOVIES
+// ========================================
 function renderMovies() {
     const container = document.getElementById('moviesGrid');
     if (!container) return;
     
     if (state.movies.length === 0) {
-        container.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:40px;">' + t('noResults') + '</p>';
+        renderEmptyState();
         return;
     }
     
-    container.innerHTML = state.movies.map(movie => {
+    container.innerHTML = state.movies.map((movie, index) => {
         const year = movie.release_date ? movie.release_date.split('-')[0] : '';
         const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '';
         const posterUrl = movie.poster_path ? (movie.poster_path.startsWith('http') ? movie.poster_path : 'https://image.tmdb.org/t/p/w500' + movie.poster_path) : null;
         const hasVotes = movie.vote_count > 0;
         
         return `
-            <div class="movie-card" onclick="showMovieDetails(${movie.id})">
+            <div class="movie-card" role="listitem" tabindex="0" 
+                 onclick="showMovieDetails(${movie.id})" 
+                 onkeydown="if(event.key==='Enter')showMovieDetails(${movie.id})"
+                 aria-label="${movie.title || t('noTitle')}${hasVotes && rating ? ', Avaliação ' + rating : ''}${year ? ', ' + year : ''}">
                 <div class="movie-poster">
                     ${posterUrl ? 
-                        `<img src="${posterUrl}" alt="${movie.title}" loading="lazy">` :
-                        `<div class="poster-fallback"><i class="fas fa-film"></i></div>`
+                        `<img src="${posterUrl}" alt="${movie.title || t('noTitle')}" loading="lazy">` :
+                        `<div class="poster-placeholder" aria-hidden="true"><i class="fas fa-film"></i></div>`
                     }
-                    ${hasVotes && rating ? `<div class="rating"><i class="fas fa-star"></i> ${rating}</div>` : ''}
-                    </div>
-                    <div class="movie-info">
-                        <h3 class="movie-title">${movie.title || t('noTitle')}</h3>
-                        <div class="movie-meta">
-                            ${year ? `<span class="year">${year}</span>` : ''}
-                            ${movie.production_countries?.[0]?.name ? 
-                                `<span>${movie.production_countries[0].name}</span>` : ''}
-                        </div>
+                    ${hasVotes && rating ? `<div class="movie-rating" aria-label="Avaliação ${rating}"><i class="fas fa-star" aria-hidden="true"></i> ${rating}</div>` : ''}
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">${movie.title || t('noTitle')}</h3>
+                    <div class="movie-meta">
+                        ${year ? `<span class="year">${year}</span>` : ''}
+                        ${movie.production_countries?.[0]?.name ? `<span>${movie.production_countries[0].name}</span>` : ''}
                     </div>
                 </div>
-            `;
+            </div>
+        `;
     }).join('');
 }
 
-// Update UI
+// ========================================
+// UPDATE UI
+// ========================================
 function updateUI() {
-    try {
-        const moviesCount = document.getElementById('moviesCount');
-        if (moviesCount) moviesCount.textContent = state.movies.length + ' ' + t('movies');
-        
-        const prevPageBtn = document.getElementById('prevPage');
-        if (prevPageBtn) prevPageBtn.disabled = state.currentPage <= 1;
-        
-        const nextPageBtn = document.getElementById('nextPage');
-        if (nextPageBtn) nextPageBtn.disabled = state.currentPage >= state.totalPages;
-        
-        const indicator = document.getElementById('pageIndicator');
-        if (indicator) {
-            indicator.textContent = state.currentPage + ' / ' + state.totalPages;
-        }
-        
-        renderPageNumbers();
-        updateTitle();
-        updateTranslations();
-        updateFooter();
-        updateURL();
-    } catch (e) {
-        console.error('Error in updateUI:', e);
-    }
+    document.getElementById('moviesCount').textContent = state.movies.length + ' ' + t('movies');
+    document.getElementById('prevPage').disabled = state.currentPage <= 1;
+    document.getElementById('nextPage').disabled = state.currentPage >= state.totalPages;
+    document.getElementById('pageIndicator').textContent = state.currentPage + ' / ' + state.totalPages;
+    
+    renderPageNumbers();
+    updateTitle();
+    updateTranslations();
+    updateFooter();
+    updateURL();
 }
 
 function renderPageNumbers() {
@@ -624,29 +716,29 @@ function renderPageNumbers() {
     
     if (total <= 7) {
         for (let i = 1; i <= total; i++) {
-            html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
         }
     } else {
         if (current <= 4) {
             for (let i = 1; i <= 5; i++) {
-                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
             }
-            html += '<span>...</span>';
-            html += `<button class="page-btn" onclick="goToPage(${total})">${total}</button>`;
+            html += '<span aria-hidden="true">...</span>';
+            html += `<button class="page-btn" onclick="goToPage(${total})" aria-label="${t('enterPage')} ${total}">${total}</button>`;
         } else if (current >= total - 3) {
-            html += `<button class="page-btn" onclick="goToPage(1)">1</button>`;
-            html += '<span>...</span>';
+            html += `<button class="page-btn" onclick="goToPage(1)" aria-label="${t('enterPage')} 1">1</button>`;
+            html += '<span aria-hidden="true">...</span>';
             for (let i = total - 4; i <= total; i++) {
-                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
             }
         } else {
-            html += `<button class="page-btn" onclick="goToPage(1)">1</button>`;
-            html += '<span>...</span>';
+            html += `<button class="page-btn" onclick="goToPage(1)" aria-label="${t('enterPage')} 1">1</button>`;
+            html += '<span aria-hidden="true">...</span>';
             for (let i = current - 1; i <= current + 1; i++) {
-                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
             }
-            html += '<span>...</span>';
-            html += `<button class="page-btn" onclick="goToPage(${total})">${total}</button>`;
+            html += '<span aria-hidden="true">...</span>';
+            html += `<button class="page-btn" onclick="goToPage(${total})" aria-label="${t('enterPage')} ${total}">${total}</button>`;
         }
     }
     
@@ -658,147 +750,76 @@ window.goToPage = function(page) {
     loadMovies();
 };
 
-// Update translations
+// ========================================
+// TRANSLATIONS UPDATE
+// ========================================
 function updateTranslations() {
-    try {
-        const lang = state.currentLanguage;
-        
-        const siteTagline = document.getElementById('siteTagline');
-        if (siteTagline) siteTagline.textContent = t('tagline');
-        
-        const searchInput = document.getElementById('mainSearchInput');
-        if (searchInput) searchInput.placeholder = t('searchPlaceholder');
-        
-        const filterOriginLabel = document.getElementById('filterOriginLabel');
-        if (filterOriginLabel) filterOriginLabel.textContent = (t('originLabel') || 'Filmes:');
-        
-        const filterOriginSelect = document.getElementById('filterOriginSelect');
-        if (filterOriginSelect && filterOriginSelect.options.length >= 3) {
-            filterOriginSelect.options[0].text = t('all');
-            filterOriginSelect.options[1].text = t('national');
-            filterOriginSelect.options[2].text = t('international');
-        }
-        
-        const filterSortLabel = document.getElementById('filterSortLabel');
-        if (filterSortLabel) filterSortLabel.textContent = t('sortBy') + ':';
-        
-        const filterSortSelect = document.getElementById('filterSortSelect');
-        if (filterSortSelect && filterSortSelect.options.length >= 4) {
-            filterSortSelect.options[0].text = t('popular');
-            filterSortSelect.options[1].text = t('bestRated') || t('rating');
-            filterSortSelect.options[2].text = t('worstRated') || 'Piores Avaliados';
-            filterSortSelect.options[3].text = t('release');
-        }
-        
-        const filterYearSelect = document.getElementById('filterYearSelect');
-        if (filterYearSelect && filterYearSelect.options.length > 0) {
-            filterYearSelect.options[0].text = t('allYears') || 'Todos';
-        }
-        
-        const genresTitle = document.getElementById('genresTitle');
-        if (genresTitle) genresTitle.textContent = t('genres');
-        
-        const aiTitleText = document.getElementById('aiTitleText');
-        if (aiTitleText) aiTitleText.textContent = t('aiTitle') || 'O que deseja assistir?';
-        const aiGreetingText = document.getElementById('aiGreetingText');
-        if (aiGreetingText) aiGreetingText.textContent = t('aiGreeting') || 'Olá! Sou a assistente de filmes do CineWorld.';
-        const aiDescribeText = document.getElementById('aiDescribeText');
-        if (aiDescribeText) aiDescribeText.textContent = t('aiDescribe') || 'Descreva o que você quer assistir:';
-        const aiExampleText = document.getElementById('aiExampleText');
-        if (aiExampleText) aiExampleText.textContent = t('aiExample') || 'Ex: "filme de ação com robôs", "comédia romântica indiana"';
-        const aiSearchInput = document.getElementById('aiSearchInput');
-        if (aiSearchInput) aiSearchInput.placeholder = t('aiPlaceholder') || 'Descreva o filme...';
-        
-        const prevText = document.getElementById('prevText');
-        if (prevText) prevText.textContent = t('prev');
-        const nextText = document.getElementById('nextText');
-        if (nextText) nextText.textContent = t('next');
-        
-        const navHome = document.getElementById('navHome');
-        if (navHome) navHome.textContent = t('navHome');
-        const navAbout = document.getElementById('navAbout');
-        if (navAbout) navAbout.textContent = t('navAbout');
-        const navPrivacy = document.getElementById('navPrivacy');
-        if (navPrivacy) navPrivacy.textContent = t('navPrivacy');
-        const navTerms = document.getElementById('navTerms');
-        if (navTerms) navTerms.textContent = t('navTerms');
-        const navCookies = document.getElementById('navCookies');
-        if (navCookies) navCookies.textContent = t('navCookies');
-        
-        const navAboutLink = document.getElementById('navAboutLink');
-        if (navAboutLink) navAboutLink.href = getLegalPageUrl('about');
-        const navPrivacyLink = document.getElementById('navPrivacyLink');
-        if (navPrivacyLink) navPrivacyLink.href = getLegalPageUrl('privacy');
-        const navTermsLink = document.getElementById('navTermsLink');
-        if (navTermsLink) navTermsLink.href = getLegalPageUrl('terms');
-        const navCookiesLink = document.getElementById('navCookiesLink');
-        if (navCookiesLink) navCookiesLink.href = getLegalPageUrl('cookies');
-        
-        const footerAbout = document.getElementById('footerAbout');
-        if (footerAbout) {
-            footerAbout.textContent = t('footerAbout');
-            footerAbout.href = getLegalPageUrl('about');
-        }
-        const footerPrivacy = document.getElementById('footerPrivacy');
-        if (footerPrivacy) {
-            footerPrivacy.textContent = t('footerPrivacy');
-            footerPrivacy.href = getLegalPageUrl('privacy');
-        }
-        const footerTerms = document.getElementById('footerTerms');
-        if (footerTerms) {
-            footerTerms.textContent = t('footerTerms');
-            footerTerms.href = getLegalPageUrl('terms');
-        }
-        const footerCookies = document.getElementById('footerCookies');
-        if (footerCookies) {
-            footerCookies.textContent = t('footerCookies');
-            footerCookies.href = getLegalPageUrl('cookies');
-        }
-    } catch (e) {
-        console.error('Error updating translations:', e);
+    const setIfExists = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+    
+    setIfExists('siteTagline', t('tagline'));
+    setIfExists('prevText', t('prev'));
+    setIfExists('nextText', t('next'));
+    setIfExists('navHome', t('navHome'));
+    setIfExists('navAbout', t('navAbout'));
+    setIfExists('navPrivacy', t('navPrivacy'));
+    setIfExists('navTerms', t('navTerms'));
+    setIfExists('navCookies', t('navCookies'));
+    setIfExists('aiTitleText', t('aiTitle'));
+    setIfExists('aiGreetingText', t('aiGreeting'));
+    setIfExists('aiDescribeText', t('aiDescribe'));
+    setIfExists('aiExampleText', t('aiExample'));
+    setIfExists('skipLink', t('skipToContent'));
+    
+    const searchInput = document.getElementById('mainSearchInput');
+    if (searchInput) searchInput.placeholder = t('searchPlaceholder');
+    
+    const aiInput = document.getElementById('aiSearchInput');
+    if (aiInput) aiInput.placeholder = t('aiPlaceholder');
+    
+    // Filter labels
+    setIfExists('filterOriginLabel', t('originLabel') + ':');
+    setIfExists('filterSortLabel', t('sortBy') + ':');
+    
+    // Filter options
+    const originSelect = document.getElementById('filterOriginSelect');
+    if (originSelect && originSelect.options.length >= 3) {
+        originSelect.options[0].text = t('all');
+        originSelect.options[1].text = t('national');
+        originSelect.options[2].text = t('international');
     }
+    
+    const sortSelect = document.getElementById('filterSortSelect');
+    if (sortSelect && sortSelect.options.length >= 5) {
+        sortSelect.options[0].text = t('popular');
+        sortSelect.options[1].text = t('bestRated');
+        sortSelect.options[2].text = t('worstRated');
+        sortSelect.options[3].text = t('release');
+        sortSelect.options[4].text = t('upcoming');
+    }
+    
+    const yearSelect = document.getElementById('filterYearSelect');
+    if (yearSelect && yearSelect.options.length > 0) {
+        yearSelect.options[0].text = t('allYears');
+    }
+    
+    setIfExists('genresTitle', t('genres'));
 }
 
-// Update footer
 function updateFooter() {
-    const footer = document.querySelector('.site-footer');
-    if (footer) {
-        footer.innerHTML = `
-            <div class="platforms-icons">
-                <a href="https://www.netflix.com" target="_blank" rel="noopener" title="Netflix">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="platform-img" style="height: 34px; width: auto;">
-                </a>
-                <a href="https://www.primevideo.com" target="_blank" rel="noopener" title="Prime Video">
-                    <img src="https://i.pinimg.com/736x/a3/9e/e9/a39ee9b903a46c029b2cce3a923ae42e.jpg" alt="Prime Video" style="height: 38px; width: auto;">
-                </a>
-                <a href="https://www.disneyplus.com" target="_blank" rel="noopener" title="Disney+">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" style="height: 22px; width: auto; filter: brightness(0) invert(1);">
-                </a>
-                <a href="https://www.max.com" target="_blank" rel="noopener" title="Max (HBO)">
-                    <img src="https://www.citypng.com/public/uploads/preview/hbo-max-white-logo-png-701751694707739y4d41kme7y.png" alt="Max" class="platform-img" style="height: 38px; width: auto;">
-                </a>
-                <a href="https://globoplay.globo.com" target="_blank" rel="noopener" title="Globoplay">
-                    <img src="https://static.wixstatic.com/media/64ad72_f22b0aff0a514bb7b341dcf7740ca3ce~mv2.png/v1/fill/w_456,h_468,al_c/globoplayicon.png" alt="Globoplay" class="platform-img" style="height: 40px; width: auto;">
-                </a>
-                <a href="https://pluto.tv" target="_blank" rel="noopener" title="Pluto TV">
-                    <img src="https://images.seeklogo.com/logo-png/52/3/pluto-tv-logo-png_seeklogo-520780.png" alt="Pluto TV" class="platform-img" style="height: 40px; width: auto;">
-                </a>
-            </div>
-            <div class="footer-links">
-                <a href="/sobre" id="footerAbout">${t('about')}</a>
-                <span class="footer-divider">|</span>
-                <a href="/privacidade" id="footerPrivacy">${t('privacy')}</a>
-                <span class="footer-divider">|</span>
-                <a href="/termos" id="footerTerms">${t('terms')}</a>
-                <span class="footer-divider">|</span>
-                <a href="/cookies" id="footerCookies">${t('cookies')}</a>
-            </div>
-            <p>&copy; 2026 - Todos os direitos reservados | Desenvolvido por <strong>Brenda Tavares</strong></p>
-        `;
-    }
+    const setIfExists = (id, text, href) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.textContent = text;
+            if (href) el.href = href;
+        }
+    };
+    
+    setIfExists('footerAbout', t('about'), getLegalPageUrl('about'));
+    setIfExists('footerPrivacy', t('privacy'), getLegalPageUrl('privacy'));
+    setIfExists('footerTerms', t('terms'), getLegalPageUrl('terms'));
+    setIfExists('footerCookies', t('cookies'), getLegalPageUrl('cookies'));
 }
 
-// Update title
 function updateTitle() {
     const titleEl = document.getElementById('currentTitle');
     if (!titleEl) return;
@@ -813,22 +834,23 @@ function updateTitle() {
     }
 }
 
-// Update URL
 function updateURL() {
     const params = new URLSearchParams();
-    
     if (state.currentPage > 1) params.set('page', state.currentPage);
     if (state.currentSort !== 'popularity') params.set('sort', state.currentSort);
     if (state.currentGenre !== '0') params.set('genre', state.currentGenre);
     if (state.currentOrigin !== 'all') params.set('origin', state.currentOrigin);
     if (state.currentLanguage !== 'pt-BR') params.set('lang', state.currentLanguage);
     if (state.currentYear) params.set('year', state.currentYear);
+    if (state.searchQuery) params.set('q', state.searchQuery);
     
     const newURL = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
     window.history.pushState({}, '', newURL);
 }
 
-// Legal page URLs
+// ========================================
+// LEGAL PAGES
+// ========================================
 const legalPagePaths = {
     'pt-BR': { about: '/sobre', privacy: '/privacidade', terms: '/termos', cookies: '/cookies' },
     'en': { about: '/en/sobre', privacy: '/en/privacidade', terms: '/en/termos', cookies: '/en/cookies' },
@@ -841,29 +863,16 @@ const legalPagePaths = {
 };
 
 function getLegalPageUrl(pageType) {
-    const lang = state.currentLanguage;
-    const paths = legalPagePaths[lang] || legalPagePaths['pt-BR'];
+    const paths = legalPagePaths[state.currentLanguage] || legalPagePaths['pt-BR'];
     return paths[pageType] || paths.about;
 }
 
 function updateNavLinks() {
-    const navAboutLink = document.getElementById('navAboutLink');
-    const navPrivacyLink = document.getElementById('navPrivacyLink');
-    const navTermsLink = document.getElementById('navTermsLink');
-    const navCookiesLink = document.getElementById('navCookiesLink');
-    const footerAbout = document.getElementById('footerAbout');
-    const footerPrivacy = document.getElementById('footerPrivacy');
-    const footerTerms = document.getElementById('footerTerms');
-    const footerCookies = document.getElementById('footerCookies');
-
-    if (navAboutLink) navAboutLink.href = getLegalPageUrl('about');
-    if (navPrivacyLink) navPrivacyLink.href = getLegalPageUrl('privacy');
-    if (navTermsLink) navTermsLink.href = getLegalPageUrl('terms');
-    if (navCookiesLink) navCookiesLink.href = getLegalPageUrl('cookies');
-    if (footerAbout) footerAbout.href = getLegalPageUrl('about');
-    if (footerPrivacy) footerPrivacy.href = getLegalPageUrl('privacy');
-    if (footerTerms) footerTerms.href = getLegalPageUrl('terms');
-    if (footerCookies) footerCookies.href = getLegalPageUrl('cookies');
+    const setLink = (id, href) => { const el = document.getElementById(id); if (el) el.href = href; };
+    setLink('navAboutLink', getLegalPageUrl('about'));
+    setLink('navPrivacyLink', getLegalPageUrl('privacy'));
+    setLink('navTermsLink', getLegalPageUrl('terms'));
+    setLink('navCookiesLink', getLegalPageUrl('cookies'));
 }
 
 function applyTranslations() {
@@ -890,36 +899,65 @@ function applyTranslations() {
             if (id === 'langLabel') {
                 el.textContent = lang[key] + ':';
             } else {
-                const icon = el.querySelector('i');
                 const textSpan = el.querySelector('span');
-                if (textSpan && lang[key]) {
-                    textSpan.textContent = lang[key];
-                }
+                if (textSpan && lang[key]) textSpan.textContent = lang[key];
             }
         }
     }
 }
 
-// Search
+// ========================================
+// SEARCH — HYBRID (Direct + AI)
+// ========================================
 function performMainSearch() {
     const input = document.getElementById('mainSearchInput');
     const query = input ? input.value.trim() : '';
     if (!query) return;
     
-    document.getElementById('moviesGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;"><i class="fas fa-spinner fa-spin"></i> <span>' + t('searching') + '...</span></div>';
-    
-    useAISearch(query);
-}
-
-async function useAISearch(query) {
     state.searchQuery = query;
     state.currentPage = 1;
     state.currentGenre = '0';
     
-    const params = new URLSearchParams();
-    params.set('q', query);
-    window.history.pushState({}, '', '?' + params.toString());
+    // Show loading state on button
+    const btn = document.getElementById('mainSearchBtn');
+    if (btn) {
+        btn.classList.add('btn-loading');
+        btn.innerHTML = '<i class="fas fa-spinner" aria-hidden="true"></i>';
+    }
     
+    updateURL();
+    
+    // Try direct search first via API
+    const tmdbLang = languageMap[state.currentLanguage] || 'pt-BR';
+    const directUrl = API_BASE + '/movies?q=' + encodeURIComponent(query) + '&page=1&language=' + tmdbLang;
+    
+    fetch(directUrl)
+        .then(res => res.json())
+        .then(data => {
+            if (data.results && data.results.length > 0) {
+                state.movies = data.results;
+                state.totalPages = Math.min(data.total_pages || 1, 500);
+                renderMovies();
+                updateUI();
+                document.getElementById('currentTitle').textContent = t('resultsFor') + ': ' + query;
+            } else {
+                // Fallback to AI search
+                return useAISearch(query);
+            }
+        })
+        .catch(() => {
+            // Fallback to AI search on error
+            return useAISearch(query);
+        })
+        .finally(() => {
+            if (btn) {
+                btn.classList.remove('btn-loading');
+                btn.innerHTML = '<i class="fas fa-search" aria-hidden="true"></i>';
+            }
+        });
+}
+
+async function useAISearch(query) {
     const tmdbLang = languageMap[state.currentLanguage] || 'pt-BR';
     const url = API_BASE + '/ai-search?q=' + encodeURIComponent(query) + '&page=1&language=' + tmdbLang;
     
@@ -939,19 +977,30 @@ async function useAISearch(query) {
             state.totalPages = Math.min(data.total_pages || 1, 500);
             renderMovies();
             updateUI();
+            document.getElementById('currentTitle').textContent = t('resultsFor') + ': ' + query;
         } else {
-            await loadMovies();
+            renderEmptyState();
         }
     } catch (error) {
-        console.error('Search error:', error);
-        await loadMovies();
+        console.error('AI search error:', error);
+        renderEmptyState();
     }
 }
 
-// AI Search panel
+// ========================================
+// AI PANEL
+// ========================================
 window.toggleAIPanel = function() {
     const panel = document.getElementById('aiPanel');
-    panel.classList.toggle('open');
+    const btn = document.getElementById('aiFloatBtn');
+    const isOpen = panel.classList.toggle('open');
+    
+    panel.setAttribute('aria-hidden', (!isOpen).toString());
+    btn.setAttribute('aria-expanded', isOpen.toString());
+    
+    if (isOpen) {
+        document.getElementById('aiSearchInput').focus();
+    }
 };
 
 function doAiSearch() {
@@ -959,9 +1008,9 @@ function doAiSearch() {
     const query = input ? input.value.trim() : '';
     if (!query) return;
     
-    const panel = document.getElementById('aiPanel');
     const resultsDiv = document.getElementById('aiResults');
-    resultsDiv.innerHTML = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin"></i> <span>' + t('analyzing') + '...</span></div>';
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<div class="ai-loading"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i> ' + t('analyzing') + '...</div>';
     
     const tmdbLang = languageMap[state.currentLanguage] || 'pt-BR';
     const url = API_BASE + '/ai-search?q=' + encodeURIComponent(query) + '&page=1&language=' + tmdbLang;
@@ -975,21 +1024,24 @@ function doAiSearch() {
             renderMovies();
             updateUI();
             document.getElementById('currentTitle').textContent = t('resultsFor') + ': ' + query;
-            panel.classList.remove('open');
+            document.getElementById('aiPanel').classList.remove('open');
         } else {
-            resultsDiv.innerHTML = '<p style="text-align:center;color:var(--text-muted);">' + t('noResults') + '</p>';
+            resultsDiv.innerHTML = '<p class="ai-no-results">' + t('noResults') + '</p>';
         }
     }).catch(err => {
         console.error('AI search error:', err);
-        resultsDiv.innerHTML = '<p style="text-align:center;color:var(--text-muted);">' + t('error') + '</p>';
+        resultsDiv.innerHTML = '<p class="ai-error">' + t('error') + '</p>';
     });
 }
 
 window.askAI = doAiSearch;
-window.performAiSearch = doAiSearch;
 
-// Show movie details
+// ========================================
+// MOVIE MODAL
+// ========================================
 window.showMovieDetails = async function(movieId) {
+    lastFocusedElement = document.activeElement;
+    
     try {
         const tmdbLang = languageMap[state.currentLanguage] || 'pt-BR';
         const response = await fetch(API_BASE + '/movie?id=' + movieId + '&language=' + tmdbLang);
@@ -1017,12 +1069,12 @@ function showMovieModal(movie) {
     const posterUrl = movie.poster_path ? movie.poster_path : null;
     const hasVotes = movie.vote_count > 0;
     
-let streamingHtml = '';
-        if (movie.streaming && movie.streaming.length > 0) {
-const platformUrls = {
+    let streamingHtml = '';
+    if (movie.streaming && movie.streaming.length > 0) {
+        const platformUrls = {
             'netflix': 'https://www.netflix.com',
             'netflix standard with ads': 'https://www.netflix.com',
-'amazon prime video': 'https://www.primevideo.com',
+            'amazon prime video': 'https://www.primevideo.com',
             'prime video': 'https://www.primevideo.com',
             'amazon': 'https://www.primevideo.com',
             'prime': 'https://www.primevideo.com',
@@ -1053,17 +1105,9 @@ const platformUrls = {
             'rakuten': 'https://www.rakutentv.com',
             'mubi': 'https://mubi.com',
             'arte': 'https://www.arte.tv',
-            'klub': 'https://www.klub.tv',
-            'screen media': 'https://screenmedia.tv',
-            'cineb': 'https://www.cineb.net',
-            'filmot': 'https://filmot.org',
-            'fandor': 'https://www.fandor.com',
-            'vimeo': 'https://vimeo.com',
-            'viki': 'https://www.viki.com',
-            'sony crackle': 'https://www.crackle.com',
-            'crackle': 'https://www.crackle.com',
-            'freevee': 'https://www.freevee.com',
-            'twitch': 'https://www.twitch.tv',
+            'hulu': 'https://www.hulu.com',
+            'stan': 'https://www.stan.com.au',
+            'binge': 'https://www.binge.com.au',
             'star+': 'https://www.starplus.com',
             'star plus': 'https://www.starplus.com',
             'movistar+': 'https://ver.movistarplus.es',
@@ -1072,29 +1116,15 @@ const platformUrls = {
             'itv': 'https://www.itv.com',
             'all 4': 'https://www.channel4.com',
             'bbc i player': 'https://www.bbc.co.uk/iplayer',
-            'hulu': 'https://www.hulu.com',
             'directv': 'https://www.directv.com',
             'fandango at home': 'https://athome.fandango.com',
             'vudu': 'https://vudu.com',
-            'fandango': 'https://athome.fandango.com',
-            'sonyliv': 'https://www.sonyliv.com',
-            'zee5': 'https://www.zee5.com',
-            'jio cinema': 'https://www.jiocinema.com',
-            'voot': 'https://www.voot.com',
-            'eros now': 'https://erosnow.com',
-            'shahid': 'https://shahid.mbc.net',
-            'osn': 'https://www.osn.com',
-            'stan': 'https://www.stan.com.au',
-            'fetch tv': 'https://www.fetchtv.com.au',
-            'binge': 'https://www.binge.com.au'
-};
+        };
         
         const getPlatformUrl = (platformName) => {
             const normalized = platformName.toLowerCase().replace(/\s+/g, ' ').trim();
             for (const [key, url] of Object.entries(platformUrls)) {
-                if (normalized === key || normalized.includes(key) || key.includes(normalized)) {
-                    return url;
-                }
+                if (normalized === key || normalized.includes(key) || key.includes(normalized)) return url;
             }
             return null;
         };
@@ -1105,19 +1135,17 @@ const platformUrls = {
         const buy = movie.streaming.filter(p => p.type === 'buy');
         const freeAlt = movie.streaming.filter(p => p.type === 'free-alt');
         
-        const langStreaming = translations[state.currentLanguage] || translations['pt-BR'];
-        
         let html = '<div class="modal-platforms">';
         
         if (flatrate.length > 0 || flatrateFree.length > 0 || freeAlt.length > 0) {
-            html += '<h4><i class="fas fa-play"></i> ' + langStreaming.watch + '</h4>';
+            html += '<h4><i class="fas fa-play" aria-hidden="true"></i> ' + t('streaming') + '</h4>';
             html += '<div class="streaming-list">';
             
             if (freeAlt.length > 0) {
                 html += freeAlt.map(p => {
                     const url = p.link;
-                    return `<a href="${url}" target="_blank" class="stream-tag stream-free stream-free-alt" title="${p.name} - Opção Gratuita">
-                        <i class="fas fa-play"></i>
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag stream-free stream-free-alt" title="${p.name} - Opção Gratuita" aria-label="${p.name} - Assistir grátis">
+                        <i class="fas fa-play" aria-hidden="true"></i>
                         <span>${p.name}</span>
                     </a>`;
                 }).join('');
@@ -1127,9 +1155,9 @@ const platformUrls = {
                 html += flatrateFree.map(p => {
                     const url = getPlatformUrl(p.name);
                     if (url) {
-                        return `<a href="${url}" target="_blank" class="stream-tag stream-free" title="${p.name} (Gratuito)">
+                        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag stream-free" title="${p.name} (Gratuito)" aria-label="${p.name} - Gratuito">
                             <span>${p.name}</span>
-                            <i class="fas fa-tag" title="Gratuito"></i>
+                            <i class="fas fa-tag" title="Gratuito" aria-hidden="true"></i>
                         </a>`;
                     }
                     return '';
@@ -1140,7 +1168,7 @@ const platformUrls = {
                 html += flatrate.map(p => {
                     const url = getPlatformUrl(p.name);
                     if (url) {
-                        return `<a href="${url}" target="_blank" class="stream-tag" title="${p.name}">
+                        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag" title="${p.name}" aria-label="Assistir em ${p.name}">
                             <span>${p.name}</span>
                         </a>`;
                     }
@@ -1152,12 +1180,12 @@ const platformUrls = {
         }
         
         if (rent.length > 0) {
-            html += '<h4><i class="fas fa-shopping-cart"></i> ' + langStreaming.rent + '</h4>';
+            html += '<h4><i class="fas fa-shopping-cart" aria-hidden="true"></i> ' + t('rent') + '</h4>';
             html += '<div class="streaming-list">';
             html += rent.map(p => {
                 const url = getPlatformUrl(p.name);
                 if (url) {
-                    return `<a href="${url}" target="_blank" class="stream-tag stream-rent" title="Alugar em ${p.name}">
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag stream-rent" title="Alugar em ${p.name}" aria-label="Alugar em ${p.name}">
                         <span>${p.name}</span>
                     </a>`;
                 }
@@ -1167,12 +1195,12 @@ const platformUrls = {
         }
         
         if (buy.length > 0) {
-            html += '<h4><i class="fas fa-shopping-bag"></i> ' + langStreaming.buy + '</h4>';
+            html += '<h4><i class="fas fa-shopping-bag" aria-hidden="true"></i> ' + t('buy') + '</h4>';
             html += '<div class="streaming-list">';
             html += buy.map(p => {
                 const url = getPlatformUrl(p.name);
                 if (url) {
-                    return `<a href="${url}" target="_blank" class="stream-tag stream-buy" title="Comprar em ${p.name}">
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag stream-buy" title="Comprar em ${p.name}" aria-label="Comprar em ${p.name}">
                         <span>${p.name}</span>
                     </a>`;
                 }
@@ -1199,13 +1227,13 @@ const platformUrls = {
             <div class="modal-poster">
                 ${posterUrl ? 
                     `<img src="${posterUrl}" alt="${movie.title}">` :
-                    `<div class="poster-fallback"><i class="fas fa-film"></i></div>`
+                    `<div class="poster-placeholder" aria-hidden="true"><i class="fas fa-film"></i></div>`
                 }
             </div>
             <div class="modal-details">
                 <h3>${movie.title}</h3>
                 <div class="modal-tags">
-                    ${hasVotes && rating ? `<span class="rating-tag"><i class="fas fa-star"></i> ${rating}/10</span>` : ''}
+                    ${hasVotes && rating ? `<span class="rating-tag"><i class="fas fa-star" aria-hidden="true"></i> ${rating}/10</span>` : ''}
                     ${year ? `<span>${year}</span>` : ''}
                     ${movie.runtime ? `<span>${movie.runtime} min</span>` : ''}
                 </div>
@@ -1219,8 +1247,10 @@ const platformUrls = {
                 ${trailerLink ? `
                 <a href="${trailerLink}" 
                    target="_blank" 
-                   class="trailer-btn">
-                    <i class="fab fa-youtube"></i>
+                   rel="noopener noreferrer"
+                   class="trailer-btn"
+                   aria-label="${t('watchTrailer')} - ${movie.title}">
+                    <i class="fab fa-youtube" aria-hidden="true"></i>
                     <span>${t('watchTrailer')}</span>
                 </a>` : ''}
             </div>
@@ -1228,60 +1258,45 @@ const platformUrls = {
     `;
     
     modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    
+    // Focus trap
+    trapFocus(modal);
+    
+    // Focus close button
+    const closeBtn = modal.querySelector('.modal-close');
+    if (closeBtn) closeBtn.focus();
 }
 
 function closeMovieModal() {
-    document.getElementById('movieModal').classList.remove('open');
+    const modal = document.getElementById('movieModal');
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    
+    // Restore focus
+    if (lastFocusedElement) {
+        lastFocusedElement.focus();
+        lastFocusedElement = null;
+    }
 }
 
-// Navigation
+// ========================================
+// NAVIGATION
+// ========================================
 function toggleNavMenu() {
-    document.getElementById('navMenu').classList.toggle('open');
-}
-
-// Theme toggle
-function toggleTheme() {
-    const html = document.documentElement;
-    const themeIcon = document.getElementById('themeIcon');
-    const isDark = html.getAttribute('data-theme') === 'dark';
+    const menu = document.getElementById('navMenu');
+    const btn = document.querySelector('.hamburger-btn');
+    const isOpen = menu.classList.toggle('open');
     
-    if (isDark) {
-        html.setAttribute('data-theme', 'light');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-        }
-        localStorage.setItem('theme', 'light');
-    } else {
-        html.setAttribute('data-theme', 'dark');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-        localStorage.setItem('theme', 'dark');
-    }
+    btn.setAttribute('aria-expanded', isOpen.toString());
 }
 
-function loadTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    const html = document.documentElement;
-    const themeIcon = document.getElementById('themeIcon');
-    
-    if (savedTheme === 'dark') {
-        html.setAttribute('data-theme', 'dark');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-        }
-    } else {
-        html.setAttribute('data-theme', 'light');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-    }
-}
-
-
+// ========================================
+// WINDOW EXPORTS
+// ========================================
+window.goToPage = window.goToPage;
+window.showMovieDetails = window.showMovieDetails;
+window.toggleAIPanel = window.toggleAIPanel;
+window.askAI = window.askAI;
