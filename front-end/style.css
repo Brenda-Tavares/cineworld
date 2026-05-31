@@ -1261,6 +1261,8 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 72px;
+    height: 28px;
     text-decoration: none;
     transition: var(--transition);
     opacity: 0.5;
@@ -1271,9 +1273,8 @@ body {
 }
 
 .platforms-icons img.platform-img {
-    height: 22px;
-    width: auto;
-    max-width: 80px;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
     filter: brightness(0) invert(1);
     transition: var(--transition);
@@ -1339,8 +1340,9 @@ body {
         gap: var(--space-lg);
         flex-wrap: wrap;
     }
-    .platforms-icons img.platform-img {
-        height: 18px;
+    .platforms-icons a {
+        width: 60px;
+        height: 24px;
     }
 
     .footer-links {
