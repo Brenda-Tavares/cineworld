@@ -1315,14 +1315,14 @@ body {
 .footer-contact-email {
     display: block;
     font-size: var(--font-md);
-    color: var(--accent);
+    color: #d4956a;
     text-decoration: none;
     transition: var(--transition);
     word-break: break-all;
     font-weight: 600;
 }
 .footer-contact-email:hover {
-    color: var(--accent-light);
+    color: #e8a87c;
 }
 
 /* Mobile Footer */
