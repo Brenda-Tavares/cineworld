@@ -1,0 +1,60 @@
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+docs-private/
+# Node
+node_modules/
+package-lock.json
+
+# Vercel
+.vercel/
+.vercel_output/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+server.py
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Private notes
+duvidas_a_serem_sanadas.txt
+
+# Firebase (not used anymore)
+firebase-config.js
+
+# Backup files
+*.bak
+*.backup
+
+# Environment config with real keys
+.env.temp
+
+# Test files
+back-end/node_modules/
+back-end/package-lock.json
+
+# Dev scripts
+iniciar.bat
+
+# Cloudflare (not used)
+wrangler.toml
+pages.toml
+
+# Temp files
+*.tmp

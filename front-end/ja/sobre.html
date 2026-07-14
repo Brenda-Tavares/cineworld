@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>概要 - CineWorld</title>
+<link rel="stylesheet" href="/front-end/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: var(--bg-dark) !important; }
+        .legal-page { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
+        .legal-page h1 { font-size: 2rem; margin-bottom: 30px; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 15px; }
+        .legal-page h2 { font-size: 1.3rem; margin: 30px 0 15px; color: var(--accent); }
+        .legal-page p, .legal-page li { line-height: 1.8; margin-bottom: 15px; color: var(--text-light); }
+        .legal-page a { color: var(--accent); text-decoration: none; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--accent); text-decoration: none; font-weight: 500; }
+        .back-link:hover { color: var(--primary-light); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo-area" style="text-decoration: none; cursor: pointer;">
+                <div class="logo-box">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div>
+                    <div class="logo-text">CINEWORLD</div>
+                    <span class="logo-sub">映画を見つけて、視聴方法を確認</span>
+                </div>
+            </a>
+            
+            <div id="langSelectorContainer"></div>
+        </div>
+    </header>
+    <div class="legal-page">
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> ホームに戻る</a>
+        <h1><i class="fas fa-film"></i> CineWorldについて</h1>
+        <p>CineWorldは、次の映画を見つけるための映画発見ウェブサイトです。</p>
+        <h2><i class="fas fa-star"></i> ミッション</h2>
+        <p>映画やシリーズの検索を容易にし、新しいコンテンツを発見するための直感的な体験を提供します。</p>
+        <h2><i class="fas fa-heart"></i> 提供するサービス</h2>
+        <ul>
+            <li>映画とシリーズの完全なカタログ</li>
+            <li>ストリーミングプラットフォームの情報</li>
+            <li>AIによるスマート検索</li>
+            <li>お気に入りと履歴</li>
+        </ul>
+        <p style="margin-top: 30px;"><em>最終更新：2026</em></p>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:15px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.5;">
+            CineWorldは動画ファイルをホストしていません。すべてのコンテンツはTMDB API（The Movie Database）から提供されています。
+            視聴リンクは正当なストリーミングプラットフォーム（Netflix、Prime Video、Disney+など）に誘導されます。
+        </p>
+    </div>
+
+    <script src="/front-end/js/lang-selector.js" defer></script>
+</body>
+</html>

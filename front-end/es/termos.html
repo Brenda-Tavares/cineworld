@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos de Uso - CineWorld</title>
+<link rel="stylesheet" href="/front-end/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: var(--bg-dark) !important; }
+        .legal-page { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
+        .legal-page h1 { font-size: 2rem; margin-bottom: 30px; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 15px; }
+        .legal-page h2 { font-size: 1.3rem; margin: 30px 0 15px; color: var(--accent); }
+        .legal-page p, .legal-page li { line-height: 1.8; margin-bottom: 15px; color: var(--text-light); }
+        .legal-page a { color: var(--accent); text-decoration: none; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--accent); text-decoration: none; font-weight: 500; }
+        .back-link:hover { color: var(--primary-light); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo-area" style="text-decoration: none; cursor: pointer;">
+                <div class="logo-box">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div>
+                    <div class="logo-text">CINEWORLD</div>
+                    <span class="logo-sub">Descubre películas y dónde verlas</span>
+                </div>
+            </a>
+            
+            <div id="langSelectorContainer"></div>
+        </div>
+    </header>
+    <div class="legal-page">
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Volver a inicio</a>
+        <h1><i class="fas fa-file-contract"></i> Términos de Uso</h1>
+        <p>Al acceder y usar CineWorld, aceptas estos términos.</p>
+        <h2><i class="fas fa-info-circle"></i> Uso del Sitio</h2>
+        <p>CineWorld se proporciona para uso personal y no comercial. Puedes navegar y buscar información sobre películas y series.</p>
+        <h2><i class="fas fa-ban"></i> Restricciones</h2>
+        <ul>
+            <li>Prohibido reproducir contenido sin autorización</li>
+            <li>Prohibido usar para fines ilegales</li>
+            <li>Prohibido intentar acceder a datos de forma no autorizada</li>
+        </ul>
+        <h2><i class="fas fa-exclamation-triangle"></i> Exención de Responsabilidad</h2>
+        <p>El sitio proporciona información de terceros (TMDB). No garantizamos la exactitud de la información.</p>
+        <h2><i class="fas fa-shield-alt"></i> Propiedad Intelectual</h2>
+        <p>Todo el contenido pertenece a los respectivos propietarios. El uso es solo para fines informativos.</p>
+        <h2><i class="fas fa-envelope"></i> Contacto</h2>
+        <p>Para dudas sobre estos términos, usa la página de contacto del sitio.</p>
+        <p style="margin-top: 30px;"><em>Última actualización: 2026</em></p>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:15px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.5;">
+            CineWorld no aloja ningún archivo de video. Todo el contenido es proporcionado por la API oficial de TMDB (The Movie Database). 
+            Los enlaces para ver están dirigidos a plataformas de streaming legítimas (Netflix, Prime Video, Disney+, etc.).
+        </p>
+    </div>
+
+    <script src="/front-end/js/lang-selector.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineWorld - Descubra filmes do mundo inteiro</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="CineWorld - Descubra filmes do mundo inteiro. Encontre streaming, avaliações, sinopses e mais. Assista onde e quando quiser.">
+    <meta name="keywords" content="filmes, cinema, streaming, series, lançamentos, avaliações, críticas, TMDB">
+    <meta name="author" content="ShipClaw Devs">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CineWorld - Descubra filmes do mundo inteiro">
+    <meta property="og:description" content="Encontre filmes para assistir. Busca inteligente, streaming options e muito mais.">
+    <meta property="og:url" content="https://cineworld-site.vercel.app/">
+    <meta property="og:site_name" content="CineWorld">
+    <meta property="og:image" content="https://cineworld-site.vercel.app/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CineWorld - Descubra filmes do mundo inteiro">
+    <meta name="twitter:description" content="Encontre filmes para assistir. Busca inteligente, streaming options e muito mais.">
+    <meta name="twitter:image" content="https://cineworld-site.vercel.app/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23dc2626'/%3E%3Cpath d='M180 120 L380 256 L180 392 Z' fill='white'/%3E%3C/svg%3E">
+    
+    <link rel="stylesheet" href="/front-end/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js" integrity="sha512-6WMuXRE4JbnR6Mpm2k+1I2Efm35p3+SitE6FqUJ/DH8jVSHlmxrAqhdNq2FMwl0jbCQ2HueuXGZBLn2THFYB/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "CineWorld",
+        "url": "https://cineworld-site.vercel.app",
+        "description": "Descubra filmes do mundo inteiro. Encontre streaming, avaliações, sinopses e mais.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://cineworld-site.vercel.app/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script>
+        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+    <!-- Skip to content -->
+    <a href="#moviesGrid" class="skip-link" id="skipLink">Pular para o conteúdo</a>
+    
+    <!-- LOADING -->
+    <div id="loading" role="alert" aria-live="polite">
+        <div class="loading-spinner">
+            <i class="fas fa-film" aria-hidden="true"></i>
+            <p>Carregando...</p>
+        </div>
+    </div>
+    
+    <!-- HEADER -->
+    <header class="header" role="banner">
+        <div class="header-inner">
+            <!-- Logo -->
+            <a href="/" class="logo-area" aria-label="CineWorld - Página inicial">
+                <div class="logo-box" aria-hidden="true">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div>
+                    <div class="logo-text">CINEWORLD</div>
+                    <span class="logo-sub" id="siteTagline">Descubra filmes e onde assistir</span>
+                </div>
+            </a>
+            
+            <!-- Navegação -->
+            <button class="hamburger-btn" onclick="toggleNavMenu()" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navMenu">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu" role="navigation" aria-label="Menu principal">
+                <a href="/" class="nav-link" aria-label="Página inicial"><i class="fas fa-home" aria-hidden="true"></i> <span id="navHome">Início</span></a>
+                <a href="/sobre" class="nav-link" id="navAboutLink" aria-label="Sobre"><i class="fas fa-info-circle" aria-hidden="true"></i> <span id="navAbout">Sobre</span></a>
+                <a href="/privacidade" class="nav-link" id="navPrivacyLink" aria-label="Política de Privacidade"><i class="fas fa-shield-alt" aria-hidden="true"></i> <span id="navPrivacy">Privacidade</span></a>
+                <a href="/termos" class="nav-link" id="navTermsLink" aria-label="Termos de Uso"><i class="fas fa-file-contract" aria-hidden="true"></i> <span id="navTerms">Termos</span></a>
+            </nav>
+            
+            <!-- Ações -->
+            <div class="header-actions">
+                <div id="langSelectorContainer"></div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- BUSCA CENTRALIZADA -->
+    <section class="main-search" role="search" aria-label="Busca de filmes">
+        <div class="search-box-large">
+            <label for="mainSearchInput" class="sr-only">Buscar filmes</label>
+            <input type="text" id="mainSearchInput" placeholder="O que você quer assistir hoje?">
+            <button id="mainSearchBtn" aria-label="Buscar filmes">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </button>
+        </div>
+    </section>
+    
+    <!-- FILTROS -->
+    <section class="filters" aria-label="Filtros de filmes">
+        <div class="filters-inner">
+            <div class="filter-group">
+                <span class="filter-label" id="filterOriginLabel">Filmes:</span>
+                <div class="custom-filter" id="filterOriginContainer">
+                    <button class="custom-filter-btn" data-filter="origin" aria-expanded="false" aria-label="Filtrar por origem">
+                        <span class="custom-filter-value" id="filterOriginValue">Todos</span>
+                        <i class="fas fa-chevron-down custom-filter-chevron" aria-hidden="true"></i>
+                    </button>
+                    <div class="custom-filter-panel" role="listbox" id="filterOriginPanel"></div>
+                </div>
+                <select id="filterOriginSelect" class="filter-select" aria-label="Filtrar por origem" style="display:none">
+                    <option value="all">Todos</option>
+                    <option value="BR">Nacionais</option>
+                    <option value="foreign">Internacionais</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <span class="filter-label" id="filterSortLabel">Ordenar:</span>
+                <div class="custom-filter" id="filterSortContainer">
+                    <button class="custom-filter-btn" data-filter="sort" aria-expanded="false" aria-label="Ordenar filmes">
+                        <span class="custom-filter-value" id="filterSortValue">Populares</span>
+                        <i class="fas fa-chevron-down custom-filter-chevron" aria-hidden="true"></i>
+                    </button>
+                    <div class="custom-filter-panel" role="listbox" id="filterSortPanel"></div>
+                </div>
+                <select id="filterSortSelect" class="filter-select" aria-label="Ordenar filmes" style="display:none">
+                    <option value="popularity">Populares</option>
+                    <option value="rating_desc">Melhores Avaliados</option>
+                    <option value="worst">Piores Avaliados</option>
+                    <option value="release_desc">Lançamentos</option>
+                    <option value="upcoming">Futuros Lançamentos</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <span class="filter-label" id="filterYearLabel">Ano:</span>
+                <div class="custom-filter" id="filterYearContainer">
+                    <button class="custom-filter-btn" data-filter="year" aria-expanded="false" aria-label="Filtrar por ano">
+                        <span class="custom-filter-value" id="filterYearValue">Todos</span>
+                        <i class="fas fa-chevron-down custom-filter-chevron" aria-hidden="true"></i>
+                    </button>
+                    <div class="custom-filter-panel" role="listbox" id="filterYearPanel"></div>
+                </div>
+                <select id="filterYearSelect" class="filter-select" aria-label="Filtrar por ano" style="display:none">
+                    <option value="" data-key="allYears">Todos</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2010">2010-2015</option>
+                    <option value="2000">2000-2009</option>
+                    <option value="1990">1990-1999</option>
+                </select>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SIDEBAR + CONTEÚDO -->
+    <div class="main-layout">
+        <!-- SIDEBAR GENEROS (Desktop) -->
+        <aside class="sidebar desktop-only" aria-label="Filtrar por gênero">
+            <h2 class="sidebar-title" id="genresTitle">Gêneros</h2>
+            <div class="genres-list" id="genresList" role="listbox" aria-label="Lista de gêneros">
+                <!-- Generos carregados via JS -->
+            </div>
+        </aside>
+        
+        <!-- CONTEÚDO -->
+        <main class="container" id="mainContent">
+            <div class="content-header">
+                <h1 class="content-title" id="currentTitle">Filmes Populares</h1>
+                <span class="results-count" id="moviesCount" aria-live="polite">Carregando...</span>
+            </div>
+            
+            <div class="movies-grid" id="moviesGrid" role="list" aria-label="Lista de filmes">
+                <!-- Filmes carregados via JS -->
+            </div>
+            
+            <!-- Paginação -->
+            <nav class="pagination" id="paginationNav" role="navigation" aria-label="Paginação">
+                <button id="prevPage" disabled aria-label="Página anterior">
+                    <i class="fas fa-chevron-left" aria-hidden="true"></i> <span id="prevText">Anterior</span>
+                </button>
+                <div class="page-numbers" id="pageNumbers" role="group" aria-label="Números de página"></div>
+                <span id="pageIndicator" class="page-indicator" aria-live="polite"></span>
+                <button id="nextPage" disabled aria-label="Próxima página">
+                    <span id="nextText">Próxima</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+            </nav>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="platforms-icons" aria-label="Plataformas de streaming">
+            <a href="https://www.netflix.com" target="_blank" rel="noopener noreferrer" title="Netflix" aria-label="Netflix">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/330px-Netflix_2015_logo.svg.png" alt="Netflix" class="platform-img" loading="lazy">
+            </a>
+            <a href="https://www.primevideo.com" target="_blank" rel="noopener noreferrer" title="Prime Video" aria-label="Prime Video">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Amazon_Prime_Video_logo.svg/330px-Amazon_Prime_Video_logo.svg.png" alt="Prime Video" class="platform-img" loading="lazy">
+            </a>
+            <a href="https://www.disneyplus.com" target="_blank" rel="noopener noreferrer" title="Disney+" aria-label="Disney+">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disney%2B_logo.svg/330px-Disney%2B_logo.svg.png" alt="Disney+" class="platform-img" loading="lazy">
+            </a>
+            <a href="https://www.max.com" target="_blank" rel="noopener noreferrer" title="Max" aria-label="Max">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Max_logo.svg/330px-Max_logo.svg.png" alt="Max" class="platform-img" loading="lazy">
+            </a>
+            <a href="https://globoplay.globo.com" target="_blank" rel="noopener noreferrer" title="Globoplay" aria-label="Globoplay">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Globoplay_logo_2020.svg/330px-Globoplay_logo_2020.svg.png" alt="Globoplay" class="platform-img" loading="lazy">
+            </a>
+            <a href="https://pluto.tv" target="_blank" rel="noopener noreferrer" title="Pluto TV" aria-label="Pluto TV">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Pluto_TV_logo.svg/330px-Pluto_TV_logo.svg.png" alt="Pluto TV" class="platform-img" loading="lazy">
+            </a>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-links">
+                <a href="/sobre" id="footerAbout">Sobre</a>
+                <a href="/privacidade" id="footerPrivacy">Privacidade</a>
+                <a href="/termos" id="footerTerms">Termos</a>
+            </div>
+            <p class="footer-disclaimer">
+                CineWorld não hospeda nenhum arquivo de vídeo. Todo o conteúdo é fornecido pela API oficial do TMDB (The Movie Database).
+                Os links para assistir são direcionados para plataformas de streaming legítimas.
+            </p>
+            <p class="footer-copy">
+                &copy; 2026 CineWorld. Desenvolvido por <strong>ShipClaw&trade;</strong>
+            </p>
+        </div>
+    </footer>
+    
+    <!-- MODAL FILME -->
+    <div class="modal" id="movieModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalhes</h2>
+                <button class="modal-close" onclick="closeMovieModal()" aria-label="Fechar modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+    
+    <!-- BOTAO IA FLUTUANTE -->
+    <button class="ai-float-btn" id="aiFloatBtn" title="O que deseja assistir? Pergunte à IA" onclick="toggleAIPanel()" aria-label="Abrir assistente de filmes por inteligência artificial" aria-expanded="false" aria-controls="aiPanel">
+        <i class="fas fa-robot" aria-hidden="true"></i>
+    </button>
+    
+    <!-- PAINEL IA FLUTUANTE -->
+    <div class="ai-panel" id="aiPanel" role="dialog" aria-label="Assistente de filmes IA" aria-hidden="true">
+        <div class="ai-panel-header">
+            <div class="ai-panel-title">
+                <i class="fas fa-robot" aria-hidden="true"></i>
+                <span id="aiTitleText">O que deseja assistir?</span>
+            </div>
+            <button class="ai-panel-close" onclick="toggleAIPanel()" aria-label="Fechar assistente IA">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="ai-panel-messages" id="aiMessages">
+            <div class="ai-message ai-message-bot">
+                <div class="ai-message-content">
+                    <p id="aiGreetingText">Olá! Sou a assistente de filmes do CineWorld.</p>
+                    <p id="aiDescribeText">Descreva o que você quer assistir:</p>
+                    <p id="aiExampleText" style="font-size: var(--font-sm); color: var(--text-muted); margin-top: var(--space-sm);">Ex: "filme de ação com robôs", "comédia romântica indiana"</p>
+                </div>
+            </div>
+        </div>
+        <div class="ai-panel-input">
+            <label for="aiSearchInput" class="sr-only">Descreva o filme que deseja buscar</label>
+            <input type="text" id="aiSearchInput" placeholder="Descreva o filme..." onkeydown="if(event.key==='Enter')askAI()">
+            <button onclick="askAI()" title="Buscar" aria-label="Enviar busca">
+                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="ai-panel-results" id="aiResults"></div>
+    </div>
+
+    
+    <script src="/front-end/js/lang-selector.js" defer></script>
+    <script src="/front-end/js/filter-dropdowns.js" defer></script>
+    <script src="/front-end/script.js"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7072295078376521" crossorigin="anonymous"></script>
+</body>
+</html>

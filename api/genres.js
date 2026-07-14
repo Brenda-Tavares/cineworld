@@ -1,0 +1,51 @@
+const axios = require('axios');
+
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
+
+if (!TMDB_API_KEY) {
+    module.exports = (req, res) => res.status(500).json({ error: 'TMDB_API_KEY not configured' });
+    return;
+}
+const TMDB_BASE = 'https://api.themoviedb.org/3';
+
+const ALLOWED_LANGUAGES = ['pt-BR', 'en-US', 'es-ES', 'zh-CN', 'zh-TW', 'ja-JP', 'ru-RU', 'ko-KR'];
+const CACHE_DURATION = 60 * 60 * 1000;
+let genresCache = {};
+
+module.exports = async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://cineworld-site.vercel.app');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    
+    let { language = 'pt-BR' } = req.query;
+    
+    language = ALLOWED_LANGUAGES.includes(language) ? language : 'pt-BR';
+    
+    const cached = genresCache[language];
+    if (cached && cached.timestamp && (Date.now() - cached.timestamp < CACHE_DURATION)) {
+        return res.json(cached.data);
+    }
+    
+    try {
+        const response = await axios.get(`${TMDB_BASE}/genre/movie/list`, {
+            params: {
+                api_key: TMDB_API_KEY,
+                language: language
+            }
+        });
+        
+        genresCache[language] = {
+            data: response.data.genres,
+            timestamp: Date.now()
+        };
+        
+        res.json(response.data.genres);
+    } catch (error) {
+        console.error('Erro ao buscar géneros:', error.message);
+        res.status(500).json({ error: 'Erro ao buscar géneros' });
+    }
+};

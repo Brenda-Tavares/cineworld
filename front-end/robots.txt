@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /back-end/
+
+Sitemap: https://cineworld-site.vercel.app/sitemap.xml
