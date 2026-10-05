@@ -19,6 +19,9 @@
     { "src": "/zh/sobre", "dest": "/front-end/zh/sobre.html" },
     { "src": "/zh/privacidade", "dest": "/front-end/zh/privacidade.html" },
     { "src": "/zh/termos", "dest": "/front-end/zh/termos.html" },
+    { "src": "/zh-hk/sobre", "dest": "/front-end/zh-hk/sobre.html" },
+    { "src": "/zh-hk/privacidade", "dest": "/front-end/zh-hk/privacidade.html" },
+    { "src": "/zh-hk/termos", "dest": "/front-end/zh-hk/termos.html" },
     { "src": "/ja/sobre", "dest": "/front-end/ja/sobre.html" },
     { "src": "/ja/privacidade", "dest": "/front-end/ja/privacidade.html" },
     { "src": "/ja/termos", "dest": "/front-end/ja/termos.html" },
@@ -38,14 +41,13 @@
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://pagead2.googlesyndication.com https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https://image.tmdb.org https://upload.wikimedia.org https://www.google-analytics.com https://pagead2.googlesyndication.com data:; connect-src 'self' https://api.themoviedb.org; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://www.google.com https://pagead2.googlesyndication.com; object-src 'none'; base-uri 'self'" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https://image.tmdb.org https://upload.wikimedia.org data:; connect-src 'self'; font-src 'self' https://fonts.gstatic.com data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" }
       ]
     },
     {
-      "source": "/front-end/(.*)",
+      "source": "/front-end/(.*)\\.(js|css|svg|png|jpg|jpeg|webp|ico|woff|woff2|ttf|otf)$",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]

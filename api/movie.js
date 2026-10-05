@@ -1,196 +1,120 @@
-const axios = require('axios');
+const { checkFreeStreaming } = require('../lib/free-streaming');
 
-const TMDB_API_KEY = process.env.TMDB_API_KEY;
-
-if (!TMDB_API_KEY) {
-    module.exports = (req, res) => res.status(500).json({ error: 'TMDB_API_KEY not configured' });
-    return;
-}
-const TMDB_BASE = 'https://api.themoviedb.org/3';
-const TMDB_IMAGE = 'https://image.tmdb.org/t/p/w500';
-
-const ALLOWED_LANGUAGES = ['pt-BR', 'en-US', 'es-ES', 'zh-CN', 'zh-TW', 'ja-JP', 'ru-RU', 'ko-KR'];
-
-module.exports = async (req, res) => {
+module.exports = async function handler(req, res) {
+    // CORS
     res.setHeader('Access-Control-Allow-Origin', 'https://cineworld-site.vercel.app');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    
+
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
-    
-    let { id, language = 'pt-BR' } = req.query;
-    
-    if (!id) {
-        return res.status(400).json({ error: 'ID obrigatório' });
+
+    if (req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method not allowed' });
     }
-    
-    id = parseInt(id);
-    if (!id || id < 1 || id > 2000000) {
-        return res.status(400).json({ error: 'ID inválido: ' + id });
+
+    const { createLimiter } = require('../lib/rate-limit');
+    const checkRate = createLimiter({ limit: 120, message: 'Muitas requisicoes. Tente novamente em instantes.' });
+    if (!checkRate(req, res)) return;
+
+    const movieId = req.query.id;
+    const language = req.query.language || 'pt-BR';
+
+    if (!movieId) {
+        return res.status(400).json({ error: 'ID do filme é obrigatório' });
     }
-    
-    language = ALLOWED_LANGUAGES.includes(language) ? language : 'pt-BR';
-    
+
     try {
-        // Buscar detalhes do filme
-        const movieRes = await axios.get(`${TMDB_BASE}/movie/${id}`, {
-            params: {
-                api_key: TMDB_API_KEY,
-                language: language
-            }
-        });
-        
-        // Buscar provedores de streaming
-        let providersRes;
-        try {
-            providersRes = await axios.get(`${TMDB_BASE}/movie/${id}/watch/providers`, {
-                params: { api_key: TMDB_API_KEY }
-            });
-        } catch (e) {
-            providersRes = { data: { results: {} } };
+        const apiKey = process.env.TMDB_API_KEY;
+        if (!apiKey) {
+            return res.status(500).json({ error: 'TMDB_API_KEY não configurada' });
         }
-        
-        // Buscar vídeos/trailer
-        let videosRes;
-        try {
-            videosRes = await axios.get(`${TMDB_BASE}/movie/${id}/videos`, {
-                params: { api_key: TMDB_API_KEY }
-            });
-        } catch (e) {
-            videosRes = { data: { results: [] } };
-        }
-        
-        // Processa streaming - apenas plataformas 100% gratuitas
-        const freeStreamingServices = ['Tubi', 'Pluto TV', 'Peacock', 'Crackle'];
-        const checkFreeStreaming = (name) => freeStreamingServices.some(free => name.toLowerCase().includes(free.toLowerCase()));
-        
-        // Mapeamento de links diretos para plataformas populares
-        const platformLinks = {
-            // Streamings principais
-            'Netflix': 'https://www.netflix.com',
-            'Amazon Prime Video': 'https://www.primevideo.com',
-            'Disney': 'https://www.disneyplus.com',
-            'Disney+': 'https://www.disneyplus.com',
-            'HBO Max': 'https://www.hbomax.com',
-            'HBO': 'https://www.hbomax.com',
-            'Apple TV': 'https://tv.apple.com',
-            'Paramount': 'https://www.paramountplus.com',
-            'Globo': 'https://globoplay.globo.com',
-            
-            // Streamings gratuitos
-            'Tubi': 'https://tubi.tv',
-            'Pluto TV': 'https://pluto.tv',
-            'Peacock': 'https://www.peacocktv.com',
-            'Crackle': 'https://www.crackle.com',
-            'Viki': 'https://www.viki.com',
-            'Rakuten': 'https://www.rakuten.tv',
-            'Kanopy': 'https://www.kanopy.com',
-            'Freevee': 'https://www.freevee.com',
-            'Xumo': 'https://www.xumo.com',
-            'Plex': 'https://www.plex.tv',
-            'Crunchyroll': 'https://www.crunchyroll.com',
-            'Muse': 'https://muse.ai',
-            'Mubi': 'https://mubi.com',
-            'Shudder': 'https://www.shudder.com',
-            'Yidio': 'https://www.yidio.com',
-            'Vudu': 'https://www.vudu.com',
-            
-            // Streamings brasileiros
-            'Claro': 'https://www.clarotvplus.com.br',
-            'Claro tv': 'https://www.clarotvplus.com.br',
-            'Sky': 'https://www.sky.com.br',
-            'Telecine': 'https://www.telecine.com.br',
-            'Looke': 'https://www.looke.com.br',
-            'PlayPlus': 'https://www.playplus.com',
-            'Glogin': 'https://globoplay.globo.com',
-            'Amazon Channels': 'https://www.primevideo.com/channels',
-            
-            // Outros
-            'Google Play': 'https://play.google.com/store/movies',
-            'YouTube': 'https://www.youtube.com',
-            'iTunes': 'https://tv.apple.com',
-            'Microsoft': 'https://www.microsoft.com/store/movies'
-        };
-        
-        const getPlatformLink = (name, movieTitle) => {
-            // Normaliza o nome da plataforma
-            const normalizedName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-            
-            // Mapeamento de plataformas conhecidas
-            for (const [platform, url] of Object.entries(platformLinks)) {
-                if (name.toLowerCase().includes(platform.toLowerCase())) {
-                    return url;
-                }
-            }
-            
-            // Tenta criar URL baseada em palavras-chave do nome
-            const searchName = name.toLowerCase();
-            if (searchName.includes('netflix')) return 'https://www.netflix.com';
-            if (searchName.includes('prime') || searchName.includes('amazon')) return 'https://www.primevideo.com';
-            if (searchName.includes('disney') || searchName.includes('plus')) return 'https://www.disneyplus.com';
-            if (searchName.includes('hbo')) return 'https://www.hbomax.com';
-            if (searchName.includes('globoplay') || searchName.includes('globo')) return 'https://globoplay.globo.com';
-            if (searchName.includes('apple') || searchName.includes('tv')) return 'https://tv.apple.com';
-            if (searchName.includes('youtube')) return 'https://www.youtube.com';
-            if (searchName.includes('play') || searchName.includes('google')) return 'https://play.google.com/store/movies';
-            
-            // Se plataforma não reconhecida, retorna null (não mostra link)
-            return null;
-        };
-        
+
+        const url = `https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=${apiKey}&language=${language}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
         let streaming = [];
-        const providers = providersRes.data.results || {};
-        
+
+        // Função para adicionar provedores com tipo
         const addProviders = (list, type) => {
             if (list && Array.isArray(list)) {
                 list.forEach(p => {
-                    // youtube só é gratuito se for streaming, não rent/buy
+                    // Só gratuito se for streaming (flatrate)
                     const isFree = type === 'flatrate' && checkFreeStreaming(p.provider_name);
                     streaming.push({
                         name: p.provider_name,
                         logo: p.logo_path ? 'https://image.tmdb.org/t/p/w92' + p.logo_path : null,
                         type: type,
                         isFree: isFree,
-                        link: getPlatformLink(p.provider_name, movieRes.data.title)
+                        link: getPlatformLink(p.provider_name, data.id || movieId)
                     });
                 });
             }
         };
-        
-        if (providers.BR) {
-            addProviders(providers.BR.flatrate, 'flatrate');
-            addProviders(providers.BR.rent, 'rent');
-            addProviders(providers.BR.buy, 'buy');
-        }
-        
-        if (streaming.length === 0 && providers.US) {
-            addProviders(providers.US.flatrate, 'flatrate');
-            addProviders(providers.US.rent, 'rent');
-            addProviders(providers.US.buy, 'buy');
-        }
-        
-        // Busca trailer
-        let trailerUrl = null;
-        const videos = videosRes.data.results || [];
-        const trailer = videos.find(v => v.site === 'YouTube' && v.type === 'Trailer') ||
-                    videos.find(v => v.site === 'YouTube' && v.type === 'Trailer' && v.official);
-        if (trailer) {
-            trailerUrl = `https://www.youtube.com/watch?v=${trailer.key}`;
-        }
-        
-        const movie = {
-            ...movieRes.data,
-            poster_path: movieRes.data.poster_path ? TMDB_IMAGE + movieRes.data.poster_path : null,
-            backdrop_path: movieRes.data.backdrop_path ? 'https://image.tmdb.org/t/p/w780' + movieRes.data.backdrop_path : null,
-            streaming: streaming,
-            trailer: trailerUrl
-        };
 
-        res.json({ success: true, movie });
+        // BR
+        if (data.results && data.results.BR) {
+            addProviders(data.results.BR.flatrate, 'flatrate');
+            addProviders(data.results.BR.rent, 'rent');
+            addProviders(data.results.BR.buy, 'buy');
+            addProviders(data.results.BR.ads, 'ads');
+        }
+        // US fallback
+        if (data.results && data.results.US && streaming.length === 0) {
+            addProviders(data.results.US.flatrate, 'flatrate');
+            addProviders(data.results.US.rent, 'rent');
+            addProviders(data.results.US.buy, 'buy');
+            addProviders(data.results.US.ads, 'ads');
+        }
+
+        return res.status(200).json({
+            id: movieId,
+            streaming: streaming
+        });
     } catch (error) {
-        console.error('movie.js error:', error.message);
-        res.status(500).json({ error: 'Erro ao buscar filme: ' + error.message });
+        return res.status(500).json({ error: 'Erro ao buscar plataformas' });
     }
 };
+
+// Mapa simplificado de links (mantido)
+function getPlatformLink(platformName, movieTitle) {
+    const links = {
+        'Netflix': 'https://www.netflix.com',
+        'Prime Video': 'https://www.primevideo.com',
+        'Amazon Prime Video': 'https://www.primevideo.com',
+        'Disney+': 'https://www.disneyplus.com',
+        'Disney Plus': 'https://www.disneyplus.com',
+        'Max': 'https://www.max.com',
+        'HBO Max': 'https://www.max.com',
+        'Apple TV': 'https://tv.apple.com',
+        'Apple TV+': 'https://tv.apple.com',
+        'Paramount+': 'https://www.paramountplus.com',
+        'Paramount Plus': 'https://www.paramountplus.com',
+        'Globoplay': 'https://globoplay.globo.com',
+        'Star+': 'https://www.starplus.com',
+        'Star Plus': 'https://www.starplus.com',
+        'Lionsgate+': 'https://www.lionsgateplus.com',
+        'Mubi': 'https://mubi.com',
+        'Looke': 'https://www.looke.com.br',
+        'O2 Filmes': 'https://www.o2filmes.com.br',
+        'Vix': 'https://vix.com',
+        'Claro Video': 'https://www.clarovideo.com',
+        'NOW': 'https://www.clarovideo.com',
+        'Telecine': 'https://www.telecine.com.br',
+        'HBO Go': 'https://www.hbogo.com.br',
+        'Tubi': 'https://tubitv.com',
+        'Pluto TV': 'https://pluto.tv',
+        'Peacock': 'https://www.peacocktv.com',
+        'Crackle': 'https://www.crackle.com',
+        'Freevee': 'https://www.freevee.com',
+        'YouTube': 'https://www.youtube.com',
+        'Rakuten': 'https://www.rakuten.tv',
+        'Kanopy': 'https://www.kanopy.com',
+        'Xumo': 'https://www.xumo.com',
+        'Plex': 'https://watch.plex.tv',
+        'Hoopla': 'https://www.hoopladigital.com'
+    };
+    return links[platformName] || '#';
+}
