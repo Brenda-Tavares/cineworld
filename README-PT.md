@@ -113,15 +113,6 @@ CineWorld has no accounts, no database and no advertising. It does not use Googl
 
 Third parties that receive data: TMDB (search terms), Gemini (your query, only when using AI search), Google Fonts (IP address and referring page), Vercel (hosting and request logs), Vercel Speed Insights (Core Web Vitals metrics and browser user agent), cdnjs (icons) and Wikimedia Commons (platform logos). Full details are in the privacy policy, available in all 8 languages.
 
-## Technical Details
-
-- **Architecture:** Serverless on Vercel with `/api/*` functions; static frontend under `/front-end/`.
-- **CSP (production-ready):** strict, no inline event handlers; DOMPurify on client render; HTTPS enforced.
-- **Security:** per-IP rate limiting (`lib/rate-limit.js`), CORS restricted to production origin, input validation/sanitization.
-- **Dependencies:** only `axios` runtime, `@vercel/speed-insights` devDependency; `npm audit = 0` (Node 20.x).
-- **Quality assurance:** JS syntax validated (`node -c`) across modified endpoints; no secrets in repo; EOL normalized; CSP-aware refactor to avoid unsafe-inline blocking.
-- **Ongoing:** continuous review for hardening (headers, cache, consistency); tests/checks remain lightweight and run on demand.
-
 ## Credits
 
 Catalogue data and artwork provided by [TMDB](https://www.themoviedb.org/). This product uses the TMDB API but is not endorsed or certified by TMDB.

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>關於 - CineWorld</title>
+    <link rel="stylesheet" href="/front-end/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: var(--bg-dark) !important; }
+        .legal-page { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
+        .legal-page h1 { font-size: 2rem; margin-bottom: 30px; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 15px; }
+        .legal-page h2 { font-size: 1.3rem; margin: 30px 0 15px; color: var(--accent); }
+        .legal-page p, .legal-page li { line-height: 1.8; margin-bottom: 15px; color: var(--text-light); }
+        .legal-page ul { padding-left: 20px; }
+        .legal-page a { color: var(--accent); text-decoration: none; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--accent); text-decoration: none; font-weight: 500; }
+        .back-link:hover { color: var(--primary-light); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo-area" style="text-decoration: none; cursor: pointer;">
+                <div class="logo-box">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div>
+                    <div class="logo-text">CINEWORLD</div>
+                    <span class="logo-sub">發掘電影同埋喺邊度睇</span>
+                </div>
+            </a>
+            <div id="langSelectorContainer"></div>
+        </div>
+    </header>
+    <div class="legal-page">
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> 返回主頁</a>
+        <h1><i class="fas fa-film"></i> 關於 CineWorld</h1>
+        <p>CineWorld 係一個電影發現網站，幫助你搵到下一部想睇嘅電影。</p>
+        <h2><i class="fas fa-star"></i> 我哋嘅使命</h2>
+        <p>簡化電影同劇集嘅搜尋，提供直觀嘅體驗去發掘新內容。</p>
+        <h2><i class="fas fa-heart"></i> 我哋提供</h2>
+        <ul>
+            <li>完整嘅電影同劇集目錄</li>
+            <li>串流平台資訊</li>
+            <li>人工智能驅動嘅智能搜尋</li>
+            <li>按類型、年份同埋出品國家篩選</li>
+        </ul>
+        <p style="margin-top: 30px;"><em>最後更新：2026</em></p>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:15px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.5;">
+            CineWorld 唔會託管任何影片檔案。所有內容均由 TMDB 官方 API 提供。
+            觀看連結指向合法嘅串流平台（例如 Netflix、Prime Video、Disney+）。
+        </p>
+    </div>
+
+    <script src="/front-end/js/lang-selector.js" defer></script>
+</body>
+</html>

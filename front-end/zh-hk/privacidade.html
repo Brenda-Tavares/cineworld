@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私隱政策 - CineWorld</title>
+    <link rel="stylesheet" href="/front-end/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: var(--bg-dark) !important; }
+        .legal-page { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
+        .legal-page h1 { font-size: 2rem; margin-bottom: 30px; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 15px; }
+        .legal-page h2 { font-size: 1.3rem; margin: 30px 0 15px; color: var(--accent); }
+        .legal-page h3 { font-size: 1.1rem; margin: 20px 0 10px; color: var(--text-light); }
+        .legal-page p, .legal-page li { line-height: 1.8; margin-bottom: 15px; color: var(--text-light); }
+        .legal-page ul { padding-left: 20px; }
+        .legal-page a { color: var(--accent); text-decoration: none; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--accent); text-decoration: none; font-weight: 500; }
+        .back-link:hover { color: var(--primary-light); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo-area" style="text-decoration: none; cursor: pointer;">
+                <div class="logo-box">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div>
+                    <div class="logo-text">CINEWORLD</div>
+                    <span class="logo-sub">發掘電影同埋喺邊度睇</span>
+                </div>
+            </a>
+            <div id="langSelectorContainer"></div>
+        </div>
+    </header>
+    <div class="legal-page">
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> 返回主頁</a>
+        <h1><i class="fas fa-shield-alt"></i> 私隱政策</h1>
+        <p>最後更新：2026</p>
+
+        <h2><i class="fas fa-address-card"></i> 資料控制者身份</h2>
+        <p><strong>ShipClaw Labs</strong><br>網站：CineWorld<br>私隱查詢：<a href="mailto:supportshipclawlabs@proton.me">supportshipclawlabs@proton.me</a></p>
+
+        <h2><i class="fas fa-eye"></i> 摘要</h2>
+        <p>CineWorld 係一個公開嘅電影目錄，唔使註冊、冇登入功能，亦唔會建立用戶檔案。</p>
+        <ul>
+            <li>我哋唔會使用追蹤用嘅 cookie。</li>
+            <li>我哋唔會使用 Google Analytics，亦唔會使用任何其他廣告或者營銷服務。</li>
+            <li>我哋唔會顯示廣告，亦唔會使用 Google AdSense。</li>
+            <li>我哋唔會出售、租出或者為咗廣告目的同第三方分享個人資料。</li>
+        </ul>
+
+        <h2><i class="fas fa-database"></i> 我哋處理嘅資料</h2>
+        <h3>喺你裝置上面：</h3>
+        <ul>
+            <li><strong>語言偏好。</strong>你揀咗嘅語言會存喺瀏覽器嘅 <code>localStorage</code>，鍵名係 <code>cineworld_language</code>。呢個係唯一寫入你裝置嘅資料。當中冇用戶識別碼，清除本網站嘅瀏覽資料之後就會消失。</li>
+        </ul>
+        <h3>喺我哋伺服器上面：</h3>
+        <ul>
+            <li><strong>請求記錄。</strong>我哋嘅託管服務商（Vercel）會記錄請求嘅技術資料，例如 IP 位址、日期時間、瀏覽器同埋參訪嘅網址。呢啲記錄淨係用嚟做安全同營運，並且按託管服務商自身嘅條款保留。</li>
+            <li><strong>搜尋字詞。</strong>你輸入嘅搜尋字詞會傳送俾 TMDB，等佢哋回傳目錄。搜尋字詞唔會儲存喺我哋自己嘅資料庫。</li>
+        </ul>
+        <p>我哋唔會收集姓名、電郵、電話號碼、身分證號碼、郵遞地址或者付款資料。網站入面冇任何收集個人資料嘅表格。</p>
+
+        <h2><i class="fas fa-share-alt"></i> 第三方同埋跨境傳輸</h2>
+        <p>要運行呢個網站，需要將部分資料傳送俾第三方服務：</p>
+        <ul>
+            <li><strong>TMDB（The Movie Database）</strong> &mdash; 接收你嘅搜尋字詞去搵電影，並提供目錄資料、圖片同串流平台資料。</li>
+            <li><strong>Google Gemini API</strong> &mdash; <strong>只有喺你用 AI 搜尋嘅時候</strong>先會收到你輸入嘅文字，用嚟理解你嘅搜尋意圖。存取金鑰只會留喺伺服器上面。</li>
+            <li><strong>Google Fonts</strong> &mdash; Inter 字型係由 Google Fonts 載入。呢個請求會令 Google 見到你嘅 IP 位址同埋來源頁面。過程中唔涉及追蹤用嘅 cookie。</li>
+            <li><strong>Google Custom Search API（選用，已停用）</strong> &mdash; 程式碼入面有一項選用嘅補充網上搜尋，只有設定咗 <code>GOOGLE_SEARCH_API_KEY</code> 同 <code>GOOGLE_SEARCH_CX</code> 先會啟動。而家呢兩個變數未設定，所以呢個整合係停用狀態，亦唔會傳送任何資料畀佢。</li>
+            <li><strong>Vercel Speed Insights</strong> &mdash; 量度呢一頁喺你瀏覽器入面嘅效能（Core Web Vitals：載入時間、渲染同版面位移），並且會將呢啲指標同埋瀏覽器嘅 user agent 傳送俾 Vercel。呢個係本網站唯一使用嘅流量分析工具，佢唔會設定廣告 cookie。</li>
+            <li><strong>Vercel</strong> &mdash; 託管同後端運行。</li>
+            <li><strong>Font Awesome（cdnjs）</strong> &mdash; 介面圖示。</li>
+            <li><strong>Wikimedia Commons</strong> &mdash; 頁尾顯示嘅串流平台標誌。</li>
+        </ul>
+        <p>上述供應商可能會喺巴西以外嘅伺服器（包括美國）處理資料。</p>
+
+        <h2><i class="fas fa-bullseye"></i> 使用目的</h2>
+        <ul>
+            <li>顯示電影目錄同搜尋結果</li>
+            <li>顯示每部電影可以喺邊度睇</li>
+            <li>喺你有要求時解讀 AI 搜尋</li>
+            <li>喺多次瀏覽之間記住你揀咗嘅語言</li>
+            <li>保護服務，減少濫用同自動化存取</li>
+            <li>量度頁面效能，改善載入體驗</li>
+        </ul>
+
+        <h2><i class="fas fa-clock"></i> 保留期限</h2>
+        <ul>
+            <li>語言偏好：留喺你嘅瀏覽器，直到你自己刪除</li>
+            <li>伺服器記錄：跟 Vercel 嘅保留政策</li>
+            <li>其他資料：請求處理完之後我哋唔會儲存</li>
+        </ul>
+
+        <h2><i class="fas fa-lock"></i> 安全措施</h2>
+        <ul>
+            <li>以 HTTPS/TLS 加密傳輸</li>
+            <li>API 金鑰只會放喺伺服器環境變數，絕對唔會暴露畀瀏覽器</li>
+            <li>驗證同清理輸入資料，渲染 API 資料時使用 DOMPurify</li>
+            <li>嚴格嘅 Content Security Policy，跨來源請求只限於正式環境網域</li>
+            <li>按來源限制請求頻率，減少濫用同配額消耗</li>
+        </ul>
+
+        <h2><i class="fas fa-child"></i> 未成年人資料</h2>
+        <p>本網站唔係針對 13 歲以下兒童，亦唔會蓄意收集兒童嘅個人資料。</p>
+
+        <h2><i class="fas fa-user-edit"></i> 你嘅權利（LGPD/GDPR）</h2>
+        <p>由於我哋冇帳戶，同你有關聯嘅唯一資料就係你瀏覽器入面嘅語言偏好。你可以隨時清除本網站嘅瀏覽資料將佢刪除。如果你想查詢請求記錄，或者想行使 LGPD／GDPR 規定嘅任何權利，請寫信去 <a href="mailto:supportshipclawlabs@proton.me">supportshipclawlabs@proton.me</a>。</p>
+
+        <h2><i class="fas fa-exclamation-circle"></i> 政策變更</h2>
+        <p>呢份政策可能會隨住網站變動而更新。頁面頂部嘅日期就係顯示最近一次更新嘅時間。</p>
+    </div>
+
+    <script src="/front-end/js/lang-selector.js" defer></script>
+</body>
+</html>

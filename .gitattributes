@@ -1,0 +1,14 @@
+# Normaliza EOL para LF em todo o repositorio, independente do SO.
+# Sem isso, core.autocrlf=true no Windows reintroduz CRLF e causa "mixed EOL"
+# em arquivos parcialmente editados, poluindo o diff.
+* text=auto eol=lf
+
+# Arquivos que devem permanecer binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
