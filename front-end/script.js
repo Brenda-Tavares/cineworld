@@ -1,14 +1,7 @@
 // CineWorld - Main Script
 
-// Vercel Speed Insights queue stub. O snippet inline do <head> foi removido
-// porque a CSP em vercel.json proibe scripts inline.
 window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
 
-// ========================================
-// INLINE HANDLER BINDINGS
-// ========================================
-// Liga os botões do HTML (que usam id, sem atributos onclick) de forma
-// compatível com CSP sem 'unsafe-inline'.
 function bindInlineHandlers() {
     const navToggleBtn = document.getElementById('navToggleBtn');
     if (navToggleBtn) navToggleBtn.addEventListener('click', toggleNavMenu);
@@ -32,7 +25,6 @@ function bindInlineHandlers() {
         });
     }
 
-    // Paginação (botões gerados por JS sem inline handlers, por causa da CSP)
     const pageNumbers = document.getElementById('pageNumbers');
     if (pageNumbers) {
         pageNumbers.addEventListener('click', function (event) {
@@ -480,7 +472,6 @@ function setupEvents() {
     // ESC key
     document.addEventListener('keydown', handleGlobalKeydown);
 
-    // Event delegation for movie cards
     const moviesGrid = document.getElementById('moviesGrid');
     if (moviesGrid) {
         moviesGrid.addEventListener('click', function(e) {
