@@ -1,38 +1,32 @@
 {
-  "routes": [
-    { "src": "/sitemap.xml", "dest": "/front-end/sitemap.xml" },
-    { "src": "/robots.txt", "dest": "/front-end/robots.txt" },
-    { "src": "/api/movies", "dest": "/api/movies.js" },
-    { "src": "/api/movie", "dest": "/api/movie.js" },
-    { "src": "/api/genres", "dest": "/api/genres.js" },
-    { "src": "/api/streaming", "dest": "/api/streaming.js" },
-    { "src": "/api/ai-search", "dest": "/api/ai-search.js" },
-    { "src": "/sobre(/.*)?", "dest": "/front-end/sobre.html" },
-    { "src": "/privacidade(/.*)?", "dest": "/front-end/privacidade.html" },
-    { "src": "/termos(/.*)?", "dest": "/front-end/termos.html" },
-    { "src": "/en/sobre", "dest": "/front-end/en/sobre.html" },
-    { "src": "/en/privacidade", "dest": "/front-end/en/privacidade.html" },
-    { "src": "/en/termos", "dest": "/front-end/en/termos.html" },
-    { "src": "/es/sobre", "dest": "/front-end/es/sobre.html" },
-    { "src": "/es/privacidade", "dest": "/front-end/es/privacidade.html" },
-    { "src": "/es/termos", "dest": "/front-end/es/termos.html" },
-    { "src": "/zh/sobre", "dest": "/front-end/zh/sobre.html" },
-    { "src": "/zh/privacidade", "dest": "/front-end/zh/privacidade.html" },
-    { "src": "/zh/termos", "dest": "/front-end/zh/termos.html" },
-    { "src": "/zh-hk/sobre", "dest": "/front-end/zh-hk/sobre.html" },
-    { "src": "/zh-hk/privacidade", "dest": "/front-end/zh-hk/privacidade.html" },
-    { "src": "/zh-hk/termos", "dest": "/front-end/zh-hk/termos.html" },
-    { "src": "/ja/sobre", "dest": "/front-end/ja/sobre.html" },
-    { "src": "/ja/privacidade", "dest": "/front-end/ja/privacidade.html" },
-    { "src": "/ja/termos", "dest": "/front-end/ja/termos.html" },
-    { "src": "/ru/sobre", "dest": "/front-end/ru/sobre.html" },
-    { "src": "/ru/privacidade", "dest": "/front-end/ru/privacidade.html" },
-    { "src": "/ru/termos", "dest": "/front-end/ru/termos.html" },
-    { "src": "/ko/sobre", "dest": "/front-end/ko/sobre.html" },
-    { "src": "/ko/privacidade", "dest": "/front-end/ko/privacidade.html" },
-    { "src": "/ko/termos", "dest": "/front-end/ko/termos.html" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/front-end/index.html" }
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/front-end/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/front-end/robots.txt" },
+    { "source": "/sobre(/.*)?", "destination": "/front-end/sobre.html" },
+    { "source": "/privacidade(/.*)?", "destination": "/front-end/privacidade.html" },
+    { "source": "/termos(/.*)?", "destination": "/front-end/termos.html" },
+    { "source": "/en/sobre", "destination": "/front-end/en/sobre.html" },
+    { "source": "/en/privacidade", "destination": "/front-end/en/privacidade.html" },
+    { "source": "/en/termos", "destination": "/front-end/en/termos.html" },
+    { "source": "/es/sobre", "destination": "/front-end/es/sobre.html" },
+    { "source": "/es/privacidade", "destination": "/front-end/es/privacidade.html" },
+    { "source": "/es/termos", "destination": "/front-end/es/termos.html" },
+    { "source": "/zh/sobre", "destination": "/front-end/zh/sobre.html" },
+    { "source": "/zh/privacidade", "destination": "/front-end/zh/privacidade.html" },
+    { "source": "/zh/termos", "destination": "/front-end/zh/termos.html" },
+    { "source": "/zh-hk/sobre", "destination": "/front-end/zh-hk/sobre.html" },
+    { "source": "/zh-hk/privacidade", "destination": "/front-end/zh-hk/privacidade.html" },
+    { "source": "/zh-hk/termos", "destination": "/front-end/zh-hk/termos.html" },
+    { "source": "/ja/sobre", "destination": "/front-end/ja/sobre.html" },
+    { "source": "/ja/privacidade", "destination": "/front-end/ja/privacidade.html" },
+    { "source": "/ja/termos", "destination": "/front-end/ja/termos.html" },
+    { "source": "/ru/sobre", "destination": "/front-end/ru/sobre.html" },
+    { "source": "/ru/privacidade", "destination": "/front-end/ru/privacidade.html" },
+    { "source": "/ru/termos", "destination": "/front-end/ru/termos.html" },
+    { "source": "/ko/sobre", "destination": "/front-end/ko/sobre.html" },
+    { "source": "/ko/privacidade", "destination": "/front-end/ko/privacidade.html" },
+    { "source": "/ko/termos", "destination": "/front-end/ko/termos.html" },
+    { "source": "/((?!api/).*)", "destination": "/front-end/index.html" }
   ],
   "trailingSlash": false,
   "headers": [
@@ -46,13 +40,13 @@
         { "key": "Cross-Origin-Resource-Policy", "value": "same-site" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https://image.tmdb.org https://upload.wikimedia.org data:; connect-src 'self'; font-src 'self' https://fonts.gstatic.com data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com 'sha256-noFiSa0GbR/f+V3Grow26ZF69J2Gz4WUKNAuCVFxyEU='; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' https://image.tmdb.org https://upload.wikimedia.org data:; connect-src 'self'; font-src 'self' https://fonts.gstatic.com data:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests" }
       ]
     },
     {
       "source": "/front-end/(.*)\\.(js|css|svg|png|jpg|jpeg|webp|ico|woff|woff2|ttf|otf)$",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
       ]
     }
   ]
