@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { createLimiter } = require('../lib/rate-limit');
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
@@ -11,6 +12,8 @@ const TMDB_IMAGE = 'https://image.tmdb.org/t/p/w500';
 
 const ALLOWED_LANGUAGES = ['pt-BR', 'en-US', 'es-ES', 'zh-CN', 'zh-TW', 'ja-JP', 'ru-RU', 'ko-KR'];
 
+const checkRate = createLimiter({ limit: 120, message: 'Muitas requisicoes. Tente novamente em instantes.' });
+
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://cineworld-site.vercel.app');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -19,6 +22,10 @@ module.exports = async (req, res) => {
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
+    if (req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
+    if (!checkRate(req, res)) return;
     
     let { id, language = 'pt-BR' } = req.query;
     
@@ -191,6 +198,6 @@ module.exports = async (req, res) => {
         res.json({ success: true, movie });
     } catch (error) {
         console.error('movie.js error:', error.message);
-        res.status(500).json({ error: 'Erro ao buscar filme: ' + error.message });
+        res.status(500).json({ error: 'Erro ao buscar filme' });
     }
 };

@@ -226,7 +226,7 @@ const GEMINI_URL = `https://generativelanguage.googleapis.com/v1/models/${GEMINI
 const AXIOS_TIMEOUT = 10000;
 
 function geminiUrl() {
-    return `${GEMINI_URL}?key=${GEMINI_API_KEY}`;
+    return GEMINI_URL;
 }
 
 function extractJsonObject(text) {
@@ -255,7 +255,7 @@ async function callGeminiJSON(systemInstruction, userText, maxTokens, temperatur
             body.systemInstruction = { parts: [{ text: systemInstruction }] };
         }
         const response = await axios.post(geminiUrl(), body,
-            { headers: { 'Content-Type': 'application/json' }, timeout: AXIOS_TIMEOUT + 2000 }
+            { headers: { 'Content-Type': 'application/json', 'x-goog-api-key': GEMINI_API_KEY }, timeout: AXIOS_TIMEOUT + 2000 }
         );
         const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
         return extractJsonObject(text);
@@ -561,6 +561,9 @@ module.exports = async (req, res) => {
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
+    }
+    if (req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     const { q = '', page = 1, language = 'pt-BR' } = req.query;

@@ -26,6 +26,9 @@ module.exports = async (req, res) => {
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
+    if (req.method !== 'GET') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
     if (!checkRate(req, res)) return;
 
@@ -211,6 +214,6 @@ module.exports = async (req, res) => {
         });
     } catch (error) {
         console.error('Erro:', error.message);
-        res.status(500).json({ error: 'Erro ao buscar filmes: ' + error.message });
+        res.status(500).json({ error: 'Erro ao buscar filmes' });
     }
 };
