@@ -1,10 +1,10 @@
-# CineWorld
+﻿# CineWorld
 
 **Movie discovery platform with natural-language search and streaming availability.**
 
 Live site: [https://cineworld-site.vercel.app](https://cineworld-site.vercel.app)
 Repository: _(link to be added)_
-Author: **Brenda Tavares** (ShipClaw Labs) - Portfolio/contact: **tavaresbrenda@proton.me**
+Author: **Brenda Tavares** (ShipClaw) - Portfolio/contact: **tavaresbrenda@proton.me**
 
 ---
 
@@ -12,7 +12,7 @@ Author: **Brenda Tavares** (ShipClaw Labs) - Portfolio/contact: **tavaresbrenda@
 
 Finding a movie is fragmented. You land on a streaming platform, browse what is already on the catalog, and only then discover the film you actually wanted is not available in your country. Search engines do not answer availability. Letterboxd-style databases tell you *what* a film is, not *where you can legally watch it right now*.
 
-The reverse problem is just as common: you remember a film vaguely — "the one with the diver, set in space, maybe 2010s" — and cannot recall the title. Keyword search cannot help you, because you do not have the keywords.
+The reverse problem is just as common: you remember a film vaguely â€” "the one with the diver, set in space, maybe 2010s" â€” and cannot recall the title. Keyword search cannot help you, because you do not have the keywords.
 
 CineWorld addresses both with a single interface: describe what you want in plain language, get the title back, and immediately see whether it streams free, by subscription, for rent, or for purchase.
 
@@ -20,19 +20,19 @@ CineWorld addresses both with a single interface: describe what you want in plai
 
 A single-page movie catalogue that turns recall and discovery into one flow:
 
-1. **Browse or filter** — popular, highest rated, upcoming, national or international, by genre, year or origin.
-2. **Search by intent** — type a description instead of a title. The AI endpoint resolves it to a real catalogue entry.
-3. **Check availability** — each title shows where it streams, split into free, subscription, rent and buy.
+1. **Browse or filter** â€” popular, highest rated, upcoming, national or international, by genre, year or origin.
+2. **Search by intent** â€” type a description instead of a title. The AI endpoint resolves it to a real catalogue entry.
+3. **Check availability** â€” each title shows where it streams, split into free, subscription, rent and buy.
 
 ## Features
 
-- **Natural-language AI search** — describe a film in your own words; Gemini extracts the intent and resolves it against the TMDB catalogue.
-- **Identify mode** — for fuzzy recall. Returns the best matching title with a localised explanation of why it matched.
-- **Streaming availability** — subscription, rent, purchase and free-with-ads providers, resolved per country with a Brazilian fallback.
-- **Filtering and sorting** — popularity, rating, release date, upcoming, genre, year, and national versus international.
-- **8 languages** — English, Portuguese, Spanish, Simplified Chinese, Traditional Chinese (Hong Kong), Japanese, Russian and Korean, all client-side with no reload.
-- **No account required** — nothing to sign up for, nothing stored on a server you control.
-- **Responsive** — desktop, tablet and mobile from a single layout.
+- **Natural-language AI search** â€” describe a film in your own words; Gemini extracts the intent and resolves it against the TMDB catalogue.
+- **Identify mode** â€” for fuzzy recall. Returns the best matching title with a localised explanation of why it matched.
+- **Streaming availability** â€” subscription, rent, purchase and free-with-ads providers, resolved per country with a Brazilian fallback.
+- **Filtering and sorting** â€” popularity, rating, release date, upcoming, genre, year, and national versus international.
+- **8 languages** â€” English, Portuguese, Spanish, Simplified Chinese, Traditional Chinese (Hong Kong), Japanese, Russian and Korean, all client-side with no reload.
+- **No account required** â€” nothing to sign up for, nothing stored on a server you control.
+- **Responsive** â€” desktop, tablet and mobile from a single layout.
 
 ## Tech Stack
 
@@ -98,7 +98,7 @@ Get a TMDB key at [themoviedb.org/settings/api](https://www.themoviedb.org/setti
 
 `axios` is the only runtime dependency, and `npm audit` reports **0 vulnerabilities**.
 
-There is no `@vercel/node` in `package.json`. Vercel's Node.js runtime builds `/api` functions with its own platform-provided builder, so the package was never needed here — it only pulled in a build-time dependency chain (`ts-morph` → `fast-glob` → `micromatch` → `braces`) that accounted for every advisory this project had, including the critical `node-tar` one. `@vercel/speed-insights` remains a devDependency: the script served from `/_vercel/speed-insights/script.js` comes from Vercel's edge, not from `node_modules`.
+There is no `@vercel/node` in `package.json`. Vercel's Node.js runtime builds `/api` functions with its own platform-provided builder, so the package was never needed here â€” it only pulled in a build-time dependency chain (`ts-morph` â†’ `fast-glob` â†’ `micromatch` â†’ `braces`) that accounted for every advisory this project had, including the critical `node-tar` one. `@vercel/speed-insights` remains a devDependency: the script served from `/_vercel/speed-insights/script.js` comes from Vercel's edge, not from `node_modules`.
 
 `engines.node` is pinned to `20.x` so builds do not drift with Vercel's default.
 - **Input validation.** Search queries are length-checked and rejected before reaching any upstream API.
@@ -116,3 +116,8 @@ Third parties that receive data: TMDB (search terms), Gemini (your query, only w
 ## Credits
 
 Catalogue data and artwork provided by [TMDB](https://www.themoviedb.org/). This product uses the TMDB API but is not endorsed or certified by TMDB.
+
+
+
+
+

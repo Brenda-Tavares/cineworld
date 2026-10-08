@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>プライバシーポリシー - CineWorld</title>
-<link rel="stylesheet" href="/front-end/style.css">
+    <link rel="stylesheet" href="/front-end/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -12,7 +12,9 @@
         .legal-page { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
         .legal-page h1 { font-size: 2rem; margin-bottom: 30px; color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 15px; }
         .legal-page h2 { font-size: 1.3rem; margin: 30px 0 15px; color: var(--accent); }
+        .legal-page h3 { font-size: 1.1rem; margin: 20px 0 10px; color: var(--text-light); }
         .legal-page p, .legal-page li { line-height: 1.8; margin-bottom: 15px; color: var(--text-light); }
+        .legal-page ul { padding-left: 20px; }
         .legal-page a { color: var(--accent); text-decoration: none; }
         .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 30px; color: var(--accent); text-decoration: none; font-weight: 500; }
         .back-link:hover { color: var(--primary-light); }
@@ -27,109 +29,89 @@
                 </div>
                 <div>
                     <div class="logo-text">CINEWORLD</div>
-                    <span class="logo-sub">映画を見つけて、視聴方法を確認</span>
+                    <span class="logo-sub">映画を探す</span>
                 </div>
             </a>
-            
             <div id="langSelectorContainer"></div>
         </div>
     </header>
     <div class="legal-page">
         <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> ホームに戻る</a>
         <h1><i class="fas fa-shield-alt"></i> プライバシーポリシー</h1>
-        <p>最終更新日：2026 | 発効日：2026</p>
-        
-        <h2><i class="fas fa-address-card"></i> 事業者の識別</h2>
-        <p><strong>CineWorld</strong><br>責任者：CineWorldチーム<br>連絡先：サイトの連絡先ページを通じて</p>
-        
-        <h2><i class="fas fa-eye"></i> プライバシーの概要</h2>
-        <p>このプライバシーポリシーは、映画とシリーズの検索ウェブサイトを使用する際に、当社がどのように個人情報を収集、使用、開示、保護するかを説明します。</p>
-        
-        <h2><i class="fas fa-database"></i> 収集するデータ</h2>
-        
-        <h3>您が提供するデータ：</h3>
+        <p>最終更新日：2026</p>
+
+        <h2><i class="fas fa-address-card"></i> 管理者の情報</h2>
+        <p><strong>ShipClaw</strong><br>サイト：CineWorld<br>プライバシーに関する連絡先：<a href="mailto:tavaresbrenda@proton.me">tavaresbrenda@proton.me</a></p>
+
+        <h2><i class="fas fa-eye"></i> 概要</h2>
+        <p>CineWorld は公開の映画カタログです。登録は不要で、ログインはなく、ユーザープロファイルも作成しません。</p>
         <ul>
-            <li>アカウント情報（登録時）</li>
-            <li>連絡先フォームから送信されたメッセージ</li>
-            <li>言語設定</li>
+            <li>追跡用の Cookie は使用しません。</li>
+            <li>Google Analytics その他の広告・マーケティングサービスは使用しません。</li>
+            <li>広告は表示せず、Google AdSense も使用しません。</li>
+            <li>個人データを販売・貸出し、広告目的で第三者と共有することはありません。</li>
         </ul>
-        
-        <h3>自動的に収集されるデータ：</h3>
+
+        <h2><i class="fas fa-database"></i> 取り扱うデータ</h2>
+        <h3>お使いのデバイス上：</h3>
         <ul>
-            <li>IPアドレス（セキュリティのために匿名化）</li>
-            <li>ブラウザの種類とデバイス</li>
-            <li>Google Analytics</li>
-            <li>訪問したページと滞在時間</li>
-            <li>観た映画と行った検索</li>
+            <li><strong>言語の偏好。</strong>選択した言語は、ブラウザの <code>localStorage</code> にキー <code>cineworld_language</code> として保存されます。これはデバイスに書き込まれる唯一のデータです。ユーザー識別情報は含まず、当サイトのブラウザデータを消去すると消えます。</li>
         </ul>
-        
-        <h2><i class="fas fa-bullseye"></i> 処理の目的</h2>
+        <h3>サーバー上：</h3>
         <ul>
-            <li>サイトの機能提供とユーザー体験の改善</li>
-            <li>偏好に基づくコンテンツの個人化</li>
-            <li>サイト最適化のための使用指標の分析</li>
-            <li>AdSenseポリシーに基づく広告の表示</li>
-            <li>ユーザーの質問とリクエストへの回答</li>
-            <li>法的義務の遵守</li>
+            <li><strong>リクエストログ。</strong>ホスティング事業者（Vercel）は、IP アドレス、日時、ブラウザ、アクセスされた URL などの技術的なリクエスト情報を記録します。これらのログはセキュリティとサービス運用のためにのみ使用され、ホスティング事業者自身の条項に従って保管されます。</li>
+            <li><strong>検索語。</strong>入力された検索語は、カタログを取得するため TMDB に送信されます。当社が管理するデータベースには保存されません。</li>
         </ul>
-        
-        <h2><i class="fas fa-balance-scale"></i> 処理の法的根拠</h2>
-        <p>データ処理は、契約履行（依頼されたサービス）、正当な利益（サービスの改善）に基づいて行われます。</p>
-        
-        <h2><i class="fas fa-share-alt"></i> データの共有</h2>
+        <p>氏名、メールアドレス、電話番号、身分証番号、郵便住所、決済情報は収集しません。個人情報を収集するフォームも存在しません。</p>
+
+        <h2><i class="fas fa-share-alt"></i> 第三者および移転</h2>
+        <p>サイトの運営には、一部のデータを第三者サービスへ送信する必要があります：</p>
         <ul>
-            <li><strong>Google Analytics：</strong>トラフィックと行動分析のため</li>
-            <li><strong>広告プロバイダー：</strong>広告表示のため</li>
-            <li>私たちは個人データを第三者に販売しません</li>
+            <li><strong>TMDB（The Movie Database）</strong> &mdash; 映画を特定するため検索語を受け取り、カタログデータ、画像、配信事業者の情報を提供します。</li>
+            <li><strong>Google Gemini API</strong> &mdash; <strong>AI 検索を使用されたときのみ</strong>、入力されたテキストを受け取ります。その意図を解釈するために使用されます。アクセスキーはサーバーにのみ保持されます。</li>
+            <li><strong>Google Fonts</strong> &mdash; Inter フォントは Google Fonts から読み込まれます。このリクエストにより、あなたの IP アドレスと参照元ページが Google に伝わります。追跡用 Cookie は含まれません。</li>
+            <li><strong>Google Custom Search API（任意・無効）</strong> &mdash; コードには補完的なウェブ検索の機能が含まれますが、<code>GOOGLE_SEARCH_API_KEY</code> と <code>GOOGLE_SEARCH_CX</code> が設定された場合のみ有効になります。これらは未設定のため、この連携は無効であり、現時点ではデータを送信しません。</li>
+            <li><strong>Vercel Speed Insights</strong> &mdash; お使いのブラウザで本ページの読み込み性能（Core Web Vitals：読み込み時間、描画、レイアウトシフト）を計測し、その指標とブラウザの user agent を Vercel に送信します。本サイトで使用しているトラフィック解析ツールはこれのみです。広告用の Cookie は設定しません。</li>
+            <li><strong>Vercel</strong> &mdash; ホスティングとバックエンドの実行。</li>
+            <li><strong>Font Awesome（cdnjs）</strong> &mdash; インターフェースアイコン。</li>
+            <li><strong>Wikimedia Commons</strong> &mdash; フッターに表示される配信サービスのロゴ。</li>
         </ul>
-        
-        <h2><i class="fas fa-globe-americas"></i> 国境を越えた転送</h2>
-        <p>データは、EU標準契約条項またはその他のコンプライアンスメカニズムに従って、アメリカを含むブラジル外のサーバーに転送される場合があります。</p>
-        
+        <p>これらの事業者により、ブラジル国外（米国を含む）のサーバーでデータが処理される場合があります。</p>
+
+        <h2><i class="fas fa-bullseye"></i> 利用目的</h2>
+        <ul>
+            <li>映画カタログと検索結果の表示</li>
+            <li>各作品の視聴可能なプラットフォームの表示</li>
+            <li>AI 検索の要求に対する解釈</li>
+            <li>訪問をまたいで選択した言語を保持すること</li>
+            <li>不正利用や自動化されたアクセスの防止</li>
+            <li>ページの読み込み性能を測定し、体験を改善すること</li>
+        </ul>
+
         <h2><i class="fas fa-clock"></i> 保持期間</h2>
         <ul>
-            <li>ナビゲーションデータ：最大14ヶ月</li>
-            <li>連絡先データ：最大2年</li>
-            <li>サーバーログ：最大12ヶ月</li>
+            <li>言語の偏好：削除するまでブラウザに保存されます</li>
+            <li>サーバーログ：Vercel の保持ポリシーに従います</li>
+            <li>その他のデータ：リクエストの処理後、当社が保存することはありません</li>
         </ul>
-        
+
         <h2><i class="fas fa-lock"></i> セキュリティ対策</h2>
         <ul>
-            <li>データ伝送用のSSL/TLS暗号化</li>
-            <li>個人データへのアクセスの制限</li>
-            <li>定期的なセキュリティ監視</li>
-            <li>ソフトウェアの更新とセキュリティパッチ</li>
+            <li>HTTPS/TLS による暗号化通信</li>
+            <li>API キーはサーバーの環境変数にのみ保持し、ブラウザには一切公開しません</li>
+            <li>入力の検証とサニタイズを行い、API データの描画には DOMPurify を使用</li>
+            <li>厳格な Content Security Policy を設定し、クロスオリジン要求を本番ドメインに限定</li>
+            <li>悪用とクォータ消費を抑えるため、送信元ごとのリクエスト数を制限</li>
         </ul>
-        
+
         <h2><i class="fas fa-child"></i> 子どものデータ</h2>
-        <p>我们的网站不面向13岁以下的儿童。我们不会故意收集儿童的个人数据。</p>
-        
-        <h2><i class="fas fa-user-edit"></i> あなたの権利（GDPR/LGPD）</h2>
-        <ul>
-            <li>処理の存在の確認</li>
-            <li>個人データへのアクセス</li>
-            <li>不完全または不正なデータの訂正</li>
-            <li>データの匿名化、ブロック、削除</li>
-            <li>データの移植性</li>
-            <li>同意の撤回</li>
-            <li>自動化決定のレビュー</li>
-        </ul>
-        
-        <h2><i class="fas fa-ad"></i> 広告とAdSense</h2>
-        <p>私たちは広告表示にGoogle AdSenseを使用しています。Googleはあなたの関心に基づいて広告を表示するためにCookieを使用する場合があります。広告の個人化を無効にするには：<a href="https://www.google.com/settings/ads" target="_blank">Google広告設定</a></p>
-        
-        
-        <h2><i class="fas fa-exclamation-circle"></i> 変更</h2>
-        <p>このポリシーはいつでも変更される場合があります。重大な変更はサイトを通じて通知します。</p>
-        
-        <h2><i class="fas fa-envelope"></i> 連絡先</h2>
-        <p>権利を行使하거나このポリシーについて質問がある場合は、サイトの連絡先ページを使用してください。</p>
-        
-        <p style="margin-top: 30px;"><em>CineWorld - 2026</em></p>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:15px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.5;">
-            CineWorldは動画ファイルをホストしていません。すべてのコンテンツはTMDB API（The Movie Database）から提供されています。
-            視聴リンクは正当なストリーミングプラットフォーム（Netflix、Prime Video、Disney+など）に誘導されます。
-        </p>
+        <p>本サイトは 13 歳未満の子どもを対象としておらず、子どもの個人情報を意図的に収集することはありません。</p>
+
+        <h2><i class="fas fa-user-edit"></i> あなたの権利（LGPD/GDPR）</h2>
+        <p>当社はアカウントを保持しないため、あなたに関連するデータはご自身のブラウザに保存された言語の偏好のみです。当サイトのブラウザデータを消去すればいつでも削除できます。リクエストログについてのご質問、または LGPD・GDPR に基づく権利の行使については、<a href="mailto:tavaresbrenda@proton.me">tavaresbrenda@proton.me</a> までご連絡ください。</p>
+
+        <h2><i class="fas fa-exclamation-circle"></i> 変更について</h2>
+        <p>本ポリシーは、Vercel のサイト変更に応じて更新される場合があります。ページ上部の日付が最終更新日を示します。</p>
     </div>
 
     <script src="/front-end/js/lang-selector.js" defer></script>

@@ -51,120 +51,101 @@
         <h1 class="legal-title">
                 <i class="fas fa-shield-alt"></i> Política de Privacidade
             </h1>
-            <p class="legal-date">Última atualização: 2026 | Data de vigência: 2026</p>
+            <p class="legal-date">Última atualização: 2026</p>
 
             <div class="legal-section">
                 <h2><i class="fas fa-address-card"></i> Identidade do Controlador</h2>
-                <p><strong>CineWorld</strong><br>
-                Responsável: Equipe CineWorld<br>
-                Contato: através da página "Sobre" do site</p>
+                <p><strong>ShipClaw</strong><br>
+                Site: CineWorld<br>
+                E-mail de contato e privacidade: <a href="mailto:tavaresbrenda@proton.me">tavaresbrenda@proton.me</a></p>
             </div>
 
             <div class="legal-section">
-                <h2><i class="fas fa-eye"></i> Visão Geral da Privacidade</h2>
-                <p>Esta Política de Privacidade descreve como coletamos, usamos, divulgamos e protegemos suas informações pessoais quando você usa nosso site de descoberta de filmes e séries.</p>
-            </div>
-
-            <div class="legal-section">
-                <h2><i class="fas fa-database"></i> Dados que Coletamos</h2>
-                <h3>Dados que você fornece:</h3>
+                <h2><i class="fas fa-eye"></i> Resumo</h2>
+                <p>O CineWorld é um catálogo público de filmes. Não exige cadastro, não possui login e não cria perfis de usuário.</p>
                 <ul>
-                    <li>Informações de conta (quando cadastrado)</li>
-                    <li>Mensagens enviadas pelo formulário de contato</li>
-                    <li>Preferências de idioma e configurações</li>
-                </ul>
-                <h3>Dados coletados automaticamente:</h3>
-                <ul>
-                    <li>Endereço IP (anonimizado para segurança)</li>
-                    <li>Tipo de navegador e dispositivo</li>
-                    <li>Dados de navegação (Google Analytics)</li>
-                    <li>Páginas visitadas e tempo de permanência</li>
-                    <li>Filmes visualizados e buscas realizadas</li>
+                    <li>Não utilizamos cookies para rastreamento.</li>
+                    <li>Não utilizamos Google Analytics nem qualquer outro serviço de publicidade ou marketing.</li>
+                    <li>Não exibimos anúncios e não utilizamos Google AdSense.</li>
+                    <li>Não vendemos, alugamos nem compartilhamos dados pessoais com terceiros para fins publicitários.</li>
                 </ul>
             </div>
 
             <div class="legal-section">
-                <h2><i class="fas fa-bullseye"></i> Finalidades do Tratamento</h2>
+                <h2><i class="fas fa-database"></i> Dados que Tratamos</h2>
+                <h3>No seu dispositivo:</h3>
                 <ul>
-                    <li>Fornecer funcionalidades do site e melhorar experiência do usuário</li>
-                    <li>Personalizar conteúdo com base em preferências</li>
-                    <li>Analisar métricas de uso para otimização do site</li>
-                    <li>Exibir anúncios conforme política do AdSense</li>
-                    <li>Responder dúvidas e solicitações do usuário</li>
-                    <li>Cumprir obrigações legais</li>
+                    <li><strong>Preferência de idioma.</strong> O idioma escolhido é salvo no <code>localStorage</code> do seu navegador, na chave <code>cineworld_language</code>. É o único dado gravado no seu dispositivo. Não contém identificador de usuário e some ao limpar os dados de navegação do navegador.</li>
+                </ul>
+                <h3>No nosso servidor:</h3>
+                <ul>
+                    <li><strong>Logs de requisição.</strong> O provedor de hospedagem (Vercel) registra dados técnicos das requisições, como endereço IP, data e hora, navegador e URL acessada. Esses logs são usados apenas para segurança e operação do serviço, e ficam sob os termos de retenção do próprio provedor.</li>
+                    <li><strong>Termos de busca.</strong> Os termos que você digita são enviados ao TMDB para que ele retorne o catálogo. Os termos não são armazenados em um banco de dados nosso.</li>
+                </ul>
+                <p>Não coletamos nome, e-mail, telefone, documento, endereço postal nem dados de pagamento. Não existe formulário que colete dados pessoais.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2><i class="fas fa-share-alt"></i> Terceiros e Transferências</h2>
+                <p>Para operar o site, alguns dados são enviados a serviços de terceiros:</p>
+                <ul>
+                    <li><strong>TMDB (The Movie Database)</strong> — recebe os termos de busca para localizar filmes, além de fornecer dados de catálogo, imagens e provedores de streaming.</li>
+                    <li><strong>Google Gemini API</strong> — recebe o texto digitado por você <strong>apenas quando você usa a busca por IA</strong>. Esse texto é usado para interpretar a sua intenção de busca. As chaves de acesso ficam somente no servidor.</li>
+                    <li><strong>Google Fonts</strong> — a fonte Inter é carregada do Google Fonts. Essa requisição carrega o seu endereço IP e a página de origem para o Google. Não há cookie de rastreamento envolvido.</li>
+                    <li><strong>Google Custom Search API (opcional, desativado)</strong> — o código prevê uma busca online complementar, que só seria ativada se as variáveis <code>GOOGLE_SEARCH_API_KEY</code> e <code>GOOGLE_SEARCH_CX</code> fossem configuradas. Elas não estão configuradas, portanto essa integração está inativa e nenhum dado é enviado a ela hoje.</li>
+                    <li><strong>Vercel Speed Insights</strong> — mede o desempenho desta página no seu navegador (Core Web Vitals: tempo de carregamento, renderização e deslocamento de layout) e envia essas métricas e o user agent do navegador à Vercel. É a única ferramenta de análise de tráfego usada no site. Não grava cookie de publicidade.</li>
+                    <li><strong>Vercel</strong> — hospedagem e execução do backend.</li>
+                    <li><strong>Font Awesome (cdnjs)</strong> — ícones da interface.</li>
+                    <li><strong>Wikimedia Commons</strong> — logotipos das plataformas de streaming exibidas no rodapé.</li>
+                </ul>
+                <p>Os dados podem ser processados em servidores fora do Brasil, incluindo nos Estados Unidos, por esses fornecedores.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2><i class="fas fa-bullseye"></i> Finalidades</h2>
+                <ul>
+                    <li>Exibir o catálogo de filmes e os resultados de busca</li>
+                    <li>Informar onde cada título está disponível para assistir</li>
+                    <li>Interpretar a busca por IA quando solicitada</li>
+                    <li>Manter o idioma escolhido entre visitas</li>
+                    <li>Proteger o serviço contra abuso e acessos automatizados</li>
+                    <li>Medir o desempenho da página para melhorar a experiência de carregamento</li>
                 </ul>
             </div>
 
             <div class="legal-section">
-                <h2><i class="fas fa-balance-scale"></i> Base Legal para Tratamento</h2>
-                <p>O tratamento de dados é realizado com base na execução de contrato (serviços solicitados) e interesse legítimo (melhoria do serviço).</p>
-            </div>
-
-            <div class="legal-section">
-                <h2><i class="fas fa-share-alt"></i> Compartilhamento de Dados</h2>
+                <h2><i class="fas fa-clock"></i> Retenção</h2>
                 <ul>
-                    <li><strong>Google Analytics:</strong> Para análise de tráfego e comportamento</li>
-                    <li><strong>Provedores de anúncios:</strong> Para exibição de publicidade</li>
-                    <li>Não vendemos dados pessoais a terceiros</li>
-                </ul>
-            </div>
-
-            <div class="legal-section">
-                <h2><i class="fas fa-globe-americas"></i> Transferência Internacional</h2>
-                <p>Seus dados podem ser transferidos para servidores fora do Brasil, incluindo Estados Unidos, seguindo Cláusulas Contratuais Padrão da UE ou outros mecanismos de conformidade.</p>
-            </div>
-
-            <div class="legal-section">
-                <h2><i class="fas fa-clock"></i> Período de Retenção</h2>
-                <ul>
-                    <li>Dados de navegação: até 14 meses</li>
-                    <li>Dados de contato: até 2 anos</li>
-                    <li>Logs de servidor: até 12 meses</li>
+                    <li>Preferência de idioma: mantida no seu navegador até você apagá-la</li>
+                    <li>Logs de servidor: conforme a política de retenção da Vercel</li>
+                    <li>Demais dados: não são armazenados por nós após o processamento da requisição</li>
                 </ul>
             </div>
 
             <div class="legal-section">
                 <h2><i class="fas fa-lock"></i> Medidas de Segurança</h2>
                 <ul>
-                    <li>Criptografia SSL/TLS para transmissão de dados</li>
-                    <li>Acesso restrito a dados pessoais</li>
-                    <li>Monitoramento regular de segurança</li>
-                    <li>Atualização de software e patches de segurança</li>
+                    <li>Conexão criptografada por HTTPS/TLS</li>
+                    <li>Chaves de API mantidas apenas em variáveis de ambiente do servidor, nunca expostas ao navegador</li>
+                    <li>Validação e sanitização das entradas, com DOMPurify na renderização de dados da API</li>
+                    <li>Content Security Policy restritiva e requisições cross-origin limitadas ao domínio de produção</li>
+                    <li>Limite de requisições por origem para reduzir abuso e consumo de cota</li>
                 </ul>
             </div>
 
             <div class="legal-section">
                 <h2><i class="fas fa-child"></i> Dados de Menores</h2>
-                <p>Nosso site não é direcionado a menores de 13 anos. Não coletamos intencionalmente dados pessoais de menores.</p>
+                <p>O site não é direcionado a menores de 13 anos e não coleta intencionalmente dados pessoais de crianças.</p>
             </div>
 
             <div class="legal-section">
                 <h2><i class="fas fa-user-edit"></i> Seus Direitos (LGPD/GDPR)</h2>
-                <ul>
-                    <li>Confirmação da existência de tratamento</li>
-                    <li>Acesso aos dados pessoais</li>
-                    <li>Correção de dados incompletos ou incorretos</li>
-                    <liAnonimização, bloqueio ou eliminação de dados</li>
-                    <li>Portabilidade dos dados</li>
-                    <li>Revogação do consentimento</li>
-                    <li>Revisão de decisões automatizadas</li>
-                </ul>
-            </div>
-
-            <div class="legal-section">
-                <h2><i class="fas fa-ad"></i> Publicidade e AdSense</h2>
-                <p>Utilizamos Google AdSense para exibição de anúncios. O Google pode usar cookies para exibir anúncios baseados em seus interesses. Para desativar-personalização de anúncios, visite: <a href="https://www.google.com/settings/ads" target="_blank">Configurações de Anúncios Google</a></p>
+                <p>Como não mantemos cadastro, o único dado asociado a você é a preferência de idioma no seu próprio navegador. Você pode apagá-la a qualquer momento limpando os dados do site. Se tiver dúvidas sobre os logs de requisição, ou precisar exercer qualquer direito previsto na LGPD ou no GDPR, escreva para <a href="mailto:tavaresbrenda@proton.me">tavaresbrenda@proton.me</a>.</p>
             </div>
 
             <div class="legal-section">
                 <h2><i class="fas fa-exclamation-circle"></i> Alterações</h2>
-                <p>Esta política pode ser alterada a qualquer tempo. Notificaremos sobre mudanças significativas através do site.</p>
-            </div>
-
-            <div class="legal-section">
-                <h2><i class="fas fa-envelope"></i> Contato</h2>
-                <p>Para exercer seus direitos ou tirar dúvidas sobre esta política, use a página "Sobre" do site.</p>
-                <p><em>CineWorld - 2026</em></p>
+                <p>Esta política pode ser atualizada para refletir mudanças no site. A data no topo desta página indica a última atualização.</p>
             </div>
         </div>
     </main>
@@ -197,9 +178,9 @@
                 <a href="/termos">Termos</a>
             </div>
             <p class="footer-copy">
-                &copy; 2026 CineWorld. Desenvolvido por <strong>ShipClaw Labs&trade;</strong>
+                &copy; 2026 CineWorld. Desenvolvido por <strong>ShipClaw&trade;</strong>
                 <span class="footer-sep" aria-hidden="true">&middot;</span>
-                <a href="mailto:supportshipclawlabs@proton.me">supportshipclawlabs@proton.me</a>
+                <a href="mailto:tavaresbrenda@proton.me">tavaresbrenda@proton.me</a>
             </p>
         </div>
     </footer>

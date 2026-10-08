@@ -38,99 +38,80 @@
     <div class="legal-page">
         <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to home</a>
         <h1><i class="fas fa-shield-alt"></i> Privacy Policy</h1>
-        <p>Last updated: 2026 | Effective date: 2026</p>
-        
+        <p>Last updated: 2026</p>
+
         <h2><i class="fas fa-address-card"></i> Controller Identity</h2>
-        <p><strong>CineWorld</strong><br>Responsible: CineWorld Team<br>Contact: through the site "About" page</p>
-        
-        <h2><i class="fas fa-eye"></i> Privacy Overview</h2>
-        <p>This Privacy Policy describes how we collect, use, disclose and protect your personal information when using our movie and series discovery website.</p>
-        
-        <h2><i class="fas fa-database"></i> Data We Collect</h2>
-        
-        <h3>Data you provide:</h3>
+        <p><strong>ShipClaw</strong><br>Site: CineWorld<br>Privacy contact: <a href="mailto:tavaresbrenda@proton.me">tavaresbrenda@proton.me</a></p>
+
+        <h2><i class="fas fa-eye"></i> Summary</h2>
+        <p>CineWorld is a public movie catalogue. It requires no sign-up, has no login and creates no user profiles.</p>
         <ul>
-            <li>Account information (when registered)</li>
-            <li>Messages sent via contact form</li>
-            <li>Language preferences and settings</li>
+            <li>We do not use tracking cookies.</li>
+            <li>We do not use Google Analytics or any other advertising or marketing service.</li>
+            <li>We do not display advertising and do not use Google AdSense.</li>
+            <li>We do not sell, rent or share personal data with third parties for advertising purposes.</li>
         </ul>
-        
-        <h3>Data collected automatically:</h3>
+
+        <h2><i class="fas fa-database"></i> Data We Process</h2>
+        <h3>On your device:</h3>
         <ul>
-            <li>IP Address (anonymized for security)</li>
-            <li>Browser type and device</li>
-            <li>Google Analytics</li>
-            <li>Pages visited and time spent</li>
-            <li>Movies viewed and searches performed</li>
+            <li><strong>Language preference.</strong> The language you pick is saved in your browser's <code>localStorage</code>, under the key <code>cineworld_language</code>. It is the only data written to your device. It contains no user identifier and disappears when you clear the site's browser data.</li>
         </ul>
-        
-        <h2><i class="fas fa-bullseye"></i> Processing Purposes</h2>
+        <h3>On our server:</h3>
         <ul>
-            <li>Provide site functionality and improve user experience</li>
-            <li>Personalize content based on preferences</li>
-            <li>Analyze usage metrics for site optimization</li>
-            <li>Display ads according to AdSense policy</li>
-            <li>Respond to user questions and requests</li>
-            <li>Comply with legal obligations</li>
+            <li><strong>Request logs.</strong> Our hosting provider (Vercel) records technical request data such as IP address, date and time, browser and the URL accessed. These logs are used only for security and service operation, and are retained under the hosting provider's own terms.</li>
+            <li><strong>Search terms.</strong> The terms you type are sent to TMDB so it can return the catalogue. Terms are not stored in any database we control.</li>
         </ul>
-        
-        <h2><i class="fas fa-balance-scale"></i> Legal Basis</h2>
-        <p>Data processing is carried out based on contract execution (requested services) and legitimate interest (service improvement).</p>
-        
-        <h2><i class="fas fa-share-alt"></i> Data Sharing</h2>
+        <p>We do not collect name, email, phone number, ID, postal address or payment details. There is no form that collects personal data.</p>
+
+        <h2><i class="fas fa-share-alt"></i> Third Parties and Transfers</h2>
+        <p>Operating the site requires sending some data to third-party services:</p>
         <ul>
-            <li><strong>Google Analytics:</strong> For traffic and behavior analysis</li>
-            <li><strong>Ad providers:</strong> For advertising display</li>
-            <li>We do not sell personal data to third parties</li>
+            <li><strong>TMDB (The Movie Database)</strong> &mdash; receives your search terms to locate films, and provides catalogue data, images and streaming providers.</li>
+            <li><strong>Google Gemini API</strong> &mdash; receives the text you type <strong>only when you use AI search</strong>. That text is used to interpret your search intent. Access keys stay on the server.</li>
+            <li><strong>Google Fonts</strong> &mdash; the Inter typeface is loaded from Google Fonts. That request exposes your IP address and the referring page to Google. No tracking cookie is involved.</li>
+            <li><strong>Google Custom Search API (optional, disabled)</strong> &mdash; the codebase includes an optional supplementary web search that would only activate if <code>GOOGLE_SEARCH_API_KEY</code> and <code>GOOGLE_SEARCH_CX</code> were configured. They are not configured, so this integration is inactive and no data is sent to it today.</li>
+            <li><strong>Vercel Speed Insights</strong> &mdash; measures this page's performance in your browser (Core Web Vitals: load time, rendering and layout shift) and sends those metrics and the browser user agent to Vercel. It is the only traffic analysis tool used on the site. It sets no advertising cookie.</li>
+            <li><strong>Vercel</strong> &mdash; hosting and backend execution.</li>
+            <li><strong>Font Awesome (cdnjs)</strong> &mdash; interface icons.</li>
+            <li><strong>Wikimedia Commons</strong> &mdash; streaming platform logos shown in the footer.</li>
         </ul>
-        
-        <h2><i class="fas fa-globe-americas"></i> International Transfer</h2>
-        <p>Your data may be transferred to servers outside Brazil, including the United States, following EU Standard Contractual Clauses or other compliance mechanisms.</p>
-        
-        <h2><i class="fas fa-clock"></i> Retention Period</h2>
+        <p>Data may be processed on servers outside Brazil, including in the United States, by those suppliers.</p>
+
+        <h2><i class="fas fa-bullseye"></i> Purposes</h2>
         <ul>
-            <li>Navigation data: up to 14 months</li>
-            <li>Contact data: up to 2 years</li>
-            <li>Server logs: up to 12 months</li>
+            <li>Display the movie catalogue and search results</li>
+            <li>Show where each title is available to watch</li>
+            <li>Interpret AI search when you ask for it</li>
+            <li>Remember your chosen language between visits</li>
+            <li>Protect the service against abuse and automated access</li>
+            <li>Measure page performance to improve load-time experience</li>
         </ul>
-        
+
+        <h2><i class="fas fa-clock"></i> Retention</h2>
+        <ul>
+            <li>Language preference: kept in your browser until you delete it</li>
+            <li>Server logs: according to Vercel's retention policy</li>
+            <li>Everything else: not stored by us once the request has been processed</li>
+        </ul>
+
         <h2><i class="fas fa-lock"></i> Security Measures</h2>
         <ul>
-            <li>SSL/TLS encryption for data transmission</li>
-            <li>Restricted access to personal data</li>
-            <li>Regular security monitoring</li>
-            <li>Software updates and security patches</li>
+            <li>Encrypted connection over HTTPS/TLS</li>
+            <li>API keys held only in server environment variables, never exposed to the browser</li>
+            <li>Input validation and sanitisation, with DOMPurify used when rendering API data</li>
+            <li>Restrictive Content Security Policy, with cross-origin requests limited to the production domain</li>
+            <li>Per-origin request limits to reduce abuse and quota consumption</li>
         </ul>
-        
-        <h2><i class="fas fa-child"></i> Children Data</h2>
-        <p>Our site is not directed to children under 13. We do not intentionally collect personal data from children.</p>
-        
+
+        <h2><i class="fas fa-child"></i> Children's Data</h2>
+        <p>The site is not directed at children under 13 and does not knowingly collect personal data from children.</p>
+
         <h2><i class="fas fa-user-edit"></i> Your Rights (LGPD/GDPR)</h2>
-        <ul>
-            <li>Confirmation of processing existence</li>
-            <li>Access to personal data</li>
-            <li>Correction of incomplete or incorrect data</li>
-            <li>Anonymization, blocking or deletion of data</li>
-            <li>Data portability</li>
-            <li>Consent revocation</li>
-            <li>Review of automated decisions</li>
-        </ul>
-        
-        <h2><i class="fas fa-ad"></i> Advertising and AdSense</h2>
-        <p>We use Google AdSense to display ads. Google may use cookies to show ads based on your interests. To disable ad personalization, visit: <a href="https://www.google.com/settings/ads" target="_blank">Google Ad Settings</a></p>
-        
-        
+        <p>Because we keep no accounts, the only data associated with you is the language preference in your own browser. You can delete it at any time by clearing this site's browser data. If you have questions about request logs, or wish to exercise any right under the LGPD or the GDPR, write to <a href="mailto:tavaresbrenda@proton.me">tavaresbrenda@proton.me</a>.</p>
+
         <h2><i class="fas fa-exclamation-circle"></i> Changes</h2>
-        <p>This policy may be changed at any time. We will notify about significant changes through the site.</p>
-        
-        <h2><i class="fas fa-envelope"></i> Contact</h2>
-        <p>To exercise your rights or ask questions about this policy, use the site "About" page.</p>
-        
-        <p style="margin-top: 30px;"><em>CineWorld - 2026</em></p>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:15px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.5;">
-            CineWorld does not host any video files. All content is provided by the official TMDB API (The Movie Database). 
-            Watch links are directed to legitimate streaming platforms (Netflix, Prime Video, Disney+, etc.).
-        </p>
+        <p>This policy may be updated to reflect changes to the site. The date at the top of this page shows the last update.</p>
     </div>
 
     <script src="/front-end/js/lang-selector.js" defer></script>
