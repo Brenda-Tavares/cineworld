@@ -24,7 +24,25 @@
         'ko': 'ko'
     };
 
-    var currentLang = localStorage.getItem('cineworld_language') || 'pt-BR';
+    // O valor vem do localStorage, que o usuário (ou qualquer script) pode alterar.
+// Sem esta validacao, um valor fora da lista quebraria o seletor de forma
+// permanente, ja que o valor invalido continua salvo.
+var DEFAULT_LANG = 'pt-BR';
+
+function isSupportedLang(code) {
+    return Object.prototype.hasOwnProperty.call(LANG_META, code);
+}
+
+function readStoredLang() {
+    try {
+        var stored = localStorage.getItem('cineworld_language');
+        if (isSupportedLang(stored)) return stored;
+        if (stored !== null) localStorage.removeItem('cineworld_language');
+    } catch (e) { /* localStorage bloqueado (modo privado) */ }
+    return DEFAULT_LANG;
+}
+
+var currentLang = readStoredLang();
 
     function buildItems() {
         var html = '';
@@ -64,10 +82,12 @@
         panel.classList.remove('open');
     }
 
-    function switchLanguage(lang) {
-        if (lang === currentLang) { closeDropdown(); return; }
+function switchLanguage(lang) {
+    if (lang === currentLang) { closeDropdown(); return; }
+    try {
         localStorage.setItem('cineworld_language', lang);
-        var prefix = LANG_PATH[lang] || '';
+    } catch (e) { /* segue a troca sem persistir */ }
+    var prefix = LANG_PATH[lang] || '';
         var path = window.location.pathname.replace(/\/$/, '');
         var isIndex = path === '' || path === '/index.html' || document.querySelector('.movies-grid, #moviesGrid');
         if (isIndex) {

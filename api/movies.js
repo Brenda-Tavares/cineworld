@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { createLimiter } = require('../lib/rate-limit');
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
@@ -15,6 +16,8 @@ const ALLOWED_ORIGINS = ['all', 'BR', 'foreign'];
 const MAX_PAGE = 500;
 const MIN_PAGE = 1;
 
+const checkRate = createLimiter({ limit: 120, message: 'Muitas requisicoes. Tente novamente em instantes.' });
+
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', 'https://cineworld-site.vercel.app');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -23,7 +26,9 @@ module.exports = async (req, res) => {
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
-    
+
+    if (!checkRate(req, res)) return;
+
     let { language = 'pt-BR', page = 1, sort = 'popular', q, genre, origin, year } = req.query;
     
     language = ALLOWED_LANGUAGES.includes(language) ? language : 'pt-BR';

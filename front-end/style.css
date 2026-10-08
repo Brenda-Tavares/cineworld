@@ -671,7 +671,7 @@ body {
 }
 
 /* ========================================
-   CONTEUDO PRINCIPAL
+   CONTEÚDO PRINCIPAL
    ======================================== */
 .container {
     flex: 1;
@@ -1128,15 +1128,15 @@ body {
 }
 
 /* Subscription (flatrate) */
-.stream-tag:not(.stream-rent):not(.stream-buy):not(.stream-free):not(.stream-free-alt) {
+.stream-tag:not(.stream-rent):not(.stream-buy):not(.stream-free) {
     background: rgba(59, 130, 246, 0.12);
     border: 1px solid rgba(59, 130, 246, 0.3);
 }
-.stream-tag:not(.stream-rent):not(.stream-buy):not(.stream-free):not(.stream-free-alt) span {
+.stream-tag:not(.stream-rent):not(.stream-buy):not(.stream-free) span {
     color: #3b82f6;
     font-weight: 500;
 }
-.stream-tag:not(.stream-rent):not(.stream-buy):not(.stream-free):not(.stream-free-alt)::after {
+.stream-tag:not(.stream-rent):not(.stream-buy):not(.stream-free)::after {
     content: "Assinatura";
     font-size: var(--font-xs);
     background: #3b82f6;
@@ -1511,12 +1511,6 @@ body {
     border: 1px solid rgba(168, 85, 247, 0.3);
 }
 .stream-tag.stream-buy span { color: #a855f7; }
-
-.stream-tag.stream-free-alt {
-    background: rgba(34, 197, 94, 0.2);
-    border: 1px solid #22c55e;
-}
-.stream-tag.stream-free-alt span { color: #22c55e; font-weight: 600; }
 
 @media (max-width: 600px) {
     .ai-float-btn {

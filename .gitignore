@@ -1,12 +1,12 @@
 # Secrets
 .env
 .env.*
+!.env.example
 *.key
 *.pem
 docs-private/
 # Node
 node_modules/
-package-lock.json
 
 # Vercel
 .vercel/
