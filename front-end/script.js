@@ -1,45 +1,6 @@
 // CineWorld - Main Script
 
 // ========================================
-// VERCEL SPEED INSIGHTS QUEUE STUB
-// ========================================
-// Declared here (not inline in <head>) because the Content-Security-Policy in
-// vercel.json forbids inline <script>. This file is a classic blocking script
-// in <body>, so it always executes before the `defer`red Speed Insights bundle,
-// which means window.si exists by the time the tracker initialises.
-window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-
-// ========================================
-// INLINE HANDLER BINDINGS
-// ========================================
-// Replaces the on* attributes that used to live in index.html, so the page
-// works under a CSP without 'unsafe-inline'. Bound on DOMContentLoaded to
-// guarantee the elements exist.
-function bindInlineHandlers() {
-    const navToggleBtn = document.getElementById('navToggleBtn');
-    if (navToggleBtn) navToggleBtn.addEventListener('click', toggleNavMenu);
-
-    const modalCloseBtn = document.getElementById('modalCloseBtn');
-    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeMovieModal);
-
-    const aiFloatBtn = document.getElementById('aiFloatBtn');
-    if (aiFloatBtn) aiFloatBtn.addEventListener('click', toggleAIPanel);
-
-    const aiPanelCloseBtn = document.getElementById('aiPanelCloseBtn');
-    if (aiPanelCloseBtn) aiPanelCloseBtn.addEventListener('click', toggleAIPanel);
-
-    const aiSearchBtn = document.getElementById('aiSearchBtn');
-    if (aiSearchBtn) aiSearchBtn.addEventListener('click', askAI);
-
-    const aiSearchInput = document.getElementById('aiSearchInput');
-    if (aiSearchInput) {
-        aiSearchInput.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') askAI();
-        });
-    }
-}
-
-// ========================================
 // TOAST NOTIFICATION
 // ========================================
 function showToast(message) {
@@ -348,11 +309,6 @@ const API_BASE = '/api';
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
     try {
-        bindInlineHandlers();
-    } catch(e) {
-        console.error('bindInlineHandlers error:', e);
-    }
-    try {
         loadFromURL();
     } catch(e) {
         console.error('loadFromURL error:', e);
@@ -384,22 +340,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========================================
 // URL STATE
 // ========================================
-// O idioma pode chegar pela URL (?lang=) ou pelo localStorage. Ambos são
-// controlados por terceiros, entao validamos contra a lista de idiomas
-// suportados antes de usar ou persistir.
-function resolveLanguage(candidate, fallback) {
-    if (candidate && Object.prototype.hasOwnProperty.call(langMeta, candidate)) {
-        return candidate;
-    }
-    return fallback;
-}
-
-function storeLanguage(code) {
-    try {
-        localStorage.setItem('cineworld_language', code);
-    } catch (e) { /* localStorage bloqueado (modo privado) */ }
-}
-
 function loadFromURL() {
     const params = new URLSearchParams(window.location.search);
     
@@ -410,14 +350,11 @@ function loadFromURL() {
     if (params.has('year')) state.currentYear = params.get('year');
     
     if (params.has('lang')) {
-        state.currentLanguage = resolveLanguage(params.get('lang'), 'pt-BR');
-        storeLanguage(state.currentLanguage);
+        state.currentLanguage = params.get('lang');
+        localStorage.setItem('cineworld_language', state.currentLanguage);
     } else {
-        let savedLang = null;
-        try {
-            savedLang = localStorage.getItem('cineworld_language');
-        } catch (e) { /* localStorage bloqueado (modo privado) */ }
-        state.currentLanguage = resolveLanguage(savedLang, state.currentLanguage);
+        const savedLang = localStorage.getItem('cineworld_language');
+        if (savedLang) state.currentLanguage = savedLang;
     }
     
     if (params.has('q')) {
@@ -493,6 +430,29 @@ function setupEvents() {
     
     // ESC key
     document.addEventListener('keydown', handleGlobalKeydown);
+
+    // Event delegation for movie cards
+    const moviesGrid = document.getElementById('moviesGrid');
+    if (moviesGrid) {
+        moviesGrid.addEventListener('click', function(e) {
+            const card = e.target.closest('.movie-card');
+            if (!card) return;
+            const id = card.getAttribute('data-id');
+            if (id) {
+                showMovieDetails(parseInt(id));
+            }
+        });
+        moviesGrid.addEventListener('keydown', function(e) {
+            if (e.key !== 'Enter' && e.key !== ' ') return;
+            const card = e.target.closest('.movie-card');
+            if (!card) return;
+            const id = card.getAttribute('data-id');
+            if (id) {
+                e.preventDefault();
+                showMovieDetails(parseInt(id));
+            }
+        });
+    }
 }
 
 // ========================================
@@ -757,8 +717,6 @@ function renderMovies() {
         
         return `
             <div class="movie-card" role="listitem" tabindex="0" 
-                 onclick="showMovieDetails(${movie.id})" 
-                 onkeydown="if(event.key==='Enter')showMovieDetails(${movie.id})"
                  aria-label="${safeTitle}${hasVotes && rating ? ', Avaliação ' + rating : ''}${year ? ', ' + year : ''}">
                 <div class="movie-poster">
                     ${posterUrl ? 
@@ -943,7 +901,7 @@ const legalPagePaths = {
     'en': { about: '/en/sobre', privacy: '/en/privacidade', terms: '/en/termos' },
     'es': { about: '/es/sobre', privacy: '/es/privacidade', terms: '/es/termos' },
     'zh-CN': { about: '/zh/sobre', privacy: '/zh/privacidade', terms: '/zh/termos' },
-    'zh-HK': { about: '/zh-hk/sobre', privacy: '/zh-hk/privacidade', terms: '/zh-hk/termos' },
+    'zh-HK': { about: '/zh/sobre', privacy: '/zh/privacidade', terms: '/zh/termos' },
     'ja': { about: '/ja/sobre', privacy: '/ja/privacidade', terms: '/ja/termos' },
     'ru': { about: '/ru/sobre', privacy: '/ru/privacidade', terms: '/ru/termos' },
     'ko': { about: '/ko/sobre', privacy: '/ko/privacidade', terms: '/ko/termos' }
@@ -1056,9 +1014,7 @@ async function useAISearch(query) {
             state.totalPages = Math.min(data.total_pages || 1, 500);
             renderMovies();
             updateUI();
-            let title = t('resultsFor') + ': ' + query;
-            if (data.mode === 'identify' && data.ai_answer) title = data.ai_answer;
-            document.getElementById('currentTitle').textContent = title;
+            document.getElementById('currentTitle').textContent = t('resultsFor') + ': ' + query;
         } else {
             renderEmptyState();
         }
@@ -1105,12 +1061,7 @@ function doAiSearch() {
             renderMovies();
             updateUI();
             document.getElementById('currentTitle').textContent = t('resultsFor') + ': ' + query;
-            if (data.mode === 'identify' && data.ai_answer) {
-                resultsDiv.innerHTML = '<div class="ai-answer">' + sanitize(data.ai_answer) + '</div>';
-                setTimeout(() => document.getElementById('aiPanel').classList.remove('open'), 4000);
-            } else {
-                document.getElementById('aiPanel').classList.remove('open');
-            }
+            document.getElementById('aiPanel').classList.remove('open');
         } else {
             resultsDiv.innerHTML = '<p class="ai-no-results">' + t('noResults') + '</p>';
         }
@@ -1215,66 +1166,85 @@ function showMovieModal(movie) {
             return null;
         };
         
-        // A API devolve apenas flatrate/rent/buy. O tipo free-alt nunca foi emitido,
-// então o bloco que o tratava era código morto (além de usar um campo link
-// que foi removido da API).
-const flatrate = movie.streaming.filter(p => p.type === 'flatrate' && !p.isFree);
-const flatrateFree = movie.streaming.filter(p => p.type === 'flatrate' && p.isFree);
-const rent = movie.streaming.filter(p => p.type === 'rent');
-const buy = movie.streaming.filter(p => p.type === 'buy');
-
-// O nome vem da TMDB, mas segue por innerHTML: sanitizamos igual aos outros
-// dados vindos da API.
-const tag = (url, className, title, label, inner) =>
-            `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${className}" title="${title}" aria-label="${label}">${inner}</a>`;
-
-let html = '<div class="modal-platforms">';
-
-if (flatrate.length > 0 || flatrateFree.length > 0) {
-    html += '<h4><i class="fas fa-play" aria-hidden="true"></i> ' + t('streaming') + '</h4>';
-    html += '<div class="streaming-list">';
-
-    flatrateFree.forEach(p => {
-        const url = getPlatformUrl(p.name);
-        if (!url) return;
-        const name = sanitize(p.name);
-        html += tag(url, 'stream-tag stream-free', `${name} (Gratuito)`, `${name} - Gratuito`,
-                `<span>${name}</span><i class="fas fa-tag" title="Gratuito" aria-hidden="true"></i>`);
-    });
-
-    flatrate.forEach(p => {
-        const url = getPlatformUrl(p.name);
-        if (!url) return;
-        const name = sanitize(p.name);
-        html += tag(url, 'stream-tag', name, `Assistir em ${name}`, `<span>${name}</span>`);
-    });
-
-    html += '</div>';
-}
-
-if (rent.length > 0) {
-    html += '<h4><i class="fas fa-shopping-cart" aria-hidden="true"></i> ' + t('rent') + '</h4>';
-    html += '<div class="streaming-list">';
-    rent.forEach(p => {
-        const url = getPlatformUrl(p.name);
-        if (!url) return;
-        const name = sanitize(p.name);
-        html += tag(url, 'stream-tag stream-rent', `Alugar em ${name}`, `Alugar em ${name}`, `<span>${name}</span>`);
-    });
-    html += '</div>';
-}
-
-if (buy.length > 0) {
-    html += '<h4><i class="fas fa-shopping-bag" aria-hidden="true"></i> ' + t('buy') + '</h4>';
-    html += '<div class="streaming-list">';
-    buy.forEach(p => {
-        const url = getPlatformUrl(p.name);
-        if (!url) return;
-        const name = sanitize(p.name);
-        html += tag(url, 'stream-tag stream-buy', `Comprar em ${name}`, `Comprar em ${name}`, `<span>${name}</span>`);
-    });
-    html += '</div>';
-}
+        const flatrate = movie.streaming.filter(p => p.type === 'flatrate' && !p.isFree);
+        const flatrateFree = movie.streaming.filter(p => p.type === 'flatrate' && p.isFree);
+        const rent = movie.streaming.filter(p => p.type === 'rent');
+        const buy = movie.streaming.filter(p => p.type === 'buy');
+        const freeAlt = movie.streaming.filter(p => p.type === 'free-alt');
+        
+        let html = '<div class="modal-platforms">';
+        
+        if (flatrate.length > 0 || flatrateFree.length > 0 || freeAlt.length > 0) {
+            html += '<h4><i class="fas fa-play" aria-hidden="true"></i> ' + t('streaming') + '</h4>';
+            html += '<div class="streaming-list">';
+            
+            if (freeAlt.length > 0) {
+                html += freeAlt.map(p => {
+                    const url = p.link;
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag stream-free stream-free-alt" title="${p.name} - Opção Gratuita" aria-label="${p.name} - Assistir grátis">
+                        <i class="fas fa-play" aria-hidden="true"></i>
+                        <span>${p.name}</span>
+                    </a>`;
+                }).join('');
+            }
+            
+            if (flatrateFree.length > 0) {
+                html += flatrateFree.map(p => {
+                    const url = getPlatformUrl(p.name);
+                    if (url) {
+                        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag stream-free" title="${p.name} (Gratuito)" aria-label="${p.name} - Gratuito">
+                            <span>${p.name}</span>
+                            <i class="fas fa-tag" title="Gratuito" aria-hidden="true"></i>
+                        </a>`;
+                    }
+                    return '';
+                }).join('');
+            }
+            
+            if (flatrate.length > 0) {
+                html += flatrate.map(p => {
+                    const url = getPlatformUrl(p.name);
+                    if (url) {
+                        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag" title="${p.name}" aria-label="Assistir em ${p.name}">
+                            <span>${p.name}</span>
+                        </a>`;
+                    }
+                    return '';
+                }).join('');
+            }
+            
+            html += '</div>';
+        }
+        
+        if (rent.length > 0) {
+            html += '<h4><i class="fas fa-shopping-cart" aria-hidden="true"></i> ' + t('rent') + '</h4>';
+            html += '<div class="streaming-list">';
+            html += rent.map(p => {
+                const url = getPlatformUrl(p.name);
+                if (url) {
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag stream-rent" title="Alugar em ${p.name}" aria-label="Alugar em ${p.name}">
+                        <span>${p.name}</span>
+                    </a>`;
+                }
+                return '';
+            }).join('');
+            html += '</div>';
+        }
+        
+        if (buy.length > 0) {
+            html += '<h4><i class="fas fa-shopping-bag" aria-hidden="true"></i> ' + t('buy') + '</h4>';
+            html += '<div class="streaming-list">';
+            html += buy.map(p => {
+                const url = getPlatformUrl(p.name);
+                if (url) {
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="stream-tag stream-buy" title="Comprar em ${p.name}" aria-label="Comprar em ${p.name}">
+                        <span>${p.name}</span>
+                    </a>`;
+                }
+                return '';
+            }).join('');
+            html += '</div>';
+        }
         
         html += '</div>';
         streamingHtml = html;
