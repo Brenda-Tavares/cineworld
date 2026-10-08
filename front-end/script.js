@@ -1,5 +1,49 @@
 // CineWorld - Main Script
 
+// Vercel Speed Insights queue stub. O snippet inline do <head> foi removido
+// porque a CSP em vercel.json proibe scripts inline.
+window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+
+// ========================================
+// INLINE HANDLER BINDINGS
+// ========================================
+// Liga os botões do HTML (que usam id, sem atributos onclick) de forma
+// compatível com CSP sem 'unsafe-inline'.
+function bindInlineHandlers() {
+    const navToggleBtn = document.getElementById('navToggleBtn');
+    if (navToggleBtn) navToggleBtn.addEventListener('click', toggleNavMenu);
+
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeMovieModal);
+
+    const aiFloatBtn = document.getElementById('aiFloatBtn');
+    if (aiFloatBtn) aiFloatBtn.addEventListener('click', toggleAIPanel);
+
+    const aiPanelCloseBtn = document.getElementById('aiPanelCloseBtn');
+    if (aiPanelCloseBtn) aiPanelCloseBtn.addEventListener('click', toggleAIPanel);
+
+    const aiSearchBtn = document.getElementById('aiSearchBtn');
+    if (aiSearchBtn) aiSearchBtn.addEventListener('click', askAI);
+
+    const aiSearchInput = document.getElementById('aiSearchInput');
+    if (aiSearchInput) {
+        aiSearchInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') askAI();
+        });
+    }
+
+    // Paginação (botões gerados por JS sem inline handlers, por causa da CSP)
+    const pageNumbers = document.getElementById('pageNumbers');
+    if (pageNumbers) {
+        pageNumbers.addEventListener('click', function (event) {
+            const btn = event.target.closest('.page-btn');
+            if (!btn) return;
+            const page = parseInt(btn.getAttribute('data-page'), 10);
+            if (page) goToPage(page);
+        });
+    }
+}
+
 // ========================================
 // TOAST NOTIFICATION
 // ========================================
@@ -308,6 +352,11 @@ const API_BASE = '/api';
 // INITIALIZATION
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
+    try {
+        bindInlineHandlers();
+    } catch(e) {
+        console.error('bindInlineHandlers error:', e);
+    }
     try {
         loadFromURL();
     } catch(e) {
@@ -716,7 +765,7 @@ function renderMovies() {
         const safeTitle = sanitize(movie.title || t('noTitle'));
         
         return `
-            <div class="movie-card" role="listitem" tabindex="0" 
+            <div class="movie-card" role="listitem" tabindex="0" data-id="${movie.id}"
                  aria-label="${safeTitle}${hasVotes && rating ? ', Avaliação ' + rating : ''}${year ? ', ' + year : ''}">
                 <div class="movie-poster">
                     ${posterUrl ? 
@@ -763,29 +812,29 @@ function renderPageNumbers() {
     
     if (total <= 7) {
         for (let i = 1; i <= total; i++) {
-            html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
+            html += `<button class="page-btn ${i === current ? 'active' : ''}" data-page="${i}" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
         }
     } else {
         if (current <= 4) {
             for (let i = 1; i <= 5; i++) {
-                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
+                html += `<button class="page-btn ${i === current ? 'active' : ''}" data-page="${i}" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
             }
             html += '<span aria-hidden="true">...</span>';
-            html += `<button class="page-btn" onclick="goToPage(${total})" aria-label="${t('enterPage')} ${total}">${total}</button>`;
+            html += `<button class="page-btn" data-page="${total}" aria-label="${t('enterPage')} ${total}">${total}</button>`;
         } else if (current >= total - 3) {
-            html += `<button class="page-btn" onclick="goToPage(1)" aria-label="${t('enterPage')} 1">1</button>`;
+            html += `<button class="page-btn" data-page="1" aria-label="${t('enterPage')} 1">1</button>`;
             html += '<span aria-hidden="true">...</span>';
             for (let i = total - 4; i <= total; i++) {
-                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
+                html += `<button class="page-btn ${i === current ? 'active' : ''}" data-page="${i}" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
             }
         } else {
-            html += `<button class="page-btn" onclick="goToPage(1)" aria-label="${t('enterPage')} 1">1</button>`;
+            html += `<button class="page-btn" data-page="1" aria-label="${t('enterPage')} 1">1</button>`;
             html += '<span aria-hidden="true">...</span>';
             for (let i = current - 1; i <= current + 1; i++) {
-                html += `<button class="page-btn ${i === current ? 'active' : ''}" onclick="goToPage(${i})" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
+                html += `<button class="page-btn ${i === current ? 'active' : ''}" data-page="${i}" aria-label="${t('enterPage')} ${i}" ${i === current ? 'aria-current="page"' : ''}>${i}</button>`;
             }
             html += '<span aria-hidden="true">...</span>';
-            html += `<button class="page-btn" onclick="goToPage(${total})" aria-label="${t('enterPage')} ${total}">${total}</button>`;
+            html += `<button class="page-btn" data-page="${total}" aria-label="${t('enterPage')} ${total}">${total}</button>`;
         }
     }
     
