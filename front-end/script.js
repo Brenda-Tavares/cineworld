@@ -1118,21 +1118,23 @@ window.askAI = doAiSearch;
 // ========================================
 window.showMovieDetails = async function(movieId) {
     lastFocusedElement = document.activeElement;
-    
+    const fallbackMovie = state.movies.find(m => m.id === movieId);
+
     try {
         const tmdbLang = languageMap[state.currentLanguage] || 'pt-BR';
         const response = await fetch(API_BASE + '/movie?id=' + movieId + '&language=' + tmdbLang);
         const data = await response.json();
-        
+
         if (data.movie) {
             showMovieModal(data.movie);
+        } else if (fallbackMovie) {
+            showMovieModal(fallbackMovie);
         } else if (data.error) {
             showToast('Error: ' + data.error);
         }
     } catch (error) {
         console.error('Error loading movie:', error);
-        const movie = state.movies.find(m => m.id === movieId);
-        if (movie) showMovieModal(movie);
+        if (fallbackMovie) showMovieModal(fallbackMovie);
     }
 };
 
