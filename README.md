@@ -3,8 +3,6 @@
 **Movie discovery platform with natural-language search and streaming availability.**
 
 Live site: [https://cineworld-site.vercel.app](https://cineworld-site.vercel.app)
-Repository: _(link to be added)_
-Author: **Brenda Tavares** (ShipClaw) - Portfolio/contact: **tavaresbrenda@proton.me**
 
 ---
 
@@ -125,6 +123,22 @@ Third parties that receive data: TMDB (search terms), Gemini (your query, only w
 ## Credits
 
 Catalogue data and artwork provided by [TMDB](https://www.themoviedb.org/). This product uses the TMDB API but is not endorsed or certified by TMDB.
+
+---
+
+## Author
+
+**Brenda Tavares** - Full-Stack Developer
+
+- B.A. in Humanities, Federal University of Bahia (UFBA)
+- Backend Development, Pitágoras Unopar Anhanguera University
+- GitHub: <https://github.com/Brenda-Tavares>
+- LinkedIn: <https://www.linkedin.com/in/brenda-campos-tavares/>
+
+---
+
+Portuguese: [README.PT.md](README.PT.md) | Simplified Chinese:
+[README.ZH.md](README.ZH.md)
 
 
 
