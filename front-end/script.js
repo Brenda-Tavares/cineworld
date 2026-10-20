@@ -760,7 +760,7 @@ function renderMovies() {
                  aria-label="${safeTitle}${hasVotes && rating ? ', Avaliação ' + rating : ''}${year ? ', ' + year : ''}">
                 <div class="movie-poster">
                     ${posterUrl ? 
-                        `<img src="${posterUrl}" alt="${safeTitle}" loading="lazy">` :
+                        `<img src="${posterUrl}" alt="${safeTitle}" loading="lazy" decoding="async">` :
                         `<div class="poster-placeholder" aria-hidden="true"><i class="fas fa-film"></i></div>`
                     }
                     ${hasVotes && rating ? `<div class="movie-rating" aria-label="Avaliação ${rating}"><i class="fas fa-star" aria-hidden="true"></i> ${rating}</div>` : ''}
