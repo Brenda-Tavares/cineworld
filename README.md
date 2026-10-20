@@ -63,12 +63,12 @@ api/
   index.js            API entry point
 lib/
   rate-limit.js       Shared per-IP request limiter
-vercel.json           Routing and security headers
+vercel.json           Routing (rewrites) and security headers
 ```
 
 ## Getting Started
 
-Requires Node.js 20 or newer. Tested on Node 22; Vercel provides the runtime on deploy.
+Requires Node.js 22 or newer. Tested on Node 22 locally; Vercel builds on Node 24 (`engines.node`).
 
 ```bash
 npm install
@@ -96,12 +96,12 @@ Get a TMDB key at [themoviedb.org/settings/api](https://www.themoviedb.org/setti
 
 `axios` is the only runtime dependency, and `npm audit` reports **0 vulnerabilities**.
 
-There is no `@vercel/node` in `package.json`. Vercel's Node.js runtime builds `/api` functions with its own platform-provided builder, so the package was never needed here â€” it only pulled in a build-time dependency chain (`ts-morph` â†’ `fast-glob` â†’ `micromatch` â†’ `braces`) that accounted for every advisory this project had, including the critical `node-tar` one. `@vercel/speed-insights` remains a devDependency: the script served from `/_vercel/speed-insights/script.js` comes from Vercel's edge, not from `node_modules`.
+There is no `@vercel/node` in `package.json`. Vercel's Node.js runtime builds `/api` functions with its own platform-provided builder, so the package was never needed here — it only pulled in a build-time dependency chain (`ts-morph` → `fast-glob` → `micromatch` → `braces`) that accounted for every advisory this project had, including the critical `node-tar` one. `@vercel/speed-insights` remains a devDependency: the script served from `/_vercel/speed-insights/script.js` comes from Vercel's edge, not from `node_modules`.
 
-`engines.node` is pinned to `20.x` so builds do not drift with Vercel's default.
+`engines.node` is pinned to `24.x`, because Vercel discontinued Node.js 20 on 2026-10-01 and any build pinning `20.x` now fails immediately with `BUILD_UTILS_NODE_VERSION_DISCONTINUED`.
 - **Input validation.** Search queries are length-checked and rejected before reaching any upstream API.
 - **Sanitised rendering.** API text is sanitised with DOMPurify before insertion into the DOM.
-- **Content Security Policy.** `connect-src` is `'self'` only, so the browser can talk to this site's own API and nothing else. `script-src` allows only self and cdnjs. `img-src` is limited to self, TMDB images, Wikimedia and `data:`. `frame-src` and `object-src` are `none`, `base-uri` is `self`, `form-action` is `self`, and `frame-ancestors` is `none`.
+- **Content Security Policy.** `connect-src` is `'self'` only, so the browser can talk to this site's own API and nothing else. `script-src` allows only self, cdnjs and the inline JSON-LD hash. `img-src` is limited to self, TMDB images, Wikimedia and `data:`. `frame-src` and `object-src` are `none`, `base-uri` is `self`, `form-action` is `self`, and `frame-ancestors` is `none`.
 - **Cross-origin requests** are restricted to the production origin.
 - **Transport** is HTTPS only, with `upgrade-insecure-requests` enforced.
 
@@ -116,7 +116,7 @@ Third parties that receive data: TMDB (search terms), Gemini (your query, only w
 - **Architecture:** Serverless on Vercel with `/api/*` functions; static frontend under `/front-end/`.
 - **CSP (production-ready):** strict, no inline event handlers; DOMPurify on client render; HTTPS enforced.
 - **Security:** per-IP rate limiting (`lib/rate-limit.js`), CORS restricted to production origin, input validation/sanitization.
-- **Dependencies:** only `axios` runtime, `@vercel/speed-insights` devDependency; `npm audit = 0` (Node 20.x).
+- **Dependencies:** only `axios` runtime, `@vercel/speed-insights` devDependency; `npm audit = 0` (Node 24.x).
 - **Quality assurance:** JS syntax validated (`node -c`) across modified endpoints; no secrets in repo; EOL normalized; CSP-aware refactor to avoid unsafe-inline blocking.
 - **Ongoing:** continuous review for hardening (headers, cache, consistency); tests/checks remain lightweight and run on demand.
 
