@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada - CineWorld</title>
+    <meta name="description" content="A página que você procura não existe ou foi movida. Volte ao catálogo do CineWorld ou acesse as páginas legais.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="stylesheet" href="/front-end/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: var(--bg-dark); color: var(--text-white); font-family: 'Inter', system-ui, -apple-system, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+        .error-page { max-width: 620px; text-align: center; }
+        .error-code { font-size: clamp(4rem, 16vw, 8rem); font-weight: 800; line-height: 1; color: var(--accent); letter-spacing: -2px; }
+        .error-page h1 { font-size: 1.6rem; margin: 16px 0 12px; color: var(--text-white); }
+        .error-page p { font-size: 1rem; line-height: 1.7; color: var(--text-light); margin-bottom: 32px; }
+        .error-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 40px; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; transition: background 0.2s ease; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-white); text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; transition: background 0.2s ease; }
+        .btn-secondary:hover { background: var(--bg-hover); }
+        .error-links { border-top: 1px solid var(--border); padding-top: 24px; }
+        .error-links h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 14px; }
+        .error-links ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: center; }
+        .error-links a { color: var(--text-light); text-decoration: none; font-size: 0.9rem; }
+        .error-links a:hover { color: var(--accent); }
+        .error-lang { margin-top: 24px; font-size: 0.85rem; color: var(--text-muted); }
+        .error-lang a { color: var(--text-light); text-decoration: none; margin: 0 6px; }
+        .error-lang a:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <main class="error-page">
+        <div class="error-code">404</div>
+        <h1>Página não encontrada</h1>
+        <p>O endereço que você acessou não existe, foi movido ou o link está incorreto. Use os atalhos abaixo para continuar navegando.</p>
+
+        <div class="error-actions">
+            <a class="btn-primary" href="/"><i class="fas fa-house" aria-hidden="true"></i> Voltar ao catálogo</a>
+            <a class="btn-secondary" href="/sobre"><i class="fas fa-circle-info" aria-hidden="true"></i> Sobre o CineWorld</a>
+        </div>
+
+        <section class="error-links">
+            <h2>Páginas legais</h2>
+            <ul>
+                <li><a href="/privacidade">Política de privacidade</a></li>
+                <li><a href="/termos">Termos de uso</a></li>
+                <li><a href="/sobre">Sobre</a></li>
+            </ul>
+        </section>
+
+        <p class="error-lang">
+            <a href="/en">English</a>·<a href="/es">Español</a>·<a href="/zh">中文</a>·<a href="/ja">日本語</a>·<a href="/ru">Русский</a>·<a href="/ko">한국어</a>
+        </p>
+    </main>
+</body>
+</html>
