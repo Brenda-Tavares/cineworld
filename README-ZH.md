@@ -137,6 +137,7 @@ CineWorld 没有账号、没有数据库、没有广告。不使用 Google AdSen
 - 后端开发，Pitágoras Unopar Anhanguera 大学
 - GitHub：<https://github.com/Brenda-Tavares>
 - LinkedIn：<https://www.linkedin.com/in/brenda-campos-tavares/>
+- 邮箱：tavaresbrenda@proton.me
 
 ---
 

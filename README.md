@@ -4,6 +4,8 @@
 
 Live site: [https://cineworld-site.vercel.app](https://cineworld-site.vercel.app)
 
+Author: **Brenda Tavares** (ShipClaw) - Portfolio/contact: **tavaresbrenda@proton.me**
+
 ---
 
 ## The Problem
@@ -134,6 +136,7 @@ Catalogue data and artwork provided by [TMDB](https://www.themoviedb.org/). This
 - Backend Development, Pitágoras Unopar Anhanguera University
 - GitHub: <https://github.com/Brenda-Tavares>
 - LinkedIn: <https://www.linkedin.com/in/brenda-campos-tavares/>
+- Email: tavaresbrenda@proton.me
 
 ---
 

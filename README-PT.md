@@ -137,6 +137,7 @@ Dados do catálogo e artes fornecidos pela [TMDB](https://www.themoviedb.org/). 
 - Desenvolvimento Backend, Universidade Pitágoras Unopar Anhanguera
 - GitHub: <https://github.com/Brenda-Tavares>
 - LinkedIn: <https://www.linkedin.com/in/brenda-campos-tavares/>
+- E-mail: tavaresbrenda@proton.me
 
 ---
 
