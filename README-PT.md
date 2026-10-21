@@ -1,123 +1,144 @@
 ﻿# CineWorld
 
-**Movie discovery platform with natural-language search and streaming availability.**
+**Plataforma de descoberta de filmes com busca em linguagem natural e disponibilidade em streaming.**
 
-Live site: [https://cineworld-site.vercel.app](https://cineworld-site.vercel.app)
-Repository: _(link to be added)_
-Author: **Brenda Tavares** (ShipClaw) - Portfolio/contact: **tavaresbrenda@proton.me**
+Site no ar: [https://cineworld-site.vercel.app](https://cineworld-site.vercel.app)
+
+Autora: **Brenda Tavares** (ShipClaw) — Portfólio/contato: **tavaresbrenda@proton.me**
 
 ---
 
-## The Problem
+## O Problema
 
-Finding a movie is fragmented. You land on a streaming platform, browse what is already on the catalog, and only then discover the film you actually wanted is not available in your country. Search engines do not answer availability. Letterboxd-style databases tell you *what* a film is, not *where you can legally watch it right now*.
+Encontrar um filme é fragmentado. Você chega a uma plataforma de streaming, navega pelo que já está no catálogo e só então descobre que o filme que você realmente queria não está disponível no seu país. Motores de busca não respondem sobre disponibilidade. Bancos de dados no estilo Letterboxd dizem *o que* um filme é, não *onde você pode assisti-lo legalmente agora*.
 
-The reverse problem is just as common: you remember a film vaguely â€” "the one with the diver, set in space, maybe 2010s" â€” and cannot recall the title. Keyword search cannot help you, because you do not have the keywords.
+O problema inverso é igualmente comum: você lembra de um filme vagamente — "aquele com o mergulhador, ambientado no espaço, talvez nos anos 2010" — e não consegue lembrar o título. Busca por palavras-chave não pode ajudar, porque você não tem as palavras-chave.
 
-CineWorld addresses both with a single interface: describe what you want in plain language, get the title back, and immediately see whether it streams free, by subscription, for rent, or for purchase.
+O CineWorld resolve ambos com uma única interface: descreva o que você quer em linguagem natural, receba o título de volta e veja imediatamente se ele transmite de graça, por assinatura, para aluguel ou para compra.
 
-## The Solution
+## A Solução
 
-A single-page movie catalogue that turns recall and discovery into one flow:
+Um catálogo de filmes em página única que transforma lembrança e descoberta em um único fluxo:
 
-1. **Browse or filter** â€” popular, highest rated, upcoming, national or international, by genre, year or origin.
-2. **Search by intent** â€” type a description instead of a title. The AI endpoint resolves it to a real catalogue entry.
-3. **Check availability** â€” each title shows where it streams, split into free, subscription, rent and buy.
+1. **Navegue ou filtre** — populares, mais bem avaliados, lançamentos futuros, nacionais ou internacionais, por gênero, ano ou origem.
+2. **Busque por intenção** — digite uma descrição em vez de um título. O endpoint de IA resolve para uma entrada real do catálogo.
+3. **Verifique a disponibilidade** — cada título mostra onde é transmitido, dividido entre gratuito, assinatura, aluguel e compra.
 
-## Features
+## Funcionalidades
 
-- **Natural-language AI search** â€” describe a film in your own words; Gemini extracts the intent and resolves it against the TMDB catalogue.
-- **Identify mode** â€” for fuzzy recall. Returns the best matching title with a localised explanation of why it matched.
-- **Streaming availability** â€” subscription, rent, purchase and free-with-ads providers, resolved per country with a Brazilian fallback.
-- **Filtering and sorting** â€” popularity, rating, release date, upcoming, genre, year, and national versus international.
-- **8 languages** â€” English, Portuguese, Spanish, Simplified Chinese, Traditional Chinese (Hong Kong), Japanese, Russian and Korean, all client-side with no reload.
-- **No account required** â€” nothing to sign up for, nothing stored on a server you control.
-- **Responsive** â€” desktop, tablet and mobile from a single layout.
+- **Busca de IA em linguagem natural** — descreva um filme com suas próprias palavras; o Gemini extrai a intenção e a resolve contra o catálogo do TMDB.
+- **Modo Identificar** — para lembrança imprecisa. Retorna o título mais compatível, com uma explicação localizada de por que ele correspondeu.
+- **Disponibilidade em streaming** — provedores de assinatura, aluguel, compra e gratuito com anúncios, resolvidos por país com fallback brasileiro.
+- **Filtragem e ordenação** — popularidade, avaliação, data de lançamento, próximos lançamentos, gênero, ano e nacional versus internacional.
+- **8 idiomas** — inglês, português, espanhol, chinês simplificado, chinês tradicional (Hong Kong), japonês, russo e coreano, todos no lado do cliente e sem recarregar.
+- **Sem necessidade de conta** — nada para se cadastrar, nada armazenado em um servidor que você controla.
+- **Responsivo** — desktop, tablet e celular a partir de um único layout.
 
-## Tech Stack
+## Stack Tecnológica
 
-| Layer | Choice | Why |
+| Camada | Escolha | Por quê |
 |---|---|---|
-| Frontend | HTML5, CSS3, vanilla JavaScript | The UI is one catalogue view with filtering. A framework would add a build step and a runtime without removing meaningful complexity. |
-| Backend | Node.js on Vercel Serverless Functions | The TMDB and Gemini keys must never reach the browser. Serverless means no server to maintain, and the API surface is five small endpoints. |
-| HTTP client | `axios` | Consistent timeouts and error handling across the API layer. |
-| Movie data | TMDB API | The reference catalogue for titles, metadata, artwork and streaming providers. |
-| AI | Google Gemini API | Converts free-form descriptions into structured search intent. |
-| Sanitisation | DOMPurify (cdnjs) | Catalogue text is rendered as HTML. DOMPurify strips injected markup before it reaches the DOM. |
-| Icons | Font Awesome (cdnjs) | Consistent icon set without shipping an icon font. |
-| Hosting | Vercel | Static frontend plus serverless functions, global CDN and per-region execution. |
+| Frontend | HTML5, CSS3, JavaScript vanilla | A UI é uma única visão de catálogo com filtragem. Um framework adicionaria uma etapa de build e um runtime sem remover complexidade significativa. |
+| Backend | Node.js nas Vercel Serverless Functions | As chaves do TMDB e do Gemini jamais podem chegar ao navegador. Serverless significa nenhum servidor para manter, e a superfície de API são cinco endpoints pequenos. |
+| Cliente HTTP | `axios` | Timeouts e tratamento de erros consistentes em toda a camada de API. |
+| Dados de filmes | TMDB API | O catálogo de referência para títulos, metadados, artes e provedores de streaming. |
+| IA | Google Gemini API | Converte descrições em texto livre em intenção de busca estruturada. |
+| Sanitização | DOMPurify (cdnjs) | O texto do catálogo é renderizado como HTML. O DOMPurify remove marcação injetada antes de ela chegar ao DOM. |
+| Ícones | Font Awesome (cdnjs) | Conjunto de ícones consistente sem enviar uma fonte de ícones. |
+| Hospedagem | Vercel | Frontend estático mais funções serverless, CDN global e execução por região. |
 
-### Project structure
+### Estrutura do projeto
 
 ```
 front-end/
-  index.html          Single page for every language
-  style.css           All styling
-  script.js           i18n dictionary, catalogue rendering, filters, AI search
-  js/lang-selector.js Language dropdown, independent of script.js
-  <locale>/           sobre, privacidade, termos per language
+  index.html          Página única para todos os idiomas
+  style.css           Toda a estilização
+  script.js           Dicionário i18n, renderização do catálogo, filtros, busca de IA
+  js/lang-selector.js Dropdown de idioma, independente do script.js
+  <locale>/           sobre, privacidade e termos por idioma
 api/
-  movies.js           Catalogue listing, filters, sorting
-  movie.js            Single title detail
-  genres.js           Genre list
-  streaming.js        Streaming providers by country
-  ai-search.js        Natural-language and identify search
-  index.js            API entry point
+  movies.js           Listagem do catálogo, filtros, ordenação
+  movie.js            Detalhe de um único título
+  genres.js           Lista de gêneros
+  streaming.js        Provedores de streaming por país
+  ai-search.js        Busca em linguagem natural e modo identificar
+  index.js            Ponto de entrada da API
 lib/
-  rate-limit.js       Shared per-IP request limiter
-vercel.json           Routing (rewrites) and security headers
+  rate-limit.js       Limitador de requisições por IP, compartilhado
+vercel.json           Roteamento (rewrites) e headers de segurança
 ```
 
-## Getting Started
+## Introdução
 
-Requires Node.js 22 or newer. Tested on Node 22 locally; Vercel builds on Node 24 (`engines.node`).
+Requer Node.js 22 ou mais recente. Testado no Node 22 localmente; a Vercel compila no Node 24 (`engines.node`).
 
 ```bash
 npm install
-cp .env.example .env   # then fill in your keys
+cp .env.example .env   # depois preencha suas chaves
 vercel dev
 ```
 
-### Environment variables
+### Variáveis de ambiente
 
-| Variable | Required | Purpose |
+| Variável | Obrigatória | Propósito |
 |---|---|---|
-| `TMDB_API_KEY` | Yes | Catalogue data. Used by `movies`, `movie`, `genres` and `streaming`. |
-| `GEMINI_API_KEY` | No | Natural-language search. Without it the rest of the site works normally. |
-| `GOOGLE_SEARCH_API_KEY` | No | Optional supplementary web search for AI results. Inactive unless set. |
-| `GOOGLE_SEARCH_CX` | No | Search engine ID for the above. |
+| `TMDB_API_KEY` | Sim | Dados do catálogo. Usada por `movies`, `movie`, `genres` e `streaming`. |
+| `GEMINI_API_KEY` | Não | Busca em linguagem natural. Sem ela, o restante do site funciona normalmente. |
+| `GOOGLE_SEARCH_API_KEY` | Não | Busca na web complementar e opcional para resultados de IA. Inativa enquanto não definida. |
+| `GOOGLE_SEARCH_CX` | Não | ID do mecanismo de busca para a variável acima. |
 
-Get a TMDB key at [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api) and a Gemini key at [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey).
+Obtenha uma chave do TMDB em [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api) e uma chave do Gemini em [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey).
 
-## Security
+## Segurança
 
-- **Secrets stay server-side.** All keys are read from environment variables. No key is present in the frontend bundle.
-- **Rate limiting.** A shared per-IP limiter caps requests per endpoint (`lib/rate-limit.js`). Because Vercel functions are stateless and distributed, this is per-instance and approximate rather than a global limit.
+- **Segredos ficam no servidor.** Todas as chaves são lidas de variáveis de ambiente. Nenhuma chave está presente no bundle do frontend.
+- **Rate limiting.** Um limitador compartilhado por IP limita as solicitações por endpoint (`lib/rate-limit.js`). Como as funções da Vercel são stateless e distribuídas, o limite é por instância e aproximado, não um limite global.
 
-### Dependency audit
+### Auditoria de dependências
 
-`axios` is the only runtime dependency, and `npm audit` reports **0 vulnerabilities**.
+`axios` é a única dependência de runtime, e o `npm audit` reporta **0 vulnerabilidades**.
 
-There is no `@vercel/node` in `package.json`. Vercel's Node.js runtime builds `/api` functions with its own platform-provided builder, so the package was never needed here — it only pulled in a build-time dependency chain (`ts-morph` → `fast-glob` → `micromatch` → `braces`) that accounted for every advisory this project had, including the critical `node-tar` one. `@vercel/speed-insights` remains a devDependency: the script served from `/_vercel/speed-insights/script.js` comes from Vercel's edge, not from `node_modules`.
+Não há `@vercel/node` no `package.json`. O runtime de Node.js da Vercel compila as funções de `/api` com um builder próprio fornecido pela plataforma, então o pacote nunca foi necessário aqui — ele apenas puxava uma cadeia de dependências de build (`ts-morph` → `fast-glob` → `micromatch` → `braces`) que respondia por todos os avisos que este projeto já teve, incluindo o crítico do `node-tar`. O `@vercel/speed-insights` permanece como devDependency: o script servido de `/_vercel/speed-insights/script.js` vem da edge da Vercel, não de `node_modules`.
 
-`engines.node` is pinned to `24.x`, because Vercel discontinued Node.js 20 on 2026-10-01 and any build pinning `20.x` now fails immediately with `BUILD_UTILS_NODE_VERSION_DISCONTINUED`.
-- **Input validation.** Search queries are length-checked and rejected before reaching any upstream API.
-- **Sanitised rendering.** API text is sanitised with DOMPurify before insertion into the DOM.
-- **Content Security Policy.** `connect-src` is `'self'` only, so the browser can talk to this site's own API and nothing else. `script-src` allows only self, cdnjs and the inline JSON-LD hash. `img-src` is limited to self, TMDB images, Wikimedia and `data:`. `frame-src` and `object-src` are `none`, `base-uri` is `self`, `form-action` is `self`, and `frame-ancestors` is `none`.
-- **Cross-origin requests** are restricted to the production origin.
-- **Transport** is HTTPS only, with `upgrade-insecure-requests` enforced.
+`engines.node` está fixado em `24.x`, porque a Vercel descontinuou o Node.js 20 em 01/10/2026 e qualquer build fixado em `20.x` agora falha imediatamente com `BUILD_UTILS_NODE_VERSION_DISCONTINUED`.
 
-## Privacy
+- **Validação de entrada.** Consultas de busca têm o tamanho verificado e são rejeitadas antes de chegar a qualquer API upstream.
+- **Renderização sanitizada.** Texto da API é sanitizado com DOMPurify antes de ser inserido no DOM.
+- **Content Security Policy.** `connect-src` é apenas `'self'`, então o navegador só pode falar com a própria API deste site e com mais nada. `script-src` permite apenas self, cdnjs e o hash inline do JSON-LD. `img-src` é limitado a self, imagens do TMDB, Wikimedia e `data:`. `frame-src` e `object-src` são `none`, `base-uri` é `self`, `form-action` é `self`, e `frame-ancestors` é `none`.
+- **Requisições cross-origin** são restritas à origem de produção.
+- **Transporte** é apenas HTTPS, com `upgrade-insecure-requests` imposto.
 
-CineWorld has no accounts, no database and no advertising. It does not use Google AdSense or Google Analytics. The only data written to your device is your language choice, in `localStorage` under `cineworld_language`.
+## Privacidade
 
-Third parties that receive data: TMDB (search terms), Gemini (your query, only when using AI search), Google Fonts (IP address and referring page), Vercel (hosting and request logs), Vercel Speed Insights (Core Web Vitals metrics and browser user agent), cdnjs (icons) and Wikimedia Commons (platform logos). Full details are in the privacy policy, available in all 8 languages.
+O CineWorld não tem contas, banco de dados nem publicidade. Não usa Google AdSense nem Google Analytics. O único dado gravado no seu dispositivo é a sua escolha de idioma, em `localStorage` sob `cineworld_language`.
 
-## Credits
+Terceiros que recebem dados: TMDB (termos de busca), Gemini (sua consulta, apenas ao usar a busca de IA), Google Fonts (endereço IP e página de referência), Vercel (hospedagem e logs de requisições), Vercel Speed Insights (métricas Core Web Vitals e user agent do navegador), cdnjs (ícones) e Wikimedia Commons (logos de plataformas). Detalhes completos estão na política de privacidade, disponível nos 8 idiomas.
 
-Catalogue data and artwork provided by [TMDB](https://www.themoviedb.org/). This product uses the TMDB API but is not endorsed or certified by TMDB.
+## Detalhes Técnicos
 
+- **Arquitetura:** Serverless na Vercel com funções em `/api/*`; frontend estático sob `/front-end/`.
+- **CSP (pronta para produção):** estrita, sem event handlers inline; DOMPurify na renderização do cliente; HTTPS imposto.
+- **Segurança:** rate limiting por IP (`lib/rate-limit.js`), CORS restrito à origem de produção, validação e sanitização de entrada.
+- **Dependências:** apenas `axios` em runtime, `@vercel/speed-insights` como devDependency; `npm audit = 0` (Node 24.x).
+- **Garantia de qualidade:** sintaxe do JS validada (`node -c`) nos endpoints modificados; nenhum segredo no repositório; EOL normalizado; refatoração compatível com CSP para evitar o bloqueio de `unsafe-inline`.
+- **Em andamento:** revisão contínua de hardening (headers, cache, consistência); testes e checagens permanecem leves e executados sob demanda.
 
+## Créditos
 
+Dados do catálogo e artes fornecidos pela [TMDB](https://www.themoviedb.org/). Este produto usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.
 
+---
 
+## Autora
+
+**Brenda Tavares** — Desenvolvedora Full-Stack
+
+- Bacharelado em Humanidades, Universidade Federal da Bahia (UFBA)
+- Desenvolvimento Backend, Universidade Pitágoras Unopar Anhanguera
+- GitHub: <https://github.com/Brenda-Tavares>
+- LinkedIn: <https://www.linkedin.com/in/brenda-campos-tavares/>
+
+---
+
+Inglês: [README.md](README.md) | Chinês simplificado:
+[README-ZH.md](README-ZH.md)
