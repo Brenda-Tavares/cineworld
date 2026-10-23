@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página não encontrada - CineWorld</title>
-    <meta name="description" content="A página que você procura não existe ou foi movida. Volte ao catálogo do CineWorld ou acesse as páginas legais.">
+    <meta name="description" id="metaDescription" content="A página que você procura não existe ou foi movida. Volte ao catálogo do CineWorld ou acesse as páginas legais.">
     <meta name="robots" content="noindex, follow">
     <link rel="stylesheet" href="/front-end/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="/front-end/404-lang.js" defer></script>
     <style>
         body { background: var(--bg-dark); color: var(--text-white); font-family: 'Inter', system-ui, -apple-system, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
         .error-page { max-width: 620px; text-align: center; }
@@ -33,20 +34,20 @@
 <body>
     <main class="error-page">
         <div class="error-code">404</div>
-        <h1>Página não encontrada</h1>
-        <p>O endereço que você acessou não existe, foi movido ou o link está incorreto. Use os atalhos abaixo para continuar navegando.</p>
+        <h1 data-i18n="h1">Página não encontrada</h1>
+        <p data-i18n="p">O endereço que você acessou não existe, foi movido ou o link está incorreto. Use os atalhos abaixo para continuar navegando.</p>
 
         <div class="error-actions">
-            <a class="btn-primary" href="/"><i class="fas fa-house" aria-hidden="true"></i> Voltar ao catálogo</a>
-            <a class="btn-secondary" href="/sobre"><i class="fas fa-circle-info" aria-hidden="true"></i> Sobre o CineWorld</a>
+            <a class="btn-primary" id="linkHome" href="/"><i class="fas fa-house" aria-hidden="true"></i> <span data-i18n="catalog">Voltar ao catálogo</span></a>
+            <a class="btn-secondary" id="linkAbout" href="/sobre"><i class="fas fa-circle-info" aria-hidden="true"></i> <span data-i18n="about">Sobre o CineWorld</span></a>
         </div>
 
         <section class="error-links">
-            <h2>Páginas legais</h2>
+            <h2 data-i18n="legal">Páginas legais</h2>
             <ul>
-                <li><a href="/privacidade">Política de privacidade</a></li>
-                <li><a href="/termos">Termos de uso</a></li>
-                <li><a href="/sobre">Sobre</a></li>
+                <li><a id="linkPrivacy" href="/privacidade" data-i18n="privacy">Política de privacidade</a></li>
+                <li><a id="linkTerms" href="/termos" data-i18n="terms">Termos de uso</a></li>
+                <li><a id="linkAbout2" href="/sobre" data-i18n="about2">Sobre</a></li>
             </ul>
         </section>
 
